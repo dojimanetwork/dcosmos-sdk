@@ -242,3 +242,31 @@ func (app *BaseApp) SetInterfaceRegistry(registry types.InterfaceRegistry) {
 	app.grpcQueryRouter.SetInterfaceRegistry(registry)
 	app.msgServiceRouter.SetInterfaceRegistry(registry)
 }
+
+//
+// Side channel
+//
+
+// SetBeginSideBlocker sets begin side blocker
+func (app *BaseApp) SetBeginSideBlocker(beginSideBlocker sdk.BeginSideBlocker) {
+	if app.sealed {
+		panic("SetBeginSideBlocker() on sealed BaseApp")
+	}
+	app.beginSideBlocker = beginSideBlocker
+}
+
+// SetDeliverSideTxHandler sets deliver side-tx handler
+func (app *BaseApp) SetDeliverSideTxHandler(deliverSideTxHandler sdk.DeliverSideTxHandler) {
+	if app.sealed {
+		panic("SetDeliverSideTxHandler() on sealed BaseApp")
+	}
+	app.deliverSideTxHandler = deliverSideTxHandler
+}
+
+// SetPostDeliverTxHandler sets post deliver tx handler
+func (app *BaseApp) SetPostDeliverTxHandler(postDeliverTxHandler sdk.PostDeliverTxHandler) {
+	if app.sealed {
+		panic("SetPostDeliverTxHandler() on sealed BaseApp")
+	}
+	app.postDeliverTxHandler = postDeliverTxHandler
+}

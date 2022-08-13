@@ -1,6 +1,11 @@
 package types
 
-import abci "github.com/tendermint/tendermint/abci/types"
+import(
+	abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types" 
+
+)
+
 
 // InitChainer initializes application state at genesis
 type InitChainer func(ctx Context, req abci.RequestInitChain) abci.ResponseInitChain
@@ -19,3 +24,17 @@ type EndBlocker func(ctx Context, req abci.RequestEndBlock) abci.ResponseEndBloc
 
 // PeerFilter responds to p2p filtering queries from Tendermint
 type PeerFilter func(info string) abci.ResponseQuery
+
+//
+// side channel
+//
+
+// BeginSideBlocker runs code before the side transactions in a block
+type BeginSideBlocker func(ctx Context, req dabci.RequestBeginSideBlock) dabci.ResponseBeginSideBlock
+
+// DeliverSideTxHandler runs during each side trasaction in a block
+type DeliverSideTxHandler func(ctx Context, tx Tx, req dabci.RequestDeliverSideTx) dabci.ResponseDeliverSideTx
+
+// PostDeliverTxHandler runs after deliver tx
+type PostDeliverTxHandler func(ctx Context, tx Tx, result Result)
+

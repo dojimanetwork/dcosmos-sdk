@@ -133,6 +133,11 @@ type BaseApp struct { // nolint: maligned
 	// indexEvents defines the set of events in the form {eventType}.{attributeKey},
 	// which informs Tendermint what to index. If empty, all events will be indexed.
 	indexEvents map[string]struct{}
+
+	// side channel
+	beginSideBlocker     sdk.BeginSideBlocker
+	deliverSideTxHandler sdk.DeliverSideTxHandler
+	postDeliverTxHandler sdk.PostDeliverTxHandler
 }
 
 // NewBaseApp returns a reference to an initialized BaseApp. It accepts a
