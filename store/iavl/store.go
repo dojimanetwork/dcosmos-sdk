@@ -8,8 +8,10 @@ import (
 
 	ics23 "github.com/confio/ics23/go"
 	"github.com/cosmos/iavl"
-	abci "github.com/tendermint/tendermint/abci/types"
-	tmcrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	//tmcrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
+	dtmcrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/store/cachekv"
@@ -258,7 +260,7 @@ func (st *Store) Import(version int64) (*iavl.Importer, error) {
 }
 
 // Handle gatest the latest height, if height is 0
-func getHeight(tree Tree, req abci.RequestQuery) int64 {
+func getHeight(tree Tree, req dabci.RequestQuery) int64 {
 	height := req.Height
 	if height == 0 {
 		latest := tree.Version()
@@ -278,7 +280,7 @@ func getHeight(tree Tree, req abci.RequestQuery) int64 {
 // If latest-1 is not present, use latest (which must be present)
 // if you care to have the latest data to see a tx results, you must
 // explicitly set the height you want to see
-func (st *Store) Query(req abci.RequestQuery) (res abci.ResponseQuery) {
+func (st *Store) Query(req dabci.RequestQuery) (res dabci.ResponseQuery) {
 	defer telemetry.MeasureSince(time.Now(), "store", "iavl", "query")
 
 	if len(req.Data) == 0 {
@@ -351,7 +353,7 @@ func (st *Store) Query(req abci.RequestQuery) (res abci.ResponseQuery) {
 // Takes a MutableTree, a key, and a flag for creating existence or absence proof and returns the
 // appropriate merkle.Proof. Since this must be called after querying for the value, this function should never error
 // Thus, it will panic on error rather than returning it
-func getProofFromTree(tree *iavl.MutableTree, key []byte, exists bool) *tmcrypto.ProofOps {
+func getProofFromTree(tree *iavl.MutableTree, key []byte, exists bool) *dtmcrypto.ProofOps {
 	var (
 		commitmentProof *ics23.CommitmentProof
 		err             error
@@ -374,7 +376,7 @@ func getProofFromTree(tree *iavl.MutableTree, key []byte, exists bool) *tmcrypto
 	}
 
 	op := types.NewIavlCommitmentOp(key, commitmentProof)
-	return &tmcrypto.ProofOps{Ops: []tmcrypto.ProofOp{op.ProofOp()}}
+	return &dtmcrypto.ProofOps{Ops: []dtmcrypto.ProofOp{op.ProofOp()}}
 }
 
 //----------------------------------------

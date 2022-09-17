@@ -9,9 +9,11 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	tmbytes "github.com/tendermint/tendermint/libs/bytes"
-	rpcclient "github.com/tendermint/tendermint/rpc/client"
+	//rpcclient "github.com/tendermint/tendermint/rpc/client"
+	drpcclient "github.com/dojimanetwork/dojimamint/rpc/client"
 
 	"github.com/cosmos/cosmos-sdk/store/rootmulti"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -20,7 +22,7 @@ import (
 
 // GetNode returns an RPC client. If the context's client is not defined, an
 // error is returned.
-func (ctx Context) GetNode() (rpcclient.Client, error) {
+func (ctx Context) GetNode() (drpcclient.Client, error) {
 	if ctx.Client == nil {
 		return nil, errors.New("no RPC client is defined in offline mode")
 	}
@@ -53,7 +55,7 @@ func (ctx Context) QueryStore(key tmbytes.HexBytes, storeName string) ([]byte, i
 // It returns the ResultQuery obtained from the query. The height used to perform
 // the query is the RequestQuery Height if it is non-zero, otherwise the context
 // height is used.
-func (ctx Context) QueryABCI(req abci.RequestQuery) (abci.ResponseQuery, error) {
+func (ctx Context) QueryABCI(req dabci.RequestQuery) (dabci.ResponseQuery, error) {
 	return ctx.queryABCI(req)
 }
 
@@ -72,10 +74,10 @@ func (ctx Context) GetFromName() string {
 	return ctx.FromName
 }
 
-func (ctx Context) queryABCI(req abci.RequestQuery) (abci.ResponseQuery, error) {
+func (ctx Context) queryABCI(req dabci.RequestQuery) (dabci.ResponseQuery, error) {
 	node, err := ctx.GetNode()
 	if err != nil {
-		return abci.ResponseQuery{}, err
+		return dabci.ResponseQuery{}, err
 	}
 
 	var queryHeight int64
@@ -86,18 +88,18 @@ func (ctx Context) queryABCI(req abci.RequestQuery) (abci.ResponseQuery, error) 
 		queryHeight = ctx.Height
 	}
 
-	opts := rpcclient.ABCIQueryOptions{
+	opts := drpcclient.ABCIQueryOptions{
 		Height: queryHeight,
 		Prove:  req.Prove,
 	}
 
 	result, err := node.ABCIQueryWithOptions(context.Background(), req.Path, req.Data, opts)
 	if err != nil {
-		return abci.ResponseQuery{}, err
+		return dabci.ResponseQuery{}, err
 	}
 
 	if !result.Response.IsOK() {
-		return abci.ResponseQuery{}, sdkErrorToGRPCError(result.Response)
+		return dabci.ResponseQuery{}, sdkErrorToGRPCError(result.Response)
 	}
 
 	// data from trusted node or subspace query doesn't need verification
@@ -108,7 +110,7 @@ func (ctx Context) queryABCI(req abci.RequestQuery) (abci.ResponseQuery, error) 
 	return result.Response, nil
 }
 
-func sdkErrorToGRPCError(resp abci.ResponseQuery) error {
+func sdkErrorToGRPCError(resp dabci.ResponseQuery) error {
 	switch resp.Code {
 	case sdkerrors.ErrInvalidRequest.ABCICode():
 		return status.Error(codes.InvalidArgument, resp.Log)
@@ -125,7 +127,7 @@ func sdkErrorToGRPCError(resp abci.ResponseQuery) error {
 // and path. It returns the result and height of the query upon success
 // or an error if the query fails.
 func (ctx Context) query(path string, key tmbytes.HexBytes) ([]byte, int64, error) {
-	resp, err := ctx.queryABCI(abci.RequestQuery{
+	resp, err := ctx.queryABCI(dabci.RequestQuery{
 		Path:   path,
 		Data:   key,
 		Height: ctx.Height,

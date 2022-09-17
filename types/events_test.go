@@ -6,7 +6,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/suite"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/dabci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	testdata "github.com/cosmos/cosmos-sdk/testutil/testdata"
@@ -120,17 +121,17 @@ func (s *eventsTestSuite) TestStringifyEvents() {
 }
 
 func (s *eventsTestSuite) TestMarkEventsToIndex() {
-	events := []abci.Event{
+	events := []dabci.Event{
 		{
 			Type: "message",
-			Attributes: []abci.EventAttribute{
+			Attributes: []dabci.EventAttribute{
 				{Key: []byte("sender"), Value: []byte("foo")},
 				{Key: []byte("recipient"), Value: []byte("bar")},
 			},
 		},
 		{
 			Type: "staking",
-			Attributes: []abci.EventAttribute{
+			Attributes: []dabci.EventAttribute{
 				{Key: []byte("deposit"), Value: []byte("5")},
 				{Key: []byte("unbond"), Value: []byte("10")},
 			},
@@ -138,23 +139,23 @@ func (s *eventsTestSuite) TestMarkEventsToIndex() {
 	}
 
 	testCases := map[string]struct {
-		events   []abci.Event
+		events   []dabci.Event
 		indexSet map[string]struct{}
-		expected []abci.Event
+		expected []dabci.Event
 	}{
 		"empty index set": {
 			events: events,
-			expected: []abci.Event{
+			expected: []dabci.Event{
 				{
 					Type: "message",
-					Attributes: []abci.EventAttribute{
+					Attributes: []dabci.EventAttribute{
 						{Key: []byte("sender"), Value: []byte("foo"), Index: true},
 						{Key: []byte("recipient"), Value: []byte("bar"), Index: true},
 					},
 				},
 				{
 					Type: "staking",
-					Attributes: []abci.EventAttribute{
+					Attributes: []dabci.EventAttribute{
 						{Key: []byte("deposit"), Value: []byte("5"), Index: true},
 						{Key: []byte("unbond"), Value: []byte("10"), Index: true},
 					},
@@ -164,17 +165,17 @@ func (s *eventsTestSuite) TestMarkEventsToIndex() {
 		},
 		"index some events": {
 			events: events,
-			expected: []abci.Event{
+			expected: []dabci.Event{
 				{
 					Type: "message",
-					Attributes: []abci.EventAttribute{
+					Attributes: []dabci.EventAttribute{
 						{Key: []byte("sender"), Value: []byte("foo"), Index: true},
 						{Key: []byte("recipient"), Value: []byte("bar")},
 					},
 				},
 				{
 					Type: "staking",
-					Attributes: []abci.EventAttribute{
+					Attributes: []dabci.EventAttribute{
 						{Key: []byte("deposit"), Value: []byte("5"), Index: true},
 						{Key: []byte("unbond"), Value: []byte("10")},
 					},
@@ -187,17 +188,17 @@ func (s *eventsTestSuite) TestMarkEventsToIndex() {
 		},
 		"index all events": {
 			events: events,
-			expected: []abci.Event{
+			expected: []dabci.Event{
 				{
 					Type: "message",
-					Attributes: []abci.EventAttribute{
+					Attributes: []dabci.EventAttribute{
 						{Key: []byte("sender"), Value: []byte("foo"), Index: true},
 						{Key: []byte("recipient"), Value: []byte("bar"), Index: true},
 					},
 				},
 				{
 					Type: "staking",
-					Attributes: []abci.EventAttribute{
+					Attributes: []dabci.EventAttribute{
 						{Key: []byte("deposit"), Value: []byte("5"), Index: true},
 						{Key: []byte("unbond"), Value: []byte("10"), Index: true},
 					},

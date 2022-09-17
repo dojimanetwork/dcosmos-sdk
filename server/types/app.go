@@ -7,9 +7,9 @@ import (
 
 	"github.com/gogo/protobuf/grpc"
 	"github.com/spf13/cobra"
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/libs/log"
-	tmtypes "github.com/tendermint/tendermint/types"
+	abci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	tmtypes "github.com/dojimanetwork/dojimamint/types"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/client"

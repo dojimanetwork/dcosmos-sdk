@@ -17,7 +17,8 @@ import (
 	mux "github.com/gorilla/mux"
 	runtime "github.com/grpc-ecosystem/grpc-gateway/runtime"
 	cobra "github.com/spf13/cobra"
-	types1 "github.com/tendermint/tendermint/abci/types"
+	//types1 "github.com/tendermint/tendermint/abci/types"
+   dabci "github.com/dojimanetwork/dojimamint/abci/types"
 )
 
 // MockAppModuleBasic is a mock of AppModuleBasic interface.
@@ -241,10 +242,10 @@ func (mr *MockAppModuleGenesisMockRecorder) GetTxCmd() *gomock.Call {
 }
 
 // InitGenesis mocks base method.
-func (m *MockAppModuleGenesis) InitGenesis(arg0 types0.Context, arg1 codec.JSONCodec, arg2 json.RawMessage) []types1.ValidatorUpdate {
+func (m *MockAppModuleGenesis) InitGenesis(arg0 types0.Context, arg1 codec.JSONCodec, arg2 json.RawMessage) []dabci.ValidatorUpdate {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "InitGenesis", arg0, arg1, arg2)
-	ret0, _ := ret[0].([]types1.ValidatorUpdate)
+	ret0, _ := ret[0].([]dabci.ValidatorUpdate)
 	return ret0
 }
 
@@ -354,7 +355,7 @@ func (m *MockAppModule) EXPECT() *MockAppModuleMockRecorder {
 }
 
 // BeginBlock mocks base method.
-func (m *MockAppModule) BeginBlock(arg0 types0.Context, arg1 types1.RequestBeginBlock) {
+func (m *MockAppModule) BeginBlock(arg0 types0.Context, arg1 dabci.RequestBeginBlock) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "BeginBlock", arg0, arg1)
 }
@@ -394,10 +395,10 @@ func (mr *MockAppModuleMockRecorder) DefaultGenesis(arg0 interface{}) *gomock.Ca
 }
 
 // EndBlock mocks base method.
-func (m *MockAppModule) EndBlock(arg0 types0.Context, arg1 types1.RequestEndBlock) []types1.ValidatorUpdate {
+func (m *MockAppModule) EndBlock(arg0 types0.Context, arg1 dabci.RequestEndBlock) []dabci.ValidatorUpdate {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "EndBlock", arg0, arg1)
-	ret0, _ := ret[0].([]types1.ValidatorUpdate)
+	ret0, _ := ret[0].([]dabci.ValidatorUpdate)
 	return ret0
 }
 
@@ -450,10 +451,10 @@ func (mr *MockAppModuleMockRecorder) GetTxCmd() *gomock.Call {
 }
 
 // InitGenesis mocks base method.
-func (m *MockAppModule) InitGenesis(arg0 types0.Context, arg1 codec.JSONCodec, arg2 json.RawMessage) []types1.ValidatorUpdate {
+func (m *MockAppModule) InitGenesis(arg0 types0.Context, arg1 codec.JSONCodec, arg2 json.RawMessage) []dabci.ValidatorUpdate {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "InitGenesis", arg0, arg1, arg2)
-	ret0, _ := ret[0].([]types1.ValidatorUpdate)
+	ret0, _ := ret[0].([]dabci.ValidatorUpdate)
 	return ret0
 }
 

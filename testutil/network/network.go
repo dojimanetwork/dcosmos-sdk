@@ -16,12 +16,12 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	tmcfg "github.com/tendermint/tendermint/config"
-	tmflags "github.com/tendermint/tendermint/libs/cli/flags"
-	"github.com/tendermint/tendermint/libs/log"
-	tmrand "github.com/tendermint/tendermint/libs/rand"
-	"github.com/tendermint/tendermint/node"
-	tmclient "github.com/tendermint/tendermint/rpc/client"
+	tmcfg "github.com/dojimanetwork/dojimamint/config"
+	tmflags "github.com/dojimanetwork/dojimamint/libs/cli/flags"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
+	"github.com/dojimanetwork/dojimamint/node"
+	tmclient "github.com/dojimanetwork/dojimamint/rpc/client"
 	dbm "github.com/tendermint/tm-db"
 	"google.golang.org/grpc"
 

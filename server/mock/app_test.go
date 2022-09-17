@@ -4,8 +4,10 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	abci "github.com/tendermint/tendermint/abci/types"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	"github.com/tendermint/tendermint/types"
 )
 
@@ -25,14 +27,14 @@ func TestInitApp(t *testing.T) {
 	require.NoError(t, err)
 
 	//TODO test validators in the init chain?
-	req := abci.RequestInitChain{
+	req := dabci.RequestInitChain{
 		AppStateBytes: appState,
 	}
 	app.InitChain(req)
 	app.Commit()
 
 	// make sure we can query these values
-	query := abci.RequestQuery{
+	query := dabci.RequestQuery{
 		Path: "/store/main/key",
 		Data: []byte("foo"),
 	}
@@ -56,19 +58,19 @@ func TestDeliverTx(t *testing.T) {
 	tx := NewTx(key, value)
 	txBytes := tx.GetSignBytes()
 
-	header := tmproto.Header{
+	header := dtmproto.Header{
 		AppHash: []byte("apphash"),
 		Height:  1,
 	}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
-	dres := app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
+	dres := app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 	require.Equal(t, uint32(0), dres.Code, dres.Log)
-	app.EndBlock(abci.RequestEndBlock{})
+	app.EndBlock(dabci.RequestEndBlock{})
 	cres := app.Commit()
 	require.NotEmpty(t, cres.Data)
 
 	// make sure we can query these values
-	query := abci.RequestQuery{
+	query := dabci.RequestQuery{
 		Path: "/store/main/key",
 		Data: []byte(key),
 	}

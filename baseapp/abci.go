@@ -11,8 +11,10 @@ import (
 	"time"
 
 	"github.com/gogo/protobuf/proto"
-	abci "github.com/tendermint/tendermint/abci/types"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	"google.golang.org/grpc/codes"
 	grpcstatus "google.golang.org/grpc/status"
 
@@ -25,16 +27,16 @@ import (
 
 // InitChain implements the ABCI interface. It runs the initialization logic
 // directly on the CommitMultiStore.
-func (app *BaseApp) InitChain(req abci.RequestInitChain) (res abci.ResponseInitChain) {
+func (app *BaseApp) InitChain(req dabci.RequestInitChain) (res dabci.ResponseInitChain) {
 	// On a new chain, we consider the init chain block height as 0, even though
 	// req.InitialHeight is 1 by default.
-	initHeader := tmproto.Header{ChainID: req.ChainId, Time: req.Time}
+	initHeader := dtmproto.Header{ChainID: req.ChainId, Time: req.Time}
 
 	// If req.InitialHeight is > 1, then we set the initial version in the
 	// stores.
 	if req.InitialHeight > 1 {
 		app.initialHeight = req.InitialHeight
-		initHeader = tmproto.Header{ChainID: req.ChainId, Height: req.InitialHeight, Time: req.Time}
+		initHeader = dtmproto.Header{ChainID: req.ChainId, Height: req.InitialHeight, Time: req.Time}
 		err := app.cms.SetInitialVersion(req.InitialHeight)
 		if err != nil {
 			panic(err)
@@ -72,8 +74,8 @@ func (app *BaseApp) InitChain(req abci.RequestInitChain) (res abci.ResponseInitC
 			)
 		}
 
-		sort.Sort(abci.ValidatorUpdates(req.Validators))
-		sort.Sort(abci.ValidatorUpdates(res.Validators))
+		sort.Sort(dabci.ValidatorUpdates(req.Validators))
+		sort.Sort(dabci.ValidatorUpdates(res.Validators))
 
 		for i := range res.Validators {
 			if !proto.Equal(&res.Validators[i], &req.Validators[i]) {
@@ -96,7 +98,7 @@ func (app *BaseApp) InitChain(req abci.RequestInitChain) (res abci.ResponseInitC
 
 	// NOTE: We don't commit, but BeginBlock for block `initial_height` starts from this
 	// deliverState.
-	return abci.ResponseInitChain{
+	return dabci.ResponseInitChain{
 		ConsensusParams: res.ConsensusParams,
 		Validators:      res.Validators,
 		AppHash:         appHash,
@@ -104,10 +106,10 @@ func (app *BaseApp) InitChain(req abci.RequestInitChain) (res abci.ResponseInitC
 }
 
 // Info implements the ABCI interface.
-func (app *BaseApp) Info(req abci.RequestInfo) abci.ResponseInfo {
+func (app *BaseApp) Info(req dabci.RequestInfo) dabci.ResponseInfo {
 	lastCommitID := app.cms.LastCommitID()
 
-	return abci.ResponseInfo{
+	return dabci.ResponseInfo{
 		Data:             app.name,
 		Version:          app.version,
 		AppVersion:       app.appVersion,
@@ -117,31 +119,31 @@ func (app *BaseApp) Info(req abci.RequestInfo) abci.ResponseInfo {
 }
 
 // SetOption implements the ABCI interface.
-func (app *BaseApp) SetOption(req abci.RequestSetOption) (res abci.ResponseSetOption) {
+func (app *BaseApp) SetOption(req dabci.RequestSetOption) (res dabci.ResponseSetOption) {
 	// TODO: Implement!
 	return
 }
 
 // FilterPeerByAddrPort filters peers by address/port.
-func (app *BaseApp) FilterPeerByAddrPort(info string) abci.ResponseQuery {
+func (app *BaseApp) FilterPeerByAddrPort(info string) dabci.ResponseQuery {
 	if app.addrPeerFilter != nil {
 		return app.addrPeerFilter(info)
 	}
 
-	return abci.ResponseQuery{}
+	return dabci.ResponseQuery{}
 }
 
 // FilterPeerByID filters peers by node ID.
-func (app *BaseApp) FilterPeerByID(info string) abci.ResponseQuery {
+func (app *BaseApp) FilterPeerByID(info string) dabci.ResponseQuery {
 	if app.idPeerFilter != nil {
 		return app.idPeerFilter(info)
 	}
 
-	return abci.ResponseQuery{}
+	return dabci.ResponseQuery{}
 }
 
 // BeginBlock implements the ABCI application interface.
-func (app *BaseApp) BeginBlock(req abci.RequestBeginBlock) (res abci.ResponseBeginBlock) {
+func (app *BaseApp) BeginBlock(req dabci.RequestBeginBlock) (res dabci.ResponseBeginBlock) {
 	defer telemetry.MeasureSince(time.Now(), "abci", "begin_block")
 
 	if app.cms.TracingEnabled() {
@@ -200,7 +202,7 @@ func (app *BaseApp) BeginBlock(req abci.RequestBeginBlock) (res abci.ResponseBeg
 }
 
 // EndBlock implements the ABCI interface.
-func (app *BaseApp) EndBlock(req abci.RequestEndBlock) (res abci.ResponseEndBlock) {
+func (app *BaseApp) EndBlock(req dabci.RequestEndBlock) (res dabci.ResponseEndBlock) {
 	defer telemetry.MeasureSince(time.Now(), "abci", "end_block")
 
 	if app.deliverState.ms.TracingEnabled() {
@@ -225,16 +227,16 @@ func (app *BaseApp) EndBlock(req abci.RequestEndBlock) (res abci.ResponseEndBloc
 // internal CheckTx state if the AnteHandler passes. Otherwise, the ResponseCheckTx
 // will contain releveant error information. Regardless of tx execution outcome,
 // the ResponseCheckTx will contain relevant gas execution context.
-func (app *BaseApp) CheckTx(req abci.RequestCheckTx) abci.ResponseCheckTx {
+func (app *BaseApp) CheckTx(req dabci.RequestCheckTx) dabci.ResponseCheckTx {
 	defer telemetry.MeasureSince(time.Now(), "abci", "check_tx")
 
 	var mode runTxMode
 
 	switch {
-	case req.Type == abci.CheckTxType_New:
+	case req.Type == dabci.CheckTxType_New:
 		mode = runTxModeCheck
 
-	case req.Type == abci.CheckTxType_Recheck:
+	case req.Type == dabci.CheckTxType_Recheck:
 		mode = runTxModeReCheck
 
 	default:
@@ -246,7 +248,7 @@ func (app *BaseApp) CheckTx(req abci.RequestCheckTx) abci.ResponseCheckTx {
 		return sdkerrors.ResponseCheckTxWithEvents(err, gInfo.GasWanted, gInfo.GasUsed, anteEvents, app.trace)
 	}
 
-	return abci.ResponseCheckTx{
+	return dabci.ResponseCheckTx{
 		GasWanted: int64(gInfo.GasWanted), // TODO: Should type accept unsigned ints?
 		GasUsed:   int64(gInfo.GasUsed),   // TODO: Should type accept unsigned ints?
 		Log:       result.Log,
@@ -260,7 +262,7 @@ func (app *BaseApp) CheckTx(req abci.RequestCheckTx) abci.ResponseCheckTx {
 // Otherwise, the ResponseDeliverTx will contain releveant error information.
 // Regardless of tx execution outcome, the ResponseDeliverTx will contain relevant
 // gas execution context.
-func (app *BaseApp) DeliverTx(req abci.RequestDeliverTx) abci.ResponseDeliverTx {
+func (app *BaseApp) DeliverTx(req dabci.RequestDeliverTx) dabci.ResponseDeliverTx {
 	defer telemetry.MeasureSince(time.Now(), "abci", "deliver_tx")
 
 	gInfo := sdk.GasInfo{}
@@ -279,7 +281,7 @@ func (app *BaseApp) DeliverTx(req abci.RequestDeliverTx) abci.ResponseDeliverTx 
 		return sdkerrors.ResponseDeliverTxWithEvents(err, gInfo.GasWanted, gInfo.GasUsed, anteEvents, app.trace)
 	}
 
-	return abci.ResponseDeliverTx{
+	return dabci.ResponseDeliverTx{
 		GasWanted: int64(gInfo.GasWanted), // TODO: Should type accept unsigned ints?
 		GasUsed:   int64(gInfo.GasUsed),   // TODO: Should type accept unsigned ints?
 		Log:       result.Log,
@@ -295,7 +297,7 @@ func (app *BaseApp) DeliverTx(req abci.RequestDeliverTx) abci.ResponseDeliverTx 
 // defined in config, Commit will execute a deferred function call to check
 // against that height and gracefully halt if it matches the latest committed
 // height.
-func (app *BaseApp) Commit() (res abci.ResponseCommit) {
+func (app *BaseApp) Commit() (res dabci.ResponseCommit) {
 	defer telemetry.MeasureSince(time.Now(), "abci", "commit")
 
 	header := app.deliverState.ctx.BlockHeader()
@@ -339,7 +341,7 @@ func (app *BaseApp) Commit() (res abci.ResponseCommit) {
 		go app.snapshot(header.Height)
 	}
 
-	return abci.ResponseCommit{
+	return dabci.ResponseCommit{
 		Data:         commitID.Hash,
 		RetainHeight: retainHeight,
 	}
@@ -399,7 +401,7 @@ func (app *BaseApp) snapshot(height int64) {
 
 // Query implements the ABCI interface. It delegates to CommitMultiStore if it
 // implements Queryable.
-func (app *BaseApp) Query(req abci.RequestQuery) (res abci.ResponseQuery) {
+func (app *BaseApp) Query(req dabci.RequestQuery) (res dabci.ResponseQuery) {
 	defer telemetry.MeasureSince(time.Now(), "abci", "query")
 
 	// Add panic recovery for all queries.
@@ -445,8 +447,8 @@ func (app *BaseApp) Query(req abci.RequestQuery) (res abci.ResponseQuery) {
 }
 
 // ListSnapshots implements the ABCI interface. It delegates to app.snapshotManager if set.
-func (app *BaseApp) ListSnapshots(req abci.RequestListSnapshots) abci.ResponseListSnapshots {
-	resp := abci.ResponseListSnapshots{Snapshots: []*abci.Snapshot{}}
+func (app *BaseApp) ListSnapshots(req dabci.RequestListSnapshots) dabci.ResponseListSnapshots {
+	resp := dabci.ResponseListSnapshots{Snapshots: []*dabci.Snapshot{}}
 	if app.snapshotManager == nil {
 		return resp
 	}
@@ -470,9 +472,9 @@ func (app *BaseApp) ListSnapshots(req abci.RequestListSnapshots) abci.ResponseLi
 }
 
 // LoadSnapshotChunk implements the ABCI interface. It delegates to app.snapshotManager if set.
-func (app *BaseApp) LoadSnapshotChunk(req abci.RequestLoadSnapshotChunk) abci.ResponseLoadSnapshotChunk {
+func (app *BaseApp) LoadSnapshotChunk(req dabci.RequestLoadSnapshotChunk) dabci.ResponseLoadSnapshotChunk {
 	if app.snapshotManager == nil {
-		return abci.ResponseLoadSnapshotChunk{}
+		return dabci.ResponseLoadSnapshotChunk{}
 	}
 	chunk, err := app.snapshotManager.LoadChunk(req.Height, req.Format, req.Chunk)
 	if err != nil {
@@ -483,36 +485,36 @@ func (app *BaseApp) LoadSnapshotChunk(req abci.RequestLoadSnapshotChunk) abci.Re
 			"chunk", req.Chunk,
 			"err", err,
 		)
-		return abci.ResponseLoadSnapshotChunk{}
+		return dabci.ResponseLoadSnapshotChunk{}
 	}
-	return abci.ResponseLoadSnapshotChunk{Chunk: chunk}
+	return dabci.ResponseLoadSnapshotChunk{Chunk: chunk}
 }
 
 // OfferSnapshot implements the ABCI interface. It delegates to app.snapshotManager if set.
-func (app *BaseApp) OfferSnapshot(req abci.RequestOfferSnapshot) abci.ResponseOfferSnapshot {
+func (app *BaseApp) OfferSnapshot(req dabci.RequestOfferSnapshot) dabci.ResponseOfferSnapshot {
 	if app.snapshotManager == nil {
 		app.logger.Error("snapshot manager not configured")
-		return abci.ResponseOfferSnapshot{Result: abci.ResponseOfferSnapshot_ABORT}
+		return dabci.ResponseOfferSnapshot{Result: dabci.ResponseOfferSnapshot_ABORT}
 	}
 
 	if req.Snapshot == nil {
 		app.logger.Error("received nil snapshot")
-		return abci.ResponseOfferSnapshot{Result: abci.ResponseOfferSnapshot_REJECT}
+		return dabci.ResponseOfferSnapshot{Result: dabci.ResponseOfferSnapshot_REJECT}
 	}
 
 	snapshot, err := snapshottypes.SnapshotFromABCI(req.Snapshot)
 	if err != nil {
 		app.logger.Error("failed to decode snapshot metadata", "err", err)
-		return abci.ResponseOfferSnapshot{Result: abci.ResponseOfferSnapshot_REJECT}
+		return dabci.ResponseOfferSnapshot{Result: dabci.ResponseOfferSnapshot_REJECT}
 	}
 
 	err = app.snapshotManager.Restore(snapshot)
 	switch {
 	case err == nil:
-		return abci.ResponseOfferSnapshot{Result: abci.ResponseOfferSnapshot_ACCEPT}
+		return dabci.ResponseOfferSnapshot{Result: dabci.ResponseOfferSnapshot_ACCEPT}
 
 	case errors.Is(err, snapshottypes.ErrUnknownFormat):
-		return abci.ResponseOfferSnapshot{Result: abci.ResponseOfferSnapshot_REJECT_FORMAT}
+		return dabci.ResponseOfferSnapshot{Result: dabci.ResponseOfferSnapshot_REJECT_FORMAT}
 
 	case errors.Is(err, snapshottypes.ErrInvalidMetadata):
 		app.logger.Error(
@@ -521,7 +523,7 @@ func (app *BaseApp) OfferSnapshot(req abci.RequestOfferSnapshot) abci.ResponseOf
 			"format", req.Snapshot.Format,
 			"err", err,
 		)
-		return abci.ResponseOfferSnapshot{Result: abci.ResponseOfferSnapshot_REJECT}
+		return dabci.ResponseOfferSnapshot{Result: dabci.ResponseOfferSnapshot_REJECT}
 
 	default:
 		app.logger.Error(
@@ -533,21 +535,21 @@ func (app *BaseApp) OfferSnapshot(req abci.RequestOfferSnapshot) abci.ResponseOf
 
 		// We currently don't support resetting the IAVL stores and retrying a different snapshot,
 		// so we ask Tendermint to abort all snapshot restoration.
-		return abci.ResponseOfferSnapshot{Result: abci.ResponseOfferSnapshot_ABORT}
+		return dabci.ResponseOfferSnapshot{Result: dabci.ResponseOfferSnapshot_ABORT}
 	}
 }
 
 // ApplySnapshotChunk implements the ABCI interface. It delegates to app.snapshotManager if set.
-func (app *BaseApp) ApplySnapshotChunk(req abci.RequestApplySnapshotChunk) abci.ResponseApplySnapshotChunk {
+func (app *BaseApp) ApplySnapshotChunk(req dabci.RequestApplySnapshotChunk) dabci.ResponseApplySnapshotChunk {
 	if app.snapshotManager == nil {
 		app.logger.Error("snapshot manager not configured")
-		return abci.ResponseApplySnapshotChunk{Result: abci.ResponseApplySnapshotChunk_ABORT}
+		return dabci.ResponseApplySnapshotChunk{Result: dabci.ResponseApplySnapshotChunk_ABORT}
 	}
 
 	_, err := app.snapshotManager.RestoreChunk(req.Chunk)
 	switch {
 	case err == nil:
-		return abci.ResponseApplySnapshotChunk{Result: abci.ResponseApplySnapshotChunk_ACCEPT}
+		return dabci.ResponseApplySnapshotChunk{Result: dabci.ResponseApplySnapshotChunk_ACCEPT}
 
 	case errors.Is(err, snapshottypes.ErrChunkHashMismatch):
 		app.logger.Error(
@@ -556,19 +558,19 @@ func (app *BaseApp) ApplySnapshotChunk(req abci.RequestApplySnapshotChunk) abci.
 			"sender", req.Sender,
 			"err", err,
 		)
-		return abci.ResponseApplySnapshotChunk{
-			Result:        abci.ResponseApplySnapshotChunk_RETRY,
+		return dabci.ResponseApplySnapshotChunk{
+			Result:        dabci.ResponseApplySnapshotChunk_RETRY,
 			RefetchChunks: []uint32{req.Index},
 			RejectSenders: []string{req.Sender},
 		}
 
 	default:
 		app.logger.Error("failed to restore snapshot", "err", err)
-		return abci.ResponseApplySnapshotChunk{Result: abci.ResponseApplySnapshotChunk_ABORT}
+		return dabci.ResponseApplySnapshotChunk{Result: dabci.ResponseApplySnapshotChunk_ABORT}
 	}
 }
 
-func (app *BaseApp) handleQueryGRPC(handler GRPCQueryHandler, req abci.RequestQuery) abci.ResponseQuery {
+func (app *BaseApp) handleQueryGRPC(handler GRPCQueryHandler, req dabci.RequestQuery) dabci.ResponseQuery {
 	ctx, err := app.createQueryContext(req.Height, req.Prove)
 	if err != nil {
 		return sdkerrors.QueryResultWithDebug(err, app.trace)
@@ -748,7 +750,7 @@ func (app *BaseApp) GetBlockRetentionHeight(commitHeight int64) int64 {
 	return retentionHeight
 }
 
-func handleQueryApp(app *BaseApp, path []string, req abci.RequestQuery) abci.ResponseQuery {
+func handleQueryApp(app *BaseApp, path []string, req dabci.RequestQuery) dabci.ResponseQuery {
 	if len(path) >= 2 {
 		switch path[1] {
 		case "simulate":
@@ -769,14 +771,14 @@ func handleQueryApp(app *BaseApp, path []string, req abci.RequestQuery) abci.Res
 				return sdkerrors.QueryResultWithDebug(sdkerrors.Wrap(err, "failed to JSON encode simulation response"), app.trace)
 			}
 
-			return abci.ResponseQuery{
+			return dabci.ResponseQuery{
 				Codespace: sdkerrors.RootCodespace,
 				Height:    req.Height,
 				Value:     bz,
 			}
 
 		case "version":
-			return abci.ResponseQuery{
+			return dabci.ResponseQuery{
 				Codespace: sdkerrors.RootCodespace,
 				Height:    req.Height,
 				Value:     []byte(app.version),
@@ -794,7 +796,7 @@ func handleQueryApp(app *BaseApp, path []string, req abci.RequestQuery) abci.Res
 		), app.trace)
 }
 
-func handleQueryStore(app *BaseApp, path []string, req abci.RequestQuery) abci.ResponseQuery {
+func handleQueryStore(app *BaseApp, path []string, req dabci.RequestQuery) dabci.ResponseQuery {
 	// "/store" prefix for store queries
 	queryable, ok := app.cms.(sdk.Queryable)
 	if !ok {
@@ -817,7 +819,7 @@ func handleQueryStore(app *BaseApp, path []string, req abci.RequestQuery) abci.R
 	return resp
 }
 
-func handleQueryP2P(app *BaseApp, path []string) abci.ResponseQuery {
+func handleQueryP2P(app *BaseApp, path []string) dabci.ResponseQuery {
 	// "/p2p" prefix for p2p queries
 	if len(path) < 4 {
 		return sdkerrors.QueryResultWithDebug(
@@ -826,7 +828,7 @@ func handleQueryP2P(app *BaseApp, path []string) abci.ResponseQuery {
 			), app.trace)
 	}
 
-	var resp abci.ResponseQuery
+	var resp dabci.ResponseQuery
 
 	cmd, typ, arg := path[1], path[2], path[3]
 	switch cmd {
@@ -846,7 +848,7 @@ func handleQueryP2P(app *BaseApp, path []string) abci.ResponseQuery {
 	return resp
 }
 
-func handleQueryCustom(app *BaseApp, path []string, req abci.RequestQuery) abci.ResponseQuery {
+func handleQueryCustom(app *BaseApp, path []string, req dabci.RequestQuery) dabci.ResponseQuery {
 	// path[0] should be "custom" because "/custom" prefix is required for keeper
 	// queries.
 	//
@@ -877,7 +879,7 @@ func handleQueryCustom(app *BaseApp, path []string, req abci.RequestQuery) abci.
 		return res
 	}
 
-	return abci.ResponseQuery{
+	return dabci.ResponseQuery{
 		Height: req.Height,
 		Value:  resBytes,
 	}

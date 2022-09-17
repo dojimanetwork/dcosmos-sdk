@@ -6,7 +6,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -550,7 +551,7 @@ func TestMigrateVestingAccounts(t *testing.T) {
 		tc := tc
 		t.Run(tc.name, func(t *testing.T) {
 			app := simapp.Setup(false)
-			ctx := app.BaseApp.NewContext(false, tmproto.Header{
+			ctx := app.BaseApp.NewContext(false, dtmproto.Header{
 				Time: time.Now(),
 			})
 

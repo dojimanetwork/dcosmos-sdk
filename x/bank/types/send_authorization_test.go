@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-
+	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+    dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/bank/types"
@@ -20,7 +20,7 @@ var (
 
 func TestSendAuthorization(t *testing.T) {
 	app := simapp.Setup(false)
-	ctx := app.BaseApp.NewContext(false, tmproto.Header{})
+	ctx := app.BaseApp.NewContext(false, dtmproto.Header{})
 	authorization := types.NewSendAuthorization(coins1000)
 
 	t.Log("verify authorization returns valid method name")

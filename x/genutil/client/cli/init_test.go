@@ -11,9 +11,10 @@ import (
 
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/require"
-	abci_server "github.com/tendermint/tendermint/abci/server"
-	"github.com/tendermint/tendermint/libs/cli"
-	"github.com/tendermint/tendermint/libs/log"
+	abci_server "github.com/dojimanetwork/dojimamint/abci/server"
+	"github.com/dojimanetwork/dojimamint/libs/cli"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	dlog "github.com/dojimanetwork/dojimamint/libs/log"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -169,6 +170,8 @@ func TestEmptyState(t *testing.T) {
 func TestStartStandAlone(t *testing.T) {
 	home := t.TempDir()
 	logger := log.NewNopLogger()
+	dlogger := dlog.NewNopLogger()
+
 	interfaceRegistry := types.NewInterfaceRegistry()
 	marshaler := codec.NewProtoCodec(interfaceRegistry)
 	err := genutiltest.ExecInitCmd(testMbm, home, marshaler)
@@ -183,7 +186,7 @@ func TestStartStandAlone(t *testing.T) {
 	svr, err := abci_server.NewServer(svrAddr, "socket", app)
 	require.NoError(t, err, "error creating listener")
 
-	svr.SetLogger(logger.With("module", "abci-server"))
+	svr.SetLogger(dlogger.With("module", "abci-server"))
 	err = svr.Start()
 	require.NoError(t, err)
 

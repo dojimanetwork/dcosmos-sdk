@@ -7,9 +7,11 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	abci "github.com/tendermint/tendermint/abci/types"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	tmtypes "github.com/tendermint/tendermint/types"
+	//abci "github.com/dojimanetwork/dojimamint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmtypes "github.com/dojimanetwork/dojimamint/types"
 
 	"github.com/golang/protobuf/proto"
 
@@ -170,8 +172,8 @@ func TestDuplicatesMsgCreateValidator(t *testing.T) {
 func TestInvalidPubKeyTypeMsgCreateValidator(t *testing.T) {
 	initPower := int64(1000)
 	app, ctx, _, valAddrs := bootstrapHandlerGenesisTest(t, initPower, 1, sdk.TokensFromConsensusPower(initPower, sdk.DefaultPowerReduction))
-	ctx = ctx.WithConsensusParams(&abci.ConsensusParams{
-		Validator: &tmproto.ValidatorParams{PubKeyTypes: []string{tmtypes.ABCIPubKeyTypeEd25519}},
+	ctx = ctx.WithConsensusParams(&dabci.ConsensusParams{
+		Validator: &dtmproto.ValidatorParams{PubKeyTypes: []string{tmtypes.ABCIPubKeyTypeEd25519}},
 	})
 
 	addr := valAddrs[0]
@@ -184,8 +186,8 @@ func TestInvalidPubKeyTypeMsgCreateValidator(t *testing.T) {
 
 func TestBothPubKeyTypesMsgCreateValidator(t *testing.T) {
 	app, ctx, _, valAddrs := bootstrapHandlerGenesisTest(t, 1000, 2, sdk.NewInt(1000))
-	ctx = ctx.WithConsensusParams(&abci.ConsensusParams{
-		Validator: &tmproto.ValidatorParams{PubKeyTypes: []string{tmtypes.ABCIPubKeyTypeEd25519, tmtypes.ABCIPubKeyTypeSecp256k1}},
+	ctx = ctx.WithConsensusParams(&dabci.ConsensusParams{
+		Validator: &dtmproto.ValidatorParams{PubKeyTypes: []string{tmtypes.ABCIPubKeyTypeEd25519, tmtypes.ABCIPubKeyTypeSecp256k1}},
 	})
 
 	tstaking := teststaking.NewHelper(t, ctx, app.StakingKeeper)

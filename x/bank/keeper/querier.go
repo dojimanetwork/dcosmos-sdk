@@ -1,7 +1,8 @@
 package keeper
 
 import (
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -11,7 +12,7 @@ import (
 
 // NewQuerier returns a new sdk.Keeper instance.
 func NewQuerier(k Keeper, legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
-	return func(ctx sdk.Context, path []string, req abci.RequestQuery) ([]byte, error) {
+	return func(ctx sdk.Context, path []string, req dabci.RequestQuery) ([]byte, error) {
 		switch path[0] {
 		case types.QueryBalance:
 			return queryBalance(ctx, req, k, legacyQuerierCdc)
@@ -31,7 +32,7 @@ func NewQuerier(k Keeper, legacyQuerierCdc *codec.LegacyAmino) sdk.Querier {
 	}
 }
 
-func queryBalance(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
+func queryBalance(ctx sdk.Context, req dabci.RequestQuery, k Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
 	var params types.QueryBalanceRequest
 
 	if err := legacyQuerierCdc.UnmarshalJSON(req.Data, &params); err != nil {
@@ -53,7 +54,7 @@ func queryBalance(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQuerie
 	return bz, nil
 }
 
-func queryAllBalance(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
+func queryAllBalance(ctx sdk.Context, req dabci.RequestQuery, k Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
 	var params types.QueryAllBalancesRequest
 
 	if err := legacyQuerierCdc.UnmarshalJSON(req.Data, &params); err != nil {
@@ -75,7 +76,7 @@ func queryAllBalance(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQue
 	return bz, nil
 }
 
-func queryTotalSupply(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
+func queryTotalSupply(ctx sdk.Context, req dabci.RequestQuery, k Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
 	var params types.QueryTotalSupplyRequest
 
 	err := legacyQuerierCdc.UnmarshalJSON(req.Data, &params)
@@ -101,7 +102,7 @@ func queryTotalSupply(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQu
 	return res, nil
 }
 
-func querySupplyOf(ctx sdk.Context, req abci.RequestQuery, k Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
+func querySupplyOf(ctx sdk.Context, req dabci.RequestQuery, k Keeper, legacyQuerierCdc *codec.LegacyAmino) ([]byte, error) {
 	var params types.QuerySupplyOfParams
 
 	err := legacyQuerierCdc.UnmarshalJSON(req.Data, &params)

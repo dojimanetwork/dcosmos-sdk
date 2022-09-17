@@ -5,13 +5,14 @@ import (
 	"io/ioutil"
 	"os"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/libs/log"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/libs/log"
 )
 
 // SetupApp returns an application as well as a clean-up function
 // to be used to quickly setup a test case with an app
-func SetupApp() (abci.Application, func(), error) {
+func SetupApp() (dabci.Application, func(), error) {
 	logger := log.NewTMLogger(log.NewSyncWriter(os.Stdout)).
 		With("module", "mock")
 	rootDir, err := ioutil.TempDir("", "mock-sdk")

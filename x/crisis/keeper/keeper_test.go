@@ -4,8 +4,10 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	abci "github.com/tendermint/tendermint/abci/types"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+    dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -14,14 +16,14 @@ import (
 func TestLogger(t *testing.T) {
 	app := simapp.Setup(false)
 
-	ctx := app.NewContext(true, tmproto.Header{})
+	ctx := app.NewContext(true, dtmproto.Header{})
 	require.Equal(t, ctx.Logger(), app.CrisisKeeper.Logger(ctx))
 }
 
 func TestInvariants(t *testing.T) {
 	app := simapp.Setup(false)
 	app.Commit()
-	app.BeginBlock(abci.RequestBeginBlock{Header: tmproto.Header{Height: app.LastBlockHeight() + 1}})
+	app.BeginBlock(dabci.RequestBeginBlock{Header: dtmproto.Header{Height: app.LastBlockHeight() + 1}})
 
 	require.Equal(t, app.CrisisKeeper.InvCheckPeriod(), uint(5))
 
@@ -34,9 +36,9 @@ func TestInvariants(t *testing.T) {
 func TestAssertInvariants(t *testing.T) {
 	app := simapp.Setup(false)
 	app.Commit()
-	app.BeginBlock(abci.RequestBeginBlock{Header: tmproto.Header{Height: app.LastBlockHeight() + 1}})
+	app.BeginBlock(dabci.RequestBeginBlock{Header: dtmproto.Header{Height: app.LastBlockHeight() + 1}})
 
-	ctx := app.NewContext(true, tmproto.Header{})
+	ctx := app.NewContext(true, dtmproto.Header{})
 
 	app.CrisisKeeper.RegisterRoute("testModule", "testRoute1", func(sdk.Context) (string, bool) { return "", false })
 	require.NotPanics(t, func() { app.CrisisKeeper.AssertInvariants(ctx) })

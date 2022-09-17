@@ -23,7 +23,8 @@ import (
 
 	"github.com/gogo/protobuf/grpc"
 	"github.com/gogo/protobuf/proto"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
@@ -148,7 +149,7 @@ func getDelegatorDelegationsSum(ctx sdk.Context, address string, queryServer grp
 	if err != nil {
 		return nil, fmt.Errorf("cannot marshal staking type query request, %w", err)
 	}
-	req := abci.RequestQuery{
+	req := dabci.RequestQuery{
 		Data: b,
 		Path: delegatorDelegationPath,
 	}
@@ -192,7 +193,7 @@ func getDelegatorUnbondingDelegationsSum(ctx sdk.Context, address, bondDenom str
 	if err != nil {
 		return nil, fmt.Errorf("cannot marshal staking type query request, %w", err)
 	}
-	req := abci.RequestQuery{
+	req := dabci.RequestQuery{
 		Data: b,
 		Path: delegatorUnbondingDelegationsPath,
 	}
@@ -239,7 +240,7 @@ func getBalance(ctx sdk.Context, address string, queryServer grpc.Server) (sdk.C
 		return nil, fmt.Errorf("cannot marshal bank type query request, %w", err)
 	}
 
-	req := abci.RequestQuery{
+	req := dabci.RequestQuery{
 		Data: b,
 		Path: balancesPath,
 	}
@@ -270,7 +271,7 @@ func getBondDenom(ctx sdk.Context, queryServer grpc.Server) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("cannot marshal staking params query request, %w", err)
 	}
-	req := abci.RequestQuery{
+	req := dabci.RequestQuery{
 		Data: b,
 		Path: stakingParamsPath,
 	}

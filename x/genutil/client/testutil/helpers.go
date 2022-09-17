@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"github.com/spf13/viper"
-	tmcfg "github.com/tendermint/tendermint/config"
-	"github.com/tendermint/tendermint/libs/cli"
-	"github.com/tendermint/tendermint/libs/log"
+	tmcfg "github.com/dojimanetwork/dojimamint/config"
+	"github.com/dojimanetwork/dojimamint/libs/cli"
+	"github.com/dojimanetwork/dojimamint/libs/log"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"

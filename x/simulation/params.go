@@ -5,8 +5,10 @@ import (
 	"fmt"
 	"math/rand"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	"github.com/tendermint/tendermint/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -151,7 +153,7 @@ func (w WeightedProposalContent) ContentSimulatorFn() simulation.ContentSimulato
 // Param change proposals
 
 // randomConsensusParams returns random simulation consensus parameters, it extracts the Evidence from the Staking genesis state.
-func randomConsensusParams(r *rand.Rand, appState json.RawMessage, cdc codec.JSONCodec) *abci.ConsensusParams {
+func randomConsensusParams(r *rand.Rand, appState json.RawMessage, cdc codec.JSONCodec) *dabci.ConsensusParams {
 	var genesisState map[string]json.RawMessage
 	err := json.Unmarshal(appState, &genesisState)
 	if err != nil {
@@ -159,15 +161,15 @@ func randomConsensusParams(r *rand.Rand, appState json.RawMessage, cdc codec.JSO
 	}
 
 	stakingGenesisState := stakingtypes.GetGenesisStateFromAppState(cdc, genesisState)
-	consensusParams := &abci.ConsensusParams{
-		Block: &abci.BlockParams{
+	consensusParams := &dabci.ConsensusParams{
+		Block: &dabci.BlockParams{
 			MaxBytes: int64(simulation.RandIntBetween(r, 20000000, 30000000)),
 			MaxGas:   -1,
 		},
-		Validator: &tmproto.ValidatorParams{
+		Validator: &dtmproto.ValidatorParams{
 			PubKeyTypes: []string{types.ABCIPubKeyTypeEd25519},
 		},
-		Evidence: &tmproto.EvidenceParams{
+		Evidence: &dtmproto.EvidenceParams{
 			MaxAgeNumBlocks: int64(stakingGenesisState.Params.UnbondingTime / AverageBlockTime),
 			MaxAgeDuration:  stakingGenesisState.Params.UnbondingTime,
 		},

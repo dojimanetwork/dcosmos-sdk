@@ -16,9 +16,11 @@ import (
 	"github.com/gogo/protobuf/jsonpb"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/libs/log"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	//abci "github.com/dojimanetwork/dojimamint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	//tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -148,12 +150,12 @@ func setupBaseAppWithSnapshots(t *testing.T, blocks uint, blockTxs int, options 
 		SetPruning(sdk.PruningOptions{KeepEvery: 1}),
 		routerOpt)...)
 
-	app.InitChain(abci.RequestInitChain{})
+	app.InitChain(dabci.RequestInitChain{})
 
 	r := rand.New(rand.NewSource(3920758213583))
 	keyCounter := 0
 	for height := int64(1); height <= int64(blocks); height++ {
-		app.BeginBlock(abci.RequestBeginBlock{Header: tmproto.Header{Height: height}})
+		app.BeginBlock(dabci.RequestBeginBlock{Header: dtmproto.Header{Height: height}})
 		for txNum := 0; txNum < blockTxs; txNum++ {
 			tx := txTest{Msgs: []sdk.Msg{}}
 			for msgNum := 0; msgNum < 100; msgNum++ {
@@ -166,10 +168,10 @@ func setupBaseAppWithSnapshots(t *testing.T, blocks uint, blockTxs int, options 
 			}
 			txBytes, err := codec.Marshal(tx)
 			require.NoError(t, err)
-			resp := app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+			resp := app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 			require.True(t, resp.IsOK(), "%v", resp.String())
 		}
-		app.EndBlock(abci.RequestEndBlock{Height: height})
+		app.EndBlock(dabci.RequestEndBlock{Height: height})
 		app.Commit()
 
 		// Wait for snapshot to be taken, since it happens asynchronously.
@@ -224,14 +226,14 @@ func TestLoadVersion(t *testing.T) {
 	require.Equal(t, emptyCommitID, lastID)
 
 	// execute a block, collect commit ID
-	header := tmproto.Header{Height: 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	header := dtmproto.Header{Height: 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 	res := app.Commit()
 	commitID1 := sdk.CommitID{Version: 1, Hash: res.Data}
 
 	// execute a block, collect commit ID
-	header = tmproto.Header{Height: 2}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	header = dtmproto.Header{Height: 2}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 	res = app.Commit()
 	commitID2 := sdk.CommitID{Version: 2, Hash: res.Data}
 
@@ -248,7 +250,7 @@ func TestLoadVersion(t *testing.T) {
 	err = app.LoadVersion(1)
 	require.Nil(t, err)
 	testLoadVersionHelper(t, app, int64(1), commitID1)
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 	app.Commit()
 	testLoadVersionHelper(t, app, int64(2), commitID2)
 }
@@ -329,7 +331,7 @@ func TestSetLoader(t *testing.T) {
 			require.Nil(t, err)
 
 			// "execute" one block
-			app.BeginBlock(abci.RequestBeginBlock{Header: tmproto.Header{Height: 2}})
+			app.BeginBlock(dabci.RequestBeginBlock{Header: dtmproto.Header{Height: 2}})
 			res := app.Commit()
 			require.NotNil(t, res.Data)
 
@@ -348,14 +350,14 @@ func TestVersionSetterGetter(t *testing.T) {
 	app := NewBaseApp(name, logger, db, nil, pruningOpt)
 
 	require.Equal(t, "", app.Version())
-	res := app.Query(abci.RequestQuery{Path: "app/version"})
+	res := app.Query(dabci.RequestQuery{Path: "app/version"})
 	require.True(t, res.IsOK())
 	require.Equal(t, "", string(res.Value))
 
 	versionString := "1.0.0"
 	app.SetVersion(versionString)
 	require.Equal(t, versionString, app.Version())
-	res = app.Query(abci.RequestQuery{Path: "app/version"})
+	res = app.Query(dabci.RequestQuery{Path: "app/version"})
 	require.True(t, res.IsOK())
 	require.Equal(t, versionString, string(res.Value))
 }
@@ -374,8 +376,8 @@ func TestLoadVersionInvalid(t *testing.T) {
 	err = app.LoadVersion(-1)
 	require.Error(t, err)
 
-	header := tmproto.Header{Height: 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	header := dtmproto.Header{Height: 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 	res := app.Commit()
 	commitID1 := sdk.CommitID{Version: 1, Hash: res.Data}
 
@@ -424,7 +426,7 @@ func TestLoadVersionPruning(t *testing.T) {
 	// Commit seven blocks, of which 7 (latest) is kept in addition to 6, 5
 	// (keep recent) and 3 (keep every).
 	for i := int64(1); i <= 7; i++ {
-		app.BeginBlock(abci.RequestBeginBlock{Header: tmproto.Header{Height: i}})
+		app.BeginBlock(dabci.RequestBeginBlock{Header: dtmproto.Header{Height: i}})
 		res := app.Commit()
 		lastCommitID = sdk.CommitID{Version: i, Hash: res.Data}
 	}
@@ -490,7 +492,7 @@ func TestInfo(t *testing.T) {
 	app := newBaseApp(t.Name())
 
 	// ----- test an empty response -------
-	reqInfo := abci.RequestInfo{}
+	reqInfo := dabci.RequestInfo{}
 	res := app.Info(reqInfo)
 
 	// should be empty
@@ -563,19 +565,19 @@ func TestInitChainer(t *testing.T) {
 
 	// set a value in the store on init chain
 	key, value := []byte("hello"), []byte("goodbye")
-	var initChainer sdk.InitChainer = func(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
+	var initChainer sdk.InitChainer = func(ctx sdk.Context, req dabci.RequestInitChain) dabci.ResponseInitChain {
 		store := ctx.KVStore(capKey)
 		store.Set(key, value)
-		return abci.ResponseInitChain{}
+		return dabci.ResponseInitChain{}
 	}
 
-	query := abci.RequestQuery{
+	query := dabci.RequestQuery{
 		Path: "/store/main/key",
 		Data: key,
 	}
 
 	// initChainer is nil - nothing happens
-	app.InitChain(abci.RequestInitChain{})
+	app.InitChain(dabci.RequestInitChain{})
 	res := app.Query(query)
 	require.Equal(t, 0, len(res.Value))
 
@@ -587,7 +589,7 @@ func TestInitChainer(t *testing.T) {
 	require.Nil(t, err)
 	require.Equal(t, int64(0), app.LastBlockHeight())
 
-	initChainRes := app.InitChain(abci.RequestInitChain{AppStateBytes: []byte("{}"), ChainId: "test-chain-id"}) // must have valid JSON genesis file, even if empty
+	initChainRes := app.InitChain(dabci.RequestInitChain{AppStateBytes: []byte("{}"), ChainId: "test-chain-id"}) // must have valid JSON genesis file, even if empty
 
 	// The AppHash returned by a new chain is the sha256 hash of "".
 	// $ echo -n '' | sha256sum
@@ -623,8 +625,8 @@ func TestInitChainer(t *testing.T) {
 	require.Equal(t, value, res.Value)
 
 	// commit and ensure we can still query
-	header := tmproto.Header{Height: app.LastBlockHeight() + 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	header := dtmproto.Header{Height: app.LastBlockHeight() + 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 	app.Commit()
 
 	res = app.Query(query)
@@ -638,7 +640,7 @@ func TestInitChain_WithInitialHeight(t *testing.T) {
 	app := NewBaseApp(name, logger, db, nil)
 
 	app.InitChain(
-		abci.RequestInitChain{
+		dabci.RequestInitChain{
 			InitialHeight: 3,
 		},
 	)
@@ -654,21 +656,21 @@ func TestBeginBlock_WithInitialHeight(t *testing.T) {
 	app := NewBaseApp(name, logger, db, nil)
 
 	app.InitChain(
-		abci.RequestInitChain{
+		dabci.RequestInitChain{
 			InitialHeight: 3,
 		},
 	)
 
 	require.PanicsWithError(t, "invalid height: 4; expected: 3", func() {
-		app.BeginBlock(abci.RequestBeginBlock{
-			Header: tmproto.Header{
+		app.BeginBlock(dabci.RequestBeginBlock{
+			Header: dtmproto.Header{
 				Height: 4,
 			},
 		})
 	})
 
-	app.BeginBlock(abci.RequestBeginBlock{
-		Header: tmproto.Header{
+	app.BeginBlock(dabci.RequestBeginBlock{
+		Header: dtmproto.Header{
 			Height: 3,
 		},
 	})
@@ -927,7 +929,7 @@ func TestCheckTx(t *testing.T) {
 	app := setupBaseApp(t, anteOpt, routerOpt)
 
 	nTxs := int64(5)
-	app.InitChain(abci.RequestInitChain{})
+	app.InitChain(dabci.RequestInitChain{})
 
 	// Create same codec used in txDecoder
 	codec := codec.NewLegacyAmino()
@@ -937,7 +939,7 @@ func TestCheckTx(t *testing.T) {
 		tx := newTxCounter(i, 0) // no messages
 		txBytes, err := codec.Marshal(tx)
 		require.NoError(t, err)
-		r := app.CheckTx(abci.RequestCheckTx{Tx: txBytes})
+		r := app.CheckTx(dabci.RequestCheckTx{Tx: txBytes})
 		require.Empty(t, r.GetEvents())
 		require.True(t, r.IsOK(), fmt.Sprintf("%v", r))
 	}
@@ -949,13 +951,13 @@ func TestCheckTx(t *testing.T) {
 	require.Equal(t, nTxs, storedCounter)
 
 	// If a block is committed, CheckTx state should be reset.
-	header := tmproto.Header{Height: 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header, Hash: []byte("hash")})
+	header := dtmproto.Header{Height: 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header, Hash: []byte("hash")})
 
 	require.NotNil(t, app.checkState.ctx.BlockGasMeter(), "block gas meter should have been set to checkState")
 	require.NotEmpty(t, app.checkState.ctx.HeaderHash())
 
-	app.EndBlock(abci.RequestEndBlock{})
+	app.EndBlock(dabci.RequestEndBlock{})
 	app.Commit()
 
 	checkStateStore = app.checkState.ctx.KVStore(capKey1)
@@ -978,7 +980,7 @@ func TestDeliverTx(t *testing.T) {
 	}
 
 	app := setupBaseApp(t, anteOpt, routerOpt)
-	app.InitChain(abci.RequestInitChain{})
+	app.InitChain(dabci.RequestInitChain{})
 
 	// Create same codec used in txDecoder
 	codec := codec.NewLegacyAmino()
@@ -988,8 +990,8 @@ func TestDeliverTx(t *testing.T) {
 	txPerHeight := 5
 
 	for blockN := 0; blockN < nBlocks; blockN++ {
-		header := tmproto.Header{Height: int64(blockN) + 1}
-		app.BeginBlock(abci.RequestBeginBlock{Header: header})
+		header := dtmproto.Header{Height: int64(blockN) + 1}
+		app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 
 		for i := 0; i < txPerHeight; i++ {
 			counter := int64(blockN*txPerHeight + i)
@@ -998,7 +1000,7 @@ func TestDeliverTx(t *testing.T) {
 			txBytes, err := codec.Marshal(tx)
 			require.NoError(t, err)
 
-			res := app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+			res := app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 			require.True(t, res.IsOK(), fmt.Sprintf("%v", res))
 			events := res.GetEvents()
 			require.Len(t, events, 3, "should contain ante handler, message type and counter events respectively")
@@ -1006,7 +1008,7 @@ func TestDeliverTx(t *testing.T) {
 			require.Equal(t, sdk.MarkEventsToIndex(counterEvent(sdk.EventTypeMessage, counter).ToABCIEvents(), map[string]struct{}{})[0], events[2], "msg handler update counter event")
 		}
 
-		app.EndBlock(abci.RequestEndBlock{})
+		app.EndBlock(dabci.RequestEndBlock{})
 		app.Commit()
 	}
 }
@@ -1042,12 +1044,12 @@ func TestMultiMsgDeliverTx(t *testing.T) {
 	// run a multi-msg tx
 	// with all msgs the same route
 
-	header := tmproto.Header{Height: 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	header := dtmproto.Header{Height: 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 	tx := newTxCounter(0, 0, 1, 2)
 	txBytes, err := codec.Marshal(tx)
 	require.NoError(t, err)
-	res := app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+	res := app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 	require.True(t, res.IsOK(), fmt.Sprintf("%v", res))
 
 	store := app.deliverState.ctx.KVStore(capKey1)
@@ -1067,7 +1069,7 @@ func TestMultiMsgDeliverTx(t *testing.T) {
 	tx.Msgs = append(tx.Msgs, msgCounter2{1})
 	txBytes, err = codec.Marshal(tx)
 	require.NoError(t, err)
-	res = app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+	res = app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 	require.True(t, res.IsOK(), fmt.Sprintf("%v", res))
 
 	store = app.deliverState.ctx.KVStore(capKey1)
@@ -1114,7 +1116,7 @@ func TestSimulateTx(t *testing.T) {
 
 	app := setupBaseApp(t, anteOpt, routerOpt)
 
-	app.InitChain(abci.RequestInitChain{})
+	app.InitChain(dabci.RequestInitChain{})
 
 	// Create same codec used in txDecoder
 	cdc := codec.NewLegacyAmino()
@@ -1123,8 +1125,8 @@ func TestSimulateTx(t *testing.T) {
 	nBlocks := 3
 	for blockN := 0; blockN < nBlocks; blockN++ {
 		count := int64(blockN + 1)
-		header := tmproto.Header{Height: count}
-		app.BeginBlock(abci.RequestBeginBlock{Header: header})
+		header := dtmproto.Header{Height: count}
+		app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 
 		tx := newTxCounter(count, count)
 		txBytes, err := cdc.Marshal(tx)
@@ -1143,7 +1145,7 @@ func TestSimulateTx(t *testing.T) {
 		require.Equal(t, gasConsumed, gInfo.GasUsed)
 
 		// simulate by calling Query with encoded tx
-		query := abci.RequestQuery{
+		query := dabci.RequestQuery{
 			Path: "/app/simulate",
 			Data: txBytes,
 		}
@@ -1158,7 +1160,7 @@ func TestSimulateTx(t *testing.T) {
 		require.Equal(t, result.Events, simRes.Result.Events)
 		require.True(t, bytes.Equal(result.Data, simRes.Result.Data))
 
-		app.EndBlock(abci.RequestEndBlock{})
+		app.EndBlock(dabci.RequestEndBlock{})
 		app.Commit()
 	}
 }
@@ -1178,8 +1180,8 @@ func TestRunInvalidTransaction(t *testing.T) {
 
 	app := setupBaseApp(t, anteOpt, routerOpt)
 
-	header := tmproto.Header{Height: 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	header := dtmproto.Header{Height: 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 
 	// transaction with no messages
 	{
@@ -1259,7 +1261,7 @@ func TestRunInvalidTransaction(t *testing.T) {
 		txBytes, err := newCdc.Marshal(tx)
 		require.NoError(t, err)
 
-		res := app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+		res := app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 		require.EqualValues(t, sdkerrors.ErrTxDecode.ABCICode(), res.Code)
 		require.EqualValues(t, sdkerrors.ErrTxDecode.Codespace(), res.Codespace)
 	}
@@ -1306,8 +1308,8 @@ func TestTxGasLimits(t *testing.T) {
 
 	app := setupBaseApp(t, anteOpt, routerOpt)
 
-	header := tmproto.Header{Height: 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	header := dtmproto.Header{Height: 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 
 	testCases := []struct {
 		tx      *txTest
@@ -1389,9 +1391,9 @@ func TestMaxBlockGasLimits(t *testing.T) {
 	}
 
 	app := setupBaseApp(t, anteOpt, routerOpt)
-	app.InitChain(abci.RequestInitChain{
-		ConsensusParams: &abci.ConsensusParams{
-			Block: &abci.BlockParams{
+	app.InitChain(dabci.RequestInitChain{
+		ConsensusParams: &dabci.ConsensusParams{
+			Block: &dabci.BlockParams{
 				MaxGas: 100,
 			},
 		},
@@ -1420,8 +1422,8 @@ func TestMaxBlockGasLimits(t *testing.T) {
 		tx := tc.tx
 
 		// reset the block gas
-		header := tmproto.Header{Height: app.LastBlockHeight() + 1}
-		app.BeginBlock(abci.RequestBeginBlock{Header: header})
+		header := dtmproto.Header{Height: app.LastBlockHeight() + 1}
+		app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 
 		// execute the transaction multiple times
 		for j := 0; j < tc.numDelivers; j++ {
@@ -1473,8 +1475,8 @@ func TestCustomRunTxPanicHandler(t *testing.T) {
 
 	app := setupBaseApp(t, anteOpt, routerOpt)
 
-	header := tmproto.Header{Height: 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	header := dtmproto.Header{Height: 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 
 	app.AddRunTxRecoveryHandler(func(recoveryObj interface{}) error {
 		err, ok := recoveryObj.(error)
@@ -1512,11 +1514,11 @@ func TestBaseAppAnteHandler(t *testing.T) {
 	cdc := codec.NewLegacyAmino()
 	app := setupBaseApp(t, anteOpt, routerOpt)
 
-	app.InitChain(abci.RequestInitChain{})
+	app.InitChain(dabci.RequestInitChain{})
 	registerTestCodec(cdc)
 
-	header := tmproto.Header{Height: app.LastBlockHeight() + 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	header := dtmproto.Header{Height: app.LastBlockHeight() + 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 
 	// execute a tx that will fail ante handler execution
 	//
@@ -1526,7 +1528,7 @@ func TestBaseAppAnteHandler(t *testing.T) {
 	tx.setFailOnAnte(true)
 	txBytes, err := cdc.Marshal(tx)
 	require.NoError(t, err)
-	res := app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+	res := app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 	require.Empty(t, res.Events)
 	require.False(t, res.IsOK(), fmt.Sprintf("%v", res))
 
@@ -1542,7 +1544,7 @@ func TestBaseAppAnteHandler(t *testing.T) {
 	txBytes, err = cdc.Marshal(tx)
 	require.NoError(t, err)
 
-	res = app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+	res = app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 	// should emit ante event
 	require.NotEmpty(t, res.Events)
 	require.False(t, res.IsOK(), fmt.Sprintf("%v", res))
@@ -1559,7 +1561,7 @@ func TestBaseAppAnteHandler(t *testing.T) {
 	txBytes, err = cdc.Marshal(tx)
 	require.NoError(t, err)
 
-	res = app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+	res = app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 	require.NotEmpty(t, res.Events)
 	require.True(t, res.IsOK(), fmt.Sprintf("%v", res))
 
@@ -1569,7 +1571,7 @@ func TestBaseAppAnteHandler(t *testing.T) {
 	require.Equal(t, int64(1), getIntFromStore(store, deliverKey))
 
 	// commit
-	app.EndBlock(abci.RequestEndBlock{})
+	app.EndBlock(dabci.RequestEndBlock{})
 	app.Commit()
 }
 
@@ -1614,25 +1616,25 @@ func TestGasConsumptionBadTx(t *testing.T) {
 	registerTestCodec(cdc)
 
 	app := setupBaseApp(t, anteOpt, routerOpt)
-	app.InitChain(abci.RequestInitChain{
-		ConsensusParams: &abci.ConsensusParams{
-			Block: &abci.BlockParams{
+	app.InitChain(dabci.RequestInitChain{
+		ConsensusParams: &dabci.ConsensusParams{
+			Block: &dabci.BlockParams{
 				MaxGas: 9,
 			},
 		},
 	})
 
-	app.InitChain(abci.RequestInitChain{})
+	app.InitChain(dabci.RequestInitChain{})
 
-	header := tmproto.Header{Height: app.LastBlockHeight() + 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	header := dtmproto.Header{Height: app.LastBlockHeight() + 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 
 	tx := newTxCounter(5, 0)
 	tx.setFailOnAnte(true)
 	txBytes, err := cdc.Marshal(tx)
 	require.NoError(t, err)
 
-	res := app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+	res := app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 	require.False(t, res.IsOK(), fmt.Sprintf("%v", res))
 
 	// require next tx to fail due to black gas limit
@@ -1640,7 +1642,7 @@ func TestGasConsumptionBadTx(t *testing.T) {
 	txBytes, err = cdc.Marshal(tx)
 	require.NoError(t, err)
 
-	res = app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+	res = app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 	require.False(t, res.IsOK(), fmt.Sprintf("%v", res))
 }
 
@@ -1666,12 +1668,12 @@ func TestQuery(t *testing.T) {
 
 	app := setupBaseApp(t, anteOpt, routerOpt)
 
-	app.InitChain(abci.RequestInitChain{})
+	app.InitChain(dabci.RequestInitChain{})
 
 	// NOTE: "/store/key1" tells us KVStore
 	// and the final "/key" says to use the data as the
 	// key in the given KVStore ...
-	query := abci.RequestQuery{
+	query := dabci.RequestQuery{
 		Path: "/store/key1/key",
 		Data: key,
 	}
@@ -1689,8 +1691,8 @@ func TestQuery(t *testing.T) {
 	require.Equal(t, 0, len(res.Value))
 
 	// query is still empty after a DeliverTx before we commit
-	header := tmproto.Header{Height: app.LastBlockHeight() + 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	header := dtmproto.Header{Height: app.LastBlockHeight() + 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 
 	_, resTx, err = app.Deliver(aminoTxEncoder(), tx)
 	require.NoError(t, err)
@@ -1714,23 +1716,23 @@ func TestGRPCQuery(t *testing.T) {
 
 	app := setupBaseApp(t, grpcQueryOpt)
 
-	app.InitChain(abci.RequestInitChain{})
-	header := tmproto.Header{Height: app.LastBlockHeight() + 1}
-	app.BeginBlock(abci.RequestBeginBlock{Header: header})
+	app.InitChain(dabci.RequestInitChain{})
+	header := dtmproto.Header{Height: app.LastBlockHeight() + 1}
+	app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 	app.Commit()
 
 	req := testdata.SayHelloRequest{Name: "foo"}
 	reqBz, err := req.Marshal()
 	require.NoError(t, err)
 
-	reqQuery := abci.RequestQuery{
+	reqQuery := dabci.RequestQuery{
 		Data: reqBz,
 		Path: "/testdata.Query/SayHello",
 	}
 
 	resQuery := app.Query(reqQuery)
 
-	require.Equal(t, abci.CodeTypeOK, resQuery.Code, resQuery)
+	require.Equal(t, dabci.CodeTypeOK, resQuery.Code, resQuery)
 
 	var res testdata.SayHelloResponse
 	err = res.Unmarshal(resQuery.Value)
@@ -1741,28 +1743,28 @@ func TestGRPCQuery(t *testing.T) {
 // Test p2p filter queries
 func TestP2PQuery(t *testing.T) {
 	addrPeerFilterOpt := func(bapp *BaseApp) {
-		bapp.SetAddrPeerFilter(func(addrport string) abci.ResponseQuery {
+		bapp.SetAddrPeerFilter(func(addrport string) dabci.ResponseQuery {
 			require.Equal(t, "1.1.1.1:8000", addrport)
-			return abci.ResponseQuery{Code: uint32(3)}
+			return dabci.ResponseQuery{Code: uint32(3)}
 		})
 	}
 
 	idPeerFilterOpt := func(bapp *BaseApp) {
-		bapp.SetIDPeerFilter(func(id string) abci.ResponseQuery {
+		bapp.SetIDPeerFilter(func(id string) dabci.ResponseQuery {
 			require.Equal(t, "testid", id)
-			return abci.ResponseQuery{Code: uint32(4)}
+			return dabci.ResponseQuery{Code: uint32(4)}
 		})
 	}
 
 	app := setupBaseApp(t, addrPeerFilterOpt, idPeerFilterOpt)
 
-	addrQuery := abci.RequestQuery{
+	addrQuery := dabci.RequestQuery{
 		Path: "/p2p/filter/addr/1.1.1.1:8000",
 	}
 	res := app.Query(addrQuery)
 	require.Equal(t, uint32(3), res.Code)
 
-	idQuery := abci.RequestQuery{
+	idQuery := dabci.RequestQuery{
 		Path: "/p2p/filter/id/testid",
 	}
 	res = app.Query(idQuery)
@@ -1771,19 +1773,19 @@ func TestP2PQuery(t *testing.T) {
 
 func TestGetMaximumBlockGas(t *testing.T) {
 	app := setupBaseApp(t)
-	app.InitChain(abci.RequestInitChain{})
-	ctx := app.NewContext(true, tmproto.Header{})
+	app.InitChain(dabci.RequestInitChain{})
+	ctx := app.NewContext(true, dtmproto.Header{})
 
-	app.StoreConsensusParams(ctx, &abci.ConsensusParams{Block: &abci.BlockParams{MaxGas: 0}})
+	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dabci.BlockParams{MaxGas: 0}})
 	require.Equal(t, uint64(0), app.getMaximumBlockGas(ctx))
 
-	app.StoreConsensusParams(ctx, &abci.ConsensusParams{Block: &abci.BlockParams{MaxGas: -1}})
+	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dabci.BlockParams{MaxGas: -1}})
 	require.Equal(t, uint64(0), app.getMaximumBlockGas(ctx))
 
-	app.StoreConsensusParams(ctx, &abci.ConsensusParams{Block: &abci.BlockParams{MaxGas: 5000000}})
+	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dabci.BlockParams{MaxGas: 5000000}})
 	require.Equal(t, uint64(5000000), app.getMaximumBlockGas(ctx))
 
-	app.StoreConsensusParams(ctx, &abci.ConsensusParams{Block: &abci.BlockParams{MaxGas: -5000000}})
+	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dabci.BlockParams{MaxGas: -5000000}})
 	require.Panics(t, func() { app.getMaximumBlockGas(ctx) })
 }
 
@@ -1791,14 +1793,14 @@ func TestListSnapshots(t *testing.T) {
 	app, teardown := setupBaseAppWithSnapshots(t, 5, 4)
 	defer teardown()
 
-	resp := app.ListSnapshots(abci.RequestListSnapshots{})
+	resp := app.ListSnapshots(dabci.RequestListSnapshots{})
 	for _, s := range resp.Snapshots {
 		assert.NotEmpty(t, s.Hash)
 		assert.NotEmpty(t, s.Metadata)
 		s.Hash = nil
 		s.Metadata = nil
 	}
-	assert.Equal(t, abci.ResponseListSnapshots{Snapshots: []*abci.Snapshot{
+	assert.Equal(t, dabci.ResponseListSnapshots{Snapshots: []*dabci.Snapshot{
 		{Height: 4, Format: 1, Chunks: 2},
 		{Height: 2, Format: 1, Chunks: 1},
 	}}, resp)
@@ -1825,13 +1827,13 @@ func TestLoadSnapshotChunk(t *testing.T) {
 	for name, tc := range testcases {
 		tc := tc
 		t.Run(name, func(t *testing.T) {
-			resp := app.LoadSnapshotChunk(abci.RequestLoadSnapshotChunk{
+			resp := app.LoadSnapshotChunk(dabci.RequestLoadSnapshotChunk{
 				Height: tc.height,
 				Format: tc.format,
 				Chunk:  tc.chunk,
 			})
 			if tc.expectEmpty {
-				assert.Equal(t, abci.ResponseLoadSnapshotChunk{}, resp)
+				assert.Equal(t, dabci.ResponseLoadSnapshotChunk{}, resp)
 				return
 			}
 			assert.NotEmpty(t, resp.Chunk)
@@ -1850,49 +1852,49 @@ func TestOfferSnapshot_Errors(t *testing.T) {
 	hash := []byte{1, 2, 3}
 
 	testcases := map[string]struct {
-		snapshot *abci.Snapshot
-		result   abci.ResponseOfferSnapshot_Result
+		snapshot *dabci.Snapshot
+		result   dabci.ResponseOfferSnapshot_Result
 	}{
-		"nil snapshot": {nil, abci.ResponseOfferSnapshot_REJECT},
-		"invalid format": {&abci.Snapshot{
+		"nil snapshot": {nil, dabci.ResponseOfferSnapshot_REJECT},
+		"invalid format": {&dabci.Snapshot{
 			Height: 1, Format: 9, Chunks: 3, Hash: hash, Metadata: metadata,
-		}, abci.ResponseOfferSnapshot_REJECT_FORMAT},
-		"incorrect chunk count": {&abci.Snapshot{
+		}, dabci.ResponseOfferSnapshot_REJECT_FORMAT},
+		"incorrect chunk count": {&dabci.Snapshot{
 			Height: 1, Format: 1, Chunks: 2, Hash: hash, Metadata: metadata,
-		}, abci.ResponseOfferSnapshot_REJECT},
-		"no chunks": {&abci.Snapshot{
+		}, dabci.ResponseOfferSnapshot_REJECT},
+		"no chunks": {&dabci.Snapshot{
 			Height: 1, Format: 1, Chunks: 0, Hash: hash, Metadata: metadata,
-		}, abci.ResponseOfferSnapshot_REJECT},
-		"invalid metadata serialization": {&abci.Snapshot{
+		}, dabci.ResponseOfferSnapshot_REJECT},
+		"invalid metadata serialization": {&dabci.Snapshot{
 			Height: 1, Format: 1, Chunks: 0, Hash: hash, Metadata: []byte{3, 1, 4},
-		}, abci.ResponseOfferSnapshot_REJECT},
+		}, dabci.ResponseOfferSnapshot_REJECT},
 	}
 	for name, tc := range testcases {
 		tc := tc
 		t.Run(name, func(t *testing.T) {
-			resp := app.OfferSnapshot(abci.RequestOfferSnapshot{Snapshot: tc.snapshot})
+			resp := app.OfferSnapshot(dabci.RequestOfferSnapshot{Snapshot: tc.snapshot})
 			assert.Equal(t, tc.result, resp.Result)
 		})
 	}
 
 	// Offering a snapshot after one has been accepted should error
-	resp := app.OfferSnapshot(abci.RequestOfferSnapshot{Snapshot: &abci.Snapshot{
+	resp := app.OfferSnapshot(dabci.RequestOfferSnapshot{Snapshot: &dabci.Snapshot{
 		Height:   1,
 		Format:   snapshottypes.CurrentFormat,
 		Chunks:   3,
 		Hash:     []byte{1, 2, 3},
 		Metadata: metadata,
 	}})
-	require.Equal(t, abci.ResponseOfferSnapshot{Result: abci.ResponseOfferSnapshot_ACCEPT}, resp)
+	require.Equal(t, dabci.ResponseOfferSnapshot{Result: dabci.ResponseOfferSnapshot_ACCEPT}, resp)
 
-	resp = app.OfferSnapshot(abci.RequestOfferSnapshot{Snapshot: &abci.Snapshot{
+	resp = app.OfferSnapshot(dabci.RequestOfferSnapshot{Snapshot: &dabci.Snapshot{
 		Height:   2,
 		Format:   snapshottypes.CurrentFormat,
 		Chunks:   3,
 		Hash:     []byte{1, 2, 3},
 		Metadata: metadata,
 	}})
-	require.Equal(t, abci.ResponseOfferSnapshot{Result: abci.ResponseOfferSnapshot_ABORT}, resp)
+	require.Equal(t, dabci.ResponseOfferSnapshot{Result: dabci.ResponseOfferSnapshot_ABORT}, resp)
 }
 
 func TestApplySnapshotChunk(t *testing.T) {
@@ -1903,7 +1905,7 @@ func TestApplySnapshotChunk(t *testing.T) {
 	defer teardown()
 
 	// Fetch latest snapshot to restore
-	respList := source.ListSnapshots(abci.RequestListSnapshots{})
+	respList := source.ListSnapshots(dabci.RequestListSnapshots{})
 	require.NotEmpty(t, respList.Snapshots)
 	snapshot := respList.Snapshots[0]
 
@@ -1911,35 +1913,35 @@ func TestApplySnapshotChunk(t *testing.T) {
 	require.GreaterOrEqual(t, snapshot.Chunks, uint32(3), "Not enough snapshot chunks")
 
 	// Begin a snapshot restoration in the target
-	respOffer := target.OfferSnapshot(abci.RequestOfferSnapshot{Snapshot: snapshot})
-	require.Equal(t, abci.ResponseOfferSnapshot{Result: abci.ResponseOfferSnapshot_ACCEPT}, respOffer)
+	respOffer := target.OfferSnapshot(dabci.RequestOfferSnapshot{Snapshot: snapshot})
+	require.Equal(t, dabci.ResponseOfferSnapshot{Result: dabci.ResponseOfferSnapshot_ACCEPT}, respOffer)
 
 	// We should be able to pass an invalid chunk and get a verify failure, before reapplying it.
-	respApply := target.ApplySnapshotChunk(abci.RequestApplySnapshotChunk{
+	respApply := target.ApplySnapshotChunk(dabci.RequestApplySnapshotChunk{
 		Index:  0,
 		Chunk:  []byte{9},
 		Sender: "sender",
 	})
-	require.Equal(t, abci.ResponseApplySnapshotChunk{
-		Result:        abci.ResponseApplySnapshotChunk_RETRY,
+	require.Equal(t, dabci.ResponseApplySnapshotChunk{
+		Result:        dabci.ResponseApplySnapshotChunk_RETRY,
 		RefetchChunks: []uint32{0},
 		RejectSenders: []string{"sender"},
 	}, respApply)
 
 	// Fetch each chunk from the source and apply it to the target
 	for index := uint32(0); index < snapshot.Chunks; index++ {
-		respChunk := source.LoadSnapshotChunk(abci.RequestLoadSnapshotChunk{
+		respChunk := source.LoadSnapshotChunk(dabci.RequestLoadSnapshotChunk{
 			Height: snapshot.Height,
 			Format: snapshot.Format,
 			Chunk:  index,
 		})
 		require.NotNil(t, respChunk.Chunk)
-		respApply := target.ApplySnapshotChunk(abci.RequestApplySnapshotChunk{
+		respApply := target.ApplySnapshotChunk(dabci.RequestApplySnapshotChunk{
 			Index: index,
 			Chunk: respChunk.Chunk,
 		})
-		require.Equal(t, abci.ResponseApplySnapshotChunk{
-			Result: abci.ResponseApplySnapshotChunk_ACCEPT,
+		require.Equal(t, dabci.ResponseApplySnapshotChunk{
+			Result: dabci.ResponseApplySnapshotChunk_ACCEPT,
 		}, respApply)
 	}
 
@@ -1980,7 +1982,7 @@ func TestWithRouter(t *testing.T) {
 	}
 
 	app := setupBaseApp(t, anteOpt, routerOpt)
-	app.InitChain(abci.RequestInitChain{})
+	app.InitChain(dabci.RequestInitChain{})
 
 	// Create same codec used in txDecoder
 	codec := codec.NewLegacyAmino()
@@ -1990,8 +1992,8 @@ func TestWithRouter(t *testing.T) {
 	txPerHeight := 5
 
 	for blockN := 0; blockN < nBlocks; blockN++ {
-		header := tmproto.Header{Height: int64(blockN) + 1}
-		app.BeginBlock(abci.RequestBeginBlock{Header: header})
+		header := dtmproto.Header{Height: int64(blockN) + 1}
+		app.BeginBlock(dabci.RequestBeginBlock{Header: header})
 
 		for i := 0; i < txPerHeight; i++ {
 			counter := int64(blockN*txPerHeight + i)
@@ -2000,11 +2002,11 @@ func TestWithRouter(t *testing.T) {
 			txBytes, err := codec.Marshal(tx)
 			require.NoError(t, err)
 
-			res := app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
+			res := app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
 			require.True(t, res.IsOK(), fmt.Sprintf("%v", res))
 		}
 
-		app.EndBlock(abci.RequestEndBlock{})
+		app.EndBlock(dabci.RequestEndBlock{})
 		app.Commit()
 	}
 }
@@ -2014,28 +2016,28 @@ func TestBaseApp_EndBlock(t *testing.T) {
 	name := t.Name()
 	logger := defaultLogger()
 
-	cp := &abci.ConsensusParams{
-		Block: &abci.BlockParams{
+	cp := &dabci.ConsensusParams{
+		Block: &dabci.BlockParams{
 			MaxGas: 5000000,
 		},
 	}
 
 	app := NewBaseApp(name, logger, db, nil)
 	app.SetParamStore(&paramStore{db: dbm.NewMemDB()})
-	app.InitChain(abci.RequestInitChain{
+	app.InitChain(dabci.RequestInitChain{
 		ConsensusParams: cp,
 	})
 
-	app.SetEndBlocker(func(ctx sdk.Context, req abci.RequestEndBlock) abci.ResponseEndBlock {
-		return abci.ResponseEndBlock{
-			ValidatorUpdates: []abci.ValidatorUpdate{
+	app.SetEndBlocker(func(ctx sdk.Context, req dabci.RequestEndBlock) dabci.ResponseEndBlock {
+		return dabci.ResponseEndBlock{
+			ValidatorUpdates: []dabci.ValidatorUpdate{
 				{Power: 100},
 			},
 		}
 	})
 	app.Seal()
 
-	res := app.EndBlock(abci.RequestEndBlock{})
+	res := app.EndBlock(dabci.RequestEndBlock{})
 	require.Len(t, res.GetValidatorUpdates(), 1)
 	require.Equal(t, int64(100), res.GetValidatorUpdates()[0].Power)
 	require.Equal(t, cp.Block.MaxGas, res.ConsensusParamUpdates.Block.MaxGas)

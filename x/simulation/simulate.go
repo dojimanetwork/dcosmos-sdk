@@ -10,8 +10,9 @@ import (
 	"testing"
 	"time"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -34,7 +35,7 @@ func initChain(
 
 	appState, accounts, chainID, genesisTimestamp := appStateFn(r, accounts, config)
 	consensusParams := randomConsensusParams(r, appState, cdc)
-	req := abci.RequestInitChain{
+	req := dabci.RequestInitChain{
 		AppStateBytes:   appState,
 		ChainId:         chainID,
 		ConsensusParams: consensusParams,
@@ -119,7 +120,7 @@ func SimulateFromSeed(
 
 	var (
 		pastTimes     []time.Time
-		pastVoteInfos [][]abci.VoteInfo
+		pastVoteInfos [][]dabci.VoteInfo
 	)
 
 	request := RandomRequestBeginBlock(r, params,
@@ -183,7 +184,7 @@ func SimulateFromSeed(
 		operations := blockSimulator(r, app, ctx, accs, header)
 		opCount += operations + numQueuedOpsRan + numQueuedTimeOpsRan
 
-		res := app.EndBlock(abci.RequestEndBlock{})
+		res := app.EndBlock(dabci.RequestEndBlock{})
 		header.Height++
 		header.Time = header.Time.Add(
 			time.Duration(minTimePerBlock) * time.Second)

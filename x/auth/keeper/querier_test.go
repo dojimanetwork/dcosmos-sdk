@@ -8,7 +8,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 
 	"github.com/cosmos/cosmos-sdk/testutil/testdata"
 	keep "github.com/cosmos/cosmos-sdk/x/auth/keeper"
@@ -19,7 +20,7 @@ func TestQueryAccount(t *testing.T) {
 	app, ctx := createTestApp(true)
 	legacyQuerierCdc := codec.NewAminoCodec(app.LegacyAmino())
 
-	req := abci.RequestQuery{
+	req := dabci.RequestQuery{
 		Path: "",
 		Data: []byte{},
 	}
@@ -31,7 +32,7 @@ func TestQueryAccount(t *testing.T) {
 	require.Error(t, err)
 	require.Nil(t, bz)
 
-	req = abci.RequestQuery{
+	req = dabci.RequestQuery{
 		Path: fmt.Sprintf("custom/%s/%s", types.QuerierRoute, types.QueryAccount),
 		Data: []byte{},
 	}

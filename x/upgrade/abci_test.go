@@ -10,9 +10,10 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/libs/log"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	abci "github.com/dojimanetwork/dojimamint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
@@ -45,8 +46,8 @@ func setupTest(height int64, skip map[int64]bool) TestSuite {
 		panic(err)
 	}
 	app.InitChain(
-		abci.RequestInitChain{
-			Validators:    []abci.ValidatorUpdate{},
+		dabci.RequestInitChain{
+			Validators:    []dabci.ValidatorUpdate{},
 			AppStateBytes: stateBytes,
 		},
 	)

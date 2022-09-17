@@ -12,7 +12,9 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/pkg/errors"
-	rpcclient "github.com/tendermint/tendermint/rpc/client"
+	//rpcclient "github.com/tendermint/tendermint/rpc/client"
+	drpcclient "github.com/dojimanetwork/dojimamint/rpc/client"
+
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -24,7 +26,7 @@ import (
 // handling and queries.
 type Context struct {
 	FromAddress sdk.AccAddress
-	Client      rpcclient.Client
+	Client      drpcclient.Client
 	ChainID     string
 	// Deprecated: Codec codec will be changed to Codec: codec.Codec
 	JSONCodec         codec.JSONCodec
@@ -135,7 +137,7 @@ func (ctx Context) WithHeight(height int64) Context {
 
 // WithClient returns a copy of the context with an updated RPC client
 // instance.
-func (ctx Context) WithClient(client rpcclient.Client) Context {
+func (ctx Context) WithClient(client drpcclient.Client) Context {
 	ctx.Client = client
 	return ctx
 }

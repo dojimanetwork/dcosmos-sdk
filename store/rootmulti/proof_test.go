@@ -4,7 +4,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/store/iavl"
@@ -21,7 +22,7 @@ func TestVerifyIAVLStoreQueryProof(t *testing.T) {
 	cid := store.Commit()
 
 	// Get Proof
-	res := store.Query(abci.RequestQuery{
+	res := store.Query(dabci.RequestQuery{
 		Path:  "/key", // required path to get key/value+proof
 		Data:  []byte("MYKEY"),
 		Prove: true,
@@ -68,7 +69,7 @@ func TestVerifyMultiStoreQueryProof(t *testing.T) {
 	cid := store.Commit()
 
 	// Get Proof
-	res := store.Query(abci.RequestQuery{
+	res := store.Query(dabci.RequestQuery{
 		Path:  "/iavlStoreKey/key", // required path to get key/value+proof
 		Data:  []byte("MYKEY"),
 		Prove: true,
@@ -124,7 +125,7 @@ func TestVerifyMultiStoreQueryProofAbsence(t *testing.T) {
 	cid := store.Commit() // Commit with empty iavl store.
 
 	// Get Proof
-	res := store.Query(abci.RequestQuery{
+	res := store.Query(dabci.RequestQuery{
 		Path:  "/iavlStoreKey/key", // required path to get key/value+proof
 		Data:  []byte("MYABSENTKEY"),
 		Prove: true,

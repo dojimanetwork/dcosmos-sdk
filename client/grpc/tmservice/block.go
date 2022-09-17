@@ -3,13 +3,15 @@ package tmservice
 import (
 	"context"
 
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	//ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	dtypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 )
 
-func getBlock(ctx context.Context, clientCtx client.Context, height *int64) (*ctypes.ResultBlock, error) {
+func getBlock(ctx context.Context, clientCtx client.Context, height *int64) (*dtypes.ResultBlock, error) {
 	// get the node
 	node, err := clientCtx.GetNode()
 	if err != nil {
@@ -19,14 +21,14 @@ func getBlock(ctx context.Context, clientCtx client.Context, height *int64) (*ct
 	return node.Block(ctx, height)
 }
 
-func GetProtoBlock(ctx context.Context, clientCtx client.Context, height *int64) (tmproto.BlockID, *tmproto.Block, error) {
+func GetProtoBlock(ctx context.Context, clientCtx client.Context, height *int64) (dtmproto.BlockID, *dtmproto.Block, error) {
 	block, err := getBlock(ctx, clientCtx, height)
 	if err != nil {
-		return tmproto.BlockID{}, nil, err
+		return dtmproto.BlockID{}, nil, err
 	}
 	protoBlock, err := block.Block.ToProto()
 	if err != nil {
-		return tmproto.BlockID{}, nil, err
+		return dtmproto.BlockID{}, nil, err
 	}
 	protoBlockId := block.BlockID.ToProto()
 

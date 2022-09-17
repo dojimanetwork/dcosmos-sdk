@@ -6,9 +6,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/tendermint/tendermint/libs/bytes"
-	"github.com/tendermint/tendermint/p2p"
-	ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	"github.com/dojimanetwork/dojimamint/libs/bytes"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	//ctypes "github.com/tendermint/tendermint/rpc/core/types"
+	dtypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -30,7 +31,7 @@ type validatorInfo struct {
 // PubKey.
 type resultStatus struct {
 	NodeInfo      p2p.DefaultNodeInfo
-	SyncInfo      ctypes.SyncInfo
+	SyncInfo      dtypes.SyncInfo
 	ValidatorInfo validatorInfo
 }
 
@@ -80,10 +81,10 @@ func StatusCommand() *cobra.Command {
 	return cmd
 }
 
-func getNodeStatus(clientCtx client.Context) (*ctypes.ResultStatus, error) {
+func getNodeStatus(clientCtx client.Context) (*dtypes.ResultStatus, error) {
 	node, err := clientCtx.GetNode()
 	if err != nil {
-		return &ctypes.ResultStatus{}, err
+		return &dtypes.ResultStatus{}, err
 	}
 
 	return node.Status(context.Background())

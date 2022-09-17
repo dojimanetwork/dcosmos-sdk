@@ -3,7 +3,8 @@ package keeper_test
 import (
 	"fmt"
 
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	"github.com/cosmos/cosmos-sdk/testutil/testdata"
@@ -18,7 +19,7 @@ func (suite *IntegrationTestSuite) TestQuerier_QueryBalance() {
 	app, ctx := suite.app, suite.ctx
 	legacyAmino := app.LegacyAmino()
 	_, _, addr := testdata.KeyTestPubAddr()
-	req := abci.RequestQuery{
+	req := dabci.RequestQuery{
 		Path: fmt.Sprintf("custom/%s/%s", types.ModuleName, types.QueryBalance),
 		Data: []byte{},
 	}
@@ -55,7 +56,7 @@ func (suite *IntegrationTestSuite) TestQuerier_QueryAllBalances() {
 	app, ctx := suite.app, suite.ctx
 	legacyAmino := app.LegacyAmino()
 	_, _, addr := testdata.KeyTestPubAddr()
-	req := abci.RequestQuery{
+	req := dabci.RequestQuery{
 		Path: fmt.Sprintf("custom/%s/%s", types.ModuleName, types.QueryAllBalances),
 		Data: []byte{},
 	}
@@ -95,7 +96,7 @@ func (suite *IntegrationTestSuite) TestQuerier_QueryTotalSupply() {
 		Require().
 		NoError(app.BankKeeper.MintCoins(ctx, minttypes.ModuleName, expectedTotalSupply))
 
-	req := abci.RequestQuery{
+	req := dabci.RequestQuery{
 		Path: fmt.Sprintf("custom/%s/%s", types.ModuleName, types.QueryTotalSupply),
 		Data: []byte{},
 	}
@@ -128,7 +129,7 @@ func (suite *IntegrationTestSuite) TestQuerier_QueryTotalSupplyOf() {
 		Require().
 		NoError(app.BankKeeper.MintCoins(ctx, minttypes.ModuleName, expectedTotalSupply))
 
-	req := abci.RequestQuery{
+	req := dabci.RequestQuery{
 		Path: fmt.Sprintf("custom/%s/%s", types.ModuleName, types.QuerySupplyOf),
 		Data: []byte{},
 	}
@@ -152,7 +153,7 @@ func (suite *IntegrationTestSuite) TestQuerier_QueryTotalSupplyOf() {
 func (suite *IntegrationTestSuite) TestQuerierRouteNotFound() {
 	app, ctx := suite.app, suite.ctx
 	legacyAmino := app.LegacyAmino()
-	req := abci.RequestQuery{
+	req := dabci.RequestQuery{
 		Path: fmt.Sprintf("custom/%s/invalid", types.ModuleName),
 		Data: []byte{},
 	}

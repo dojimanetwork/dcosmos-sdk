@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"reflect"
 
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 )
 
 const (
@@ -41,9 +42,9 @@ func ABCIInfo(err error, debug bool) (codespace string, code uint32, log string)
 
 // ResponseCheckTx returns an ABCI ResponseCheckTx object with fields filled in
 // from the given error and gas values.
-func ResponseCheckTx(err error, gw, gu uint64, debug bool) abci.ResponseCheckTx {
+func ResponseCheckTx(err error, gw, gu uint64, debug bool) dabci.ResponseCheckTx {
 	space, code, log := ABCIInfo(err, debug)
-	return abci.ResponseCheckTx{
+	return dabci.ResponseCheckTx{
 		Codespace: space,
 		Code:      code,
 		Log:       log,
@@ -54,9 +55,9 @@ func ResponseCheckTx(err error, gw, gu uint64, debug bool) abci.ResponseCheckTx 
 
 // ResponseCheckTxWithEvents returns an ABCI ResponseCheckTx object with fields filled in
 // from the given error, gas values and events.
-func ResponseCheckTxWithEvents(err error, gw, gu uint64, events []abci.Event, debug bool) abci.ResponseCheckTx {
+func ResponseCheckTxWithEvents(err error, gw, gu uint64, events []dabci.Event, debug bool) dabci.ResponseCheckTx {
 	space, code, log := ABCIInfo(err, debug)
-	return abci.ResponseCheckTx{
+	return dabci.ResponseCheckTx{
 		Codespace: space,
 		Code:      code,
 		Log:       log,
@@ -68,9 +69,9 @@ func ResponseCheckTxWithEvents(err error, gw, gu uint64, events []abci.Event, de
 
 // ResponseDeliverTx returns an ABCI ResponseDeliverTx object with fields filled in
 // from the given error and gas values.
-func ResponseDeliverTx(err error, gw, gu uint64, debug bool) abci.ResponseDeliverTx {
+func ResponseDeliverTx(err error, gw, gu uint64, debug bool) dabci.ResponseDeliverTx {
 	space, code, log := ABCIInfo(err, debug)
-	return abci.ResponseDeliverTx{
+	return dabci.ResponseDeliverTx{
 		Codespace: space,
 		Code:      code,
 		Log:       log,
@@ -81,9 +82,9 @@ func ResponseDeliverTx(err error, gw, gu uint64, debug bool) abci.ResponseDelive
 
 // ResponseDeliverTxWithEvents returns an ABCI ResponseDeliverTx object with fields filled in
 // from the given error, gas values and events.
-func ResponseDeliverTxWithEvents(err error, gw, gu uint64, events []abci.Event, debug bool) abci.ResponseDeliverTx {
+func ResponseDeliverTxWithEvents(err error, gw, gu uint64, events []dabci.Event, debug bool) dabci.ResponseDeliverTx {
 	space, code, log := ABCIInfo(err, debug)
-	return abci.ResponseDeliverTx{
+	return dabci.ResponseDeliverTx{
 		Codespace: space,
 		Code:      code,
 		Log:       log,
@@ -95,9 +96,9 @@ func ResponseDeliverTxWithEvents(err error, gw, gu uint64, events []abci.Event, 
 
 // QueryResult returns a ResponseQuery from an error. It will try to parse ABCI
 // info from the error.
-func QueryResult(err error) abci.ResponseQuery {
+func QueryResult(err error) dabci.ResponseQuery {
 	space, code, log := ABCIInfo(err, false)
-	return abci.ResponseQuery{
+	return dabci.ResponseQuery{
 		Codespace: space,
 		Code:      code,
 		Log:       log,
@@ -107,9 +108,9 @@ func QueryResult(err error) abci.ResponseQuery {
 // QueryResultWithDebug returns a ResponseQuery from an error. It will try to parse ABCI
 // info from the error. It will use debugErrEncoder if debug parameter is true.
 // Starting from v0.46, this function will be removed, and be replaced by `QueryResult`.
-func QueryResultWithDebug(err error, debug bool) abci.ResponseQuery {
+func QueryResultWithDebug(err error, debug bool) dabci.ResponseQuery {
 	space, code, log := ABCIInfo(err, debug)
-	return abci.ResponseQuery{
+	return dabci.ResponseQuery{
 		Codespace: space,
 		Code:      code,
 		Log:       log,

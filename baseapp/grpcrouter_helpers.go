@@ -5,7 +5,8 @@ import (
 	"fmt"
 
 	gogogrpc "github.com/gogo/protobuf/grpc"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"google.golang.org/grpc"
 
 	"github.com/cosmos/cosmos-sdk/codec/types"
@@ -45,7 +46,7 @@ func (q *QueryServiceTestHelper) Invoke(_ gocontext.Context, method string, args
 		return err
 	}
 
-	res, err := querier(q.Ctx, abci.RequestQuery{Data: reqBz})
+	res, err := querier(q.Ctx, dabci.RequestQuery{Data: reqBz})
 	if err != nil {
 		return err
 	}

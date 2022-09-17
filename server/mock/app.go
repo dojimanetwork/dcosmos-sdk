@@ -8,8 +8,9 @@ import (
 
 	"github.com/tendermint/tendermint/types"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/libs/log"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/libs/log"
 
 	bam "github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -19,7 +20,7 @@ import (
 // NewApp creates a simple mock kvstore app for testing. It should work
 // similar to a real app. Make sure rootDir is empty before running the test,
 // in order to guarantee consistent results
-func NewApp(rootDir string, logger log.Logger) (abci.Application, error) {
+func NewApp(rootDir string, logger log.Logger) (dabci.Application, error) {
 	db, err := sdk.NewLevelDB("mock", filepath.Join(rootDir, "data"))
 	if err != nil {
 		return nil, err
@@ -82,8 +83,8 @@ type GenesisJSON struct {
 
 // InitChainer returns a function that can initialize the chain
 // with key/value pairs
-func InitChainer(key sdk.StoreKey) func(sdk.Context, abci.RequestInitChain) abci.ResponseInitChain {
-	return func(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
+func InitChainer(key sdk.StoreKey) func(sdk.Context, dabci.RequestInitChain) dabci.ResponseInitChain {
+	return func(ctx sdk.Context, req dabci.RequestInitChain) dabci.ResponseInitChain {
 		stateJSON := req.AppStateBytes
 
 		genesisState := new(GenesisJSON)
@@ -97,7 +98,7 @@ func InitChainer(key sdk.StoreKey) func(sdk.Context, abci.RequestInitChain) abci
 			store := ctx.KVStore(key)
 			store.Set([]byte(val.Key), []byte(val.Value))
 		}
-		return abci.ResponseInitChain{}
+		return dabci.ResponseInitChain{}
 	}
 }
 

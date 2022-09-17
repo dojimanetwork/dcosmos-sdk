@@ -7,7 +7,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -434,7 +435,7 @@ func TestMultiStoreQuery(t *testing.T) {
 	require.Nil(t, err)
 
 	// Test bad path.
-	query := abci.RequestQuery{Path: "/key", Data: k, Height: ver}
+	query := dabci.RequestQuery{Path: "/key", Data: k, Height: ver}
 	qres := multi.Query(query)
 	require.EqualValues(t, sdkerrors.ErrUnknownRequest.ABCICode(), qres.Code)
 	require.EqualValues(t, sdkerrors.ErrUnknownRequest.Codespace(), qres.Codespace)

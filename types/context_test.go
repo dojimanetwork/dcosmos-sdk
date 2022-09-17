@@ -7,8 +7,10 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/suite"
-	abci "github.com/tendermint/tendermint/abci/types"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	"github.com/cosmos/cosmos-sdk/tests/mocks"
@@ -82,13 +84,13 @@ func (s *contextTestSuite) TestContextWithCustom() {
 	ctrl := gomock.NewController(s.T())
 	s.T().Cleanup(ctrl.Finish)
 
-	header := tmproto.Header{}
+	header := dtmproto.Header{}
 	height := int64(1)
 	chainid := "chainid"
 	ischeck := true
 	txbytes := []byte("txbytes")
 	logger := mocks.NewMockLogger(ctrl)
-	voteinfos := []abci.VoteInfo{{}}
+	voteinfos := []dabci.VoteInfo{{}}
 	meter := types.NewGasMeter(10000)
 	blockGasMeter := types.NewGasMeter(20000)
 	minGasPrices := types.DecCoins{types.NewInt64DecCoin("feetoken", 1)}
@@ -127,7 +129,7 @@ func (s *contextTestSuite) TestContextWithCustom() {
 
 	// test consensus param
 	s.Require().Nil(ctx.ConsensusParams())
-	cp := &abci.ConsensusParams{}
+	cp := &dabci.ConsensusParams{}
 	s.Require().Equal(cp, ctx.WithConsensusParams(cp).ConsensusParams())
 
 	// test inner context
@@ -144,7 +146,7 @@ func (s *contextTestSuite) TestContextHeader() {
 	addr := secp256k1.GenPrivKey().PubKey().Address()
 	proposer := types.ConsAddress(addr)
 
-	ctx = types.NewContext(nil, tmproto.Header{}, false, nil)
+	ctx = types.NewContext(nil, dtmproto.Header{}, false, nil)
 
 	ctx = ctx.
 		WithBlockHeight(height).
@@ -158,35 +160,35 @@ func (s *contextTestSuite) TestContextHeader() {
 
 func (s *contextTestSuite) TestContextHeaderClone() {
 	cases := map[string]struct {
-		h tmproto.Header
+		h dtmproto.Header
 	}{
 		"empty": {
-			h: tmproto.Header{},
+			h: dtmproto.Header{},
 		},
 		"height": {
-			h: tmproto.Header{
+			h: dtmproto.Header{
 				Height: 77,
 			},
 		},
 		"time": {
-			h: tmproto.Header{
+			h: dtmproto.Header{
 				Time: time.Unix(12345677, 12345),
 			},
 		},
 		"zero time": {
-			h: tmproto.Header{
+			h: dtmproto.Header{
 				Time: time.Unix(0, 0),
 			},
 		},
 		"many items": {
-			h: tmproto.Header{
+			h: dtmproto.Header{
 				Height:  823,
 				Time:    time.Unix(9999999999, 0),
 				ChainID: "silly-demo",
 			},
 		},
 		"many items with hash": {
-			h: tmproto.Header{
+			h: dtmproto.Header{
 				Height:        823,
 				Time:          time.Unix(9999999999, 0),
 				ChainID:       "silly-demo",
@@ -213,7 +215,7 @@ func (s *contextTestSuite) TestContextHeaderClone() {
 }
 
 func (s *contextTestSuite) TestUnwrapSDKContext() {
-	sdkCtx := types.NewContext(nil, tmproto.Header{}, false, nil)
+	sdkCtx := types.NewContext(nil, dtmproto.Header{}, false, nil)
 	ctx := types.WrapSDKContext(sdkCtx)
 	sdkCtx2 := types.UnwrapSDKContext(ctx)
 	s.Require().Equal(sdkCtx, sdkCtx2)

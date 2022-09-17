@@ -1,8 +1,8 @@
 package simapp
 
 import (
-	abci "github.com/tendermint/tendermint/abci/types"
-
+	//abci "github.com/tendermint/tendermint/abci/types"
+    dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/server/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -20,13 +20,13 @@ type App interface {
 	LegacyAmino() *codec.LegacyAmino
 
 	// Application updates every begin block.
-	BeginBlocker(ctx sdk.Context, req abci.RequestBeginBlock) abci.ResponseBeginBlock
+	BeginBlocker(ctx sdk.Context, req dabci.RequestBeginBlock) dabci.ResponseBeginBlock
 
 	// Application updates every end block.
-	EndBlocker(ctx sdk.Context, req abci.RequestEndBlock) abci.ResponseEndBlock
+	EndBlocker(ctx sdk.Context, req dabci.RequestEndBlock) dabci.ResponseEndBlock
 
 	// Application update at chain (i.e app) initialization.
-	InitChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain
+	InitChainer(ctx sdk.Context, req dabci.RequestInitChain) dabci.ResponseInitChain
 
 	// Loads the app at a given height.
 	LoadHeight(height int64) error

@@ -36,7 +36,8 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/spf13/cobra"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -150,7 +151,7 @@ func (bm BasicManager) AddQueryCommands(rootQueryCmd *cobra.Command) {
 type AppModuleGenesis interface {
 	AppModuleBasic
 
-	InitGenesis(sdk.Context, codec.JSONCodec, json.RawMessage) []abci.ValidatorUpdate
+	InitGenesis(sdk.Context, codec.JSONCodec, json.RawMessage) []dabci.ValidatorUpdate
 	ExportGenesis(sdk.Context, codec.JSONCodec) json.RawMessage
 }
 
@@ -180,8 +181,8 @@ type AppModule interface {
 	ConsensusVersion() uint64
 
 	// ABCI
-	BeginBlock(sdk.Context, abci.RequestBeginBlock)
-	EndBlock(sdk.Context, abci.RequestEndBlock) []abci.ValidatorUpdate
+	BeginBlock(sdk.Context, dabci.RequestBeginBlock)
+	EndBlock(sdk.Context, dabci.RequestEndBlock) []dabci.ValidatorUpdate
 }
 
 // GenesisOnlyAppModule is an AppModule that only has import/export functionality
@@ -215,11 +216,11 @@ func (gam GenesisOnlyAppModule) RegisterServices(Configurator) {}
 func (gam GenesisOnlyAppModule) ConsensusVersion() uint64 { return 1 }
 
 // BeginBlock returns an empty module begin-block
-func (gam GenesisOnlyAppModule) BeginBlock(ctx sdk.Context, req abci.RequestBeginBlock) {}
+func (gam GenesisOnlyAppModule) BeginBlock(ctx sdk.Context, req dabci.RequestBeginBlock) {}
 
 // EndBlock returns an empty module end-block
-func (GenesisOnlyAppModule) EndBlock(_ sdk.Context, _ abci.RequestEndBlock) []abci.ValidatorUpdate {
-	return []abci.ValidatorUpdate{}
+func (GenesisOnlyAppModule) EndBlock(_ sdk.Context, _ dabci.RequestEndBlock) []dabci.ValidatorUpdate {
+	return []dabci.ValidatorUpdate{}
 }
 
 // Manager defines a module manager that provides the high level utility for managing and executing
@@ -310,8 +311,8 @@ func (m *Manager) RegisterServices(cfg Configurator) {
 }
 
 // InitGenesis performs init genesis functionality for modules
-func (m *Manager) InitGenesis(ctx sdk.Context, cdc codec.JSONCodec, genesisData map[string]json.RawMessage) abci.ResponseInitChain {
-	var validatorUpdates []abci.ValidatorUpdate
+func (m *Manager) InitGenesis(ctx sdk.Context, cdc codec.JSONCodec, genesisData map[string]json.RawMessage) dabci.ResponseInitChain {
+	var validatorUpdates []dabci.ValidatorUpdate
 	for _, moduleName := range m.OrderInitGenesis {
 		if genesisData[moduleName] == nil {
 			continue
@@ -329,7 +330,7 @@ func (m *Manager) InitGenesis(ctx sdk.Context, cdc codec.JSONCodec, genesisData 
 		}
 	}
 
-	return abci.ResponseInitChain{
+	return dabci.ResponseInitChain{
 		Validators: validatorUpdates,
 	}
 }
@@ -472,14 +473,14 @@ func (m Manager) RunMigrations(ctx sdk.Context, cfg Configurator, fromVM Version
 // BeginBlock performs begin block functionality for all modules. It creates a
 // child context with an event manager to aggregate events emitted from all
 // modules.
-func (m *Manager) BeginBlock(ctx sdk.Context, req abci.RequestBeginBlock) abci.ResponseBeginBlock {
+func (m *Manager) BeginBlock(ctx sdk.Context, req dabci.RequestBeginBlock) dabci.ResponseBeginBlock {
 	ctx = ctx.WithEventManager(sdk.NewEventManager())
 
 	for _, moduleName := range m.OrderBeginBlockers {
 		m.Modules[moduleName].BeginBlock(ctx, req)
 	}
 
-	return abci.ResponseBeginBlock{
+	return dabci.ResponseBeginBlock{
 		Events: ctx.EventManager().ABCIEvents(),
 	}
 }
@@ -487,9 +488,9 @@ func (m *Manager) BeginBlock(ctx sdk.Context, req abci.RequestBeginBlock) abci.R
 // EndBlock performs end block functionality for all modules. It creates a
 // child context with an event manager to aggregate events emitted from all
 // modules.
-func (m *Manager) EndBlock(ctx sdk.Context, req abci.RequestEndBlock) abci.ResponseEndBlock {
+func (m *Manager) EndBlock(ctx sdk.Context, req dabci.RequestEndBlock) dabci.ResponseEndBlock {
 	ctx = ctx.WithEventManager(sdk.NewEventManager())
-	validatorUpdates := []abci.ValidatorUpdate{}
+	validatorUpdates := []dabci.ValidatorUpdate{}
 
 	for _, moduleName := range m.OrderEndBlockers {
 		moduleValUpdates := m.Modules[moduleName].EndBlock(ctx, req)
@@ -505,7 +506,7 @@ func (m *Manager) EndBlock(ctx sdk.Context, req abci.RequestEndBlock) abci.Respo
 		}
 	}
 
-	return abci.ResponseEndBlock{
+	return dabci.ResponseEndBlock{
 		ValidatorUpdates: validatorUpdates,
 		Events:           ctx.EventManager().ABCIEvents(),
 	}

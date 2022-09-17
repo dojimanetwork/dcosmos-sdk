@@ -7,12 +7,12 @@ import (
 	"time"
 
 	"github.com/cosmos/go-bip39"
-	cfg "github.com/tendermint/tendermint/config"
-	tmed25519 "github.com/tendermint/tendermint/crypto/ed25519"
-	tmos "github.com/tendermint/tendermint/libs/os"
-	"github.com/tendermint/tendermint/p2p"
-	"github.com/tendermint/tendermint/privval"
-	tmtypes "github.com/tendermint/tendermint/types"
+	cfg "github.com/dojimanetwork/dojimamint/config"
+	tmed25519 "github.com/dojimanetwork/dojimamint/crypto/ed25519"
+	tmos "github.com/dojimanetwork/dojimamint/libs/os"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	"github.com/dojimanetwork/dojimamint/privval"
+	tmtypes "github.com/dojimanetwork/dojimamint/types"
 
 	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"

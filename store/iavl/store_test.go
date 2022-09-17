@@ -9,7 +9,8 @@ import (
 
 	"github.com/cosmos/iavl"
 	"github.com/stretchr/testify/require"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/store/types"
@@ -129,7 +130,7 @@ func TestGetImmutable(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, newStore.Get([]byte("hello")), []byte("adios"))
 
-	res := newStore.Query(abci.RequestQuery{Data: []byte("hello"), Height: cID.Version, Path: "/key", Prove: true})
+	res := newStore.Query(dabci.RequestQuery{Data: []byte("hello"), Height: cID.Version, Path: "/key", Prove: true})
 	require.Equal(t, res.Value, []byte("adios"))
 	require.NotNil(t, res.ProofOps)
 
@@ -492,8 +493,8 @@ func TestIAVLStoreQuery(t *testing.T) {
 
 	cid := iavlStore.Commit()
 	ver := cid.Version
-	query := abci.RequestQuery{Path: "/key", Data: k1, Height: ver}
-	querySub := abci.RequestQuery{Path: "/subspace", Data: ksub, Height: ver}
+	query := dabci.RequestQuery{Path: "/key", Data: k1, Height: ver}
+	querySub := dabci.RequestQuery{Path: "/subspace", Data: ksub, Height: ver}
 
 	// query subspace before anything set
 	qres := iavlStore.Query(querySub)
@@ -540,7 +541,7 @@ func TestIAVLStoreQuery(t *testing.T) {
 	qres = iavlStore.Query(query)
 	require.Equal(t, uint32(0), qres.Code)
 	require.Equal(t, v3, qres.Value)
-	query2 := abci.RequestQuery{Path: "/key", Data: k2, Height: cid.Version}
+	query2 := dabci.RequestQuery{Path: "/key", Data: k2, Height: cid.Version}
 
 	qres = iavlStore.Query(query2)
 	require.Equal(t, uint32(0), qres.Code)
@@ -551,7 +552,7 @@ func TestIAVLStoreQuery(t *testing.T) {
 	require.Equal(t, valExpSub2, qres.Value)
 
 	// default (height 0) will show latest -1
-	query0 := abci.RequestQuery{Path: "/key", Data: k1}
+	query0 := dabci.RequestQuery{Path: "/key", Data: k1}
 	qres = iavlStore.Query(query0)
 	require.Equal(t, uint32(0), qres.Code)
 	require.Equal(t, v1, qres.Value)

@@ -1,7 +1,8 @@
 package rootmulti
 
 import (
-	"github.com/tendermint/tendermint/crypto/merkle"
+	//"github.com/tendermint/tendermint/crypto/merkle"
+	dmerkle "github.com/dojimanetwork/dojimamint/crypto/merkle"
 
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 )
@@ -19,8 +20,8 @@ func RequireProof(subpath string) bool {
 
 // XXX: This should be managed by the rootMultiStore which may want to register
 // more proof ops?
-func DefaultProofRuntime() (prt *merkle.ProofRuntime) {
-	prt = merkle.NewProofRuntime()
+func DefaultProofRuntime() (prt *dmerkle.ProofRuntime) {
+	prt = dmerkle.NewProofRuntime()
 	prt.RegisterOpDecoder(storetypes.ProofOpIAVLCommitment, storetypes.CommitmentOpDecoder)
 	prt.RegisterOpDecoder(storetypes.ProofOpSimpleMerkleCommitment, storetypes.CommitmentOpDecoder)
 	return

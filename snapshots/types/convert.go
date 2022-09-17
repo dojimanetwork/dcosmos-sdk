@@ -2,13 +2,14 @@ package types
 
 import (
 	proto "github.com/gogo/protobuf/proto"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 // Converts an ABCI snapshot to a snapshot. Mainly to decode the SDK metadata.
-func SnapshotFromABCI(in *abci.Snapshot) (Snapshot, error) {
+func SnapshotFromABCI(in *dabci.Snapshot) (Snapshot, error) {
 	snapshot := Snapshot{
 		Height: in.Height,
 		Format: in.Format,
@@ -23,8 +24,8 @@ func SnapshotFromABCI(in *abci.Snapshot) (Snapshot, error) {
 }
 
 // Converts a Snapshot to its ABCI representation. Mainly to encode the SDK metadata.
-func (s Snapshot) ToABCI() (abci.Snapshot, error) {
-	out := abci.Snapshot{
+func (s Snapshot) ToABCI() (dabci.Snapshot, error) {
+	out := dabci.Snapshot{
 		Height: s.Height,
 		Format: s.Format,
 		Chunks: s.Chunks,
@@ -33,7 +34,7 @@ func (s Snapshot) ToABCI() (abci.Snapshot, error) {
 	var err error
 	out.Metadata, err = proto.Marshal(&s.Metadata)
 	if err != nil {
-		return abci.Snapshot{}, sdkerrors.Wrap(err, "failed to marshal snapshot metadata")
+		return dabci.Snapshot{}, sdkerrors.Wrap(err, "failed to marshal snapshot metadata")
 	}
 	return out, nil
 }

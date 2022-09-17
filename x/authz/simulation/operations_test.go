@@ -7,9 +7,10 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-
+	//abci "github.com/tendermint/tendermint/abci/types"
+	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+    dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
@@ -29,7 +30,7 @@ func (suite *SimTestSuite) SetupTest() {
 	checkTx := false
 	app := simapp.Setup(checkTx)
 	suite.app = app
-	suite.ctx = app.BaseApp.NewContext(checkTx, tmproto.Header{})
+	suite.ctx = app.BaseApp.NewContext(checkTx, dtmproto.Header{})
 }
 
 func (suite *SimTestSuite) TestWeightedOperations() {
@@ -90,8 +91,8 @@ func (suite *SimTestSuite) TestSimulateGrant() {
 	ctx := suite.ctx.WithBlockTime(blockTime)
 
 	// begin a new block
-	suite.app.BeginBlock(abci.RequestBeginBlock{
-		Header: tmproto.Header{
+	suite.app.BeginBlock(dabci.RequestBeginBlock{
+		Header: dtmproto.Header{
 			Height:  suite.app.LastBlockHeight() + 1,
 			AppHash: suite.app.LastCommitID().Hash,
 		},
@@ -121,8 +122,8 @@ func (suite *SimTestSuite) TestSimulateRevoke() {
 	accounts := suite.getTestingAccounts(r, 3)
 
 	// begin a new block
-	suite.app.BeginBlock(abci.RequestBeginBlock{
-		Header: tmproto.Header{
+	suite.app.BeginBlock(dabci.RequestBeginBlock{
+		Header: dtmproto.Header{
 			Height:  suite.app.LastBlockHeight() + 1,
 			AppHash: suite.app.LastCommitID().Hash,
 		}})
@@ -160,7 +161,7 @@ func (suite *SimTestSuite) TestSimulateExec() {
 	accounts := suite.getTestingAccounts(r, 3)
 
 	// begin a new block
-	suite.app.BeginBlock(abci.RequestBeginBlock{Header: tmproto.Header{Height: suite.app.LastBlockHeight() + 1, AppHash: suite.app.LastCommitID().Hash}})
+	suite.app.BeginBlock(dabci.RequestBeginBlock{Header: dtmproto.Header{Height: suite.app.LastBlockHeight() + 1, AppHash: suite.app.LastCommitID().Hash}})
 
 	initAmt := suite.app.StakingKeeper.TokensFromConsensusPower(suite.ctx, 200000)
 	initCoins := sdk.NewCoins(sdk.NewCoin("stake", initAmt))

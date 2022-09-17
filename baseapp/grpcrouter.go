@@ -6,7 +6,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/grpc/reflection"
 
 	gogogrpc "github.com/gogo/protobuf/grpc"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/encoding"
 	"google.golang.org/grpc/encoding/proto"
@@ -41,7 +42,7 @@ func NewGRPCQueryRouter() *GRPCQueryRouter {
 
 // GRPCQueryHandler defines a function type which handles ABCI Query requests
 // using gRPC
-type GRPCQueryHandler = func(ctx sdk.Context, req abci.RequestQuery) (abci.ResponseQuery, error)
+type GRPCQueryHandler = func(ctx sdk.Context, req dabci.RequestQuery) (dabci.ResponseQuery, error)
 
 // Route returns the GRPCQueryHandler for a given query route path or nil
 // if not found
@@ -79,7 +80,7 @@ func (qrt *GRPCQueryRouter) RegisterService(sd *grpc.ServiceDesc, handler interf
 			)
 		}
 
-		qrt.routes[fqName] = func(ctx sdk.Context, req abci.RequestQuery) (abci.ResponseQuery, error) {
+		qrt.routes[fqName] = func(ctx sdk.Context, req dabci.RequestQuery) (dabci.ResponseQuery, error) {
 			// call the method handler from the service description with the handler object,
 			// a wrapped sdk.Context with proto-unmarshaled data from the ABCI request data
 			res, err := methodHandler(handler, sdk.WrapSDKContext(ctx), func(i interface{}) error {
@@ -93,17 +94,17 @@ func (qrt *GRPCQueryRouter) RegisterService(sd *grpc.ServiceDesc, handler interf
 				return nil
 			}, nil)
 			if err != nil {
-				return abci.ResponseQuery{}, err
+				return dabci.ResponseQuery{}, err
 			}
 
 			// proto marshal the result bytes
 			resBytes, err := protoCodec.Marshal(res)
 			if err != nil {
-				return abci.ResponseQuery{}, err
+				return dabci.ResponseQuery{}, err
 			}
 
 			// return the result bytes as the response value
-			return abci.ResponseQuery{
+			return dabci.ResponseQuery{
 				Height: req.Height,
 				Value:  resBytes,
 			}, nil

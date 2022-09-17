@@ -7,7 +7,8 @@ import (
 	"strconv"
 
 	gogogrpc "github.com/gogo/protobuf/grpc"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/encoding"
 	"google.golang.org/grpc/encoding/proto"
@@ -72,7 +73,7 @@ func (ctx Context) Invoke(grpcCtx gocontext.Context, method string, req, reply i
 		ctx = ctx.WithHeight(height)
 	}
 
-	abciReq := abci.RequestQuery{
+	abciReq := dabci.RequestQuery{
 		Path:   method,
 		Data:   reqBz,
 		Height: ctx.Height,

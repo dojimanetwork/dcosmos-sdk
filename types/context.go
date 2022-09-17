@@ -6,9 +6,11 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	tmbytes "github.com/tendermint/tendermint/libs/bytes"
-	"github.com/tendermint/tendermint/libs/log"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 
 	"github.com/cosmos/cosmos-sdk/store/gaskv"
 	stypes "github.com/cosmos/cosmos-sdk/store/types"
@@ -25,18 +27,18 @@ and standard additions here would be better just to add to the Context struct
 type Context struct {
 	ctx           context.Context
 	ms            MultiStore
-	header        tmproto.Header
+	header        dtmproto.Header
 	headerHash    tmbytes.HexBytes
 	chainID       string
 	txBytes       []byte
 	logger        log.Logger
-	voteInfo      []abci.VoteInfo
+	voteInfo      []dabci.VoteInfo
 	gasMeter      GasMeter
 	blockGasMeter GasMeter
 	checkTx       bool
 	recheckTx     bool // if recheckTx == true, then checkTx must also be true
 	minGasPrice   DecCoins
-	consParams    *abci.ConsensusParams
+	consParams    *dabci.ConsensusParams
 	eventManager  *EventManager
 }
 
@@ -51,7 +53,7 @@ func (c Context) BlockTime() time.Time        { return c.header.Time }
 func (c Context) ChainID() string             { return c.chainID }
 func (c Context) TxBytes() []byte             { return c.txBytes }
 func (c Context) Logger() log.Logger          { return c.logger }
-func (c Context) VoteInfos() []abci.VoteInfo  { return c.voteInfo }
+func (c Context) VoteInfos() []dabci.VoteInfo  { return c.voteInfo }
 func (c Context) GasMeter() GasMeter          { return c.gasMeter }
 func (c Context) BlockGasMeter() GasMeter     { return c.blockGasMeter }
 func (c Context) IsCheckTx() bool             { return c.checkTx }
@@ -60,8 +62,8 @@ func (c Context) MinGasPrices() DecCoins      { return c.minGasPrice }
 func (c Context) EventManager() *EventManager { return c.eventManager }
 
 // clone the header before returning
-func (c Context) BlockHeader() tmproto.Header {
-	var msg = proto.Clone(&c.header).(*tmproto.Header)
+func (c Context) BlockHeader() dtmproto.Header {
+	var msg = proto.Clone(&c.header).(*dtmproto.Header)
 	return *msg
 }
 
@@ -77,7 +79,7 @@ func (c Context) ConsensusParams() *abci.ConsensusParams {
 }
 
 // create a new context
-func NewContext(ms MultiStore, header tmproto.Header, isCheckTx bool, logger log.Logger) Context {
+func NewContext(ms MultiStore, header dtmproto.Header, isCheckTx bool, logger log.Logger) Context {
 	// https://github.com/gogo/protobuf/issues/519
 	header.Time = header.Time.UTC()
 	return Context{
@@ -106,7 +108,7 @@ func (c Context) WithMultiStore(ms MultiStore) Context {
 }
 
 // WithBlockHeader returns a Context with an updated tendermint block header in UTC time.
-func (c Context) WithBlockHeader(header tmproto.Header) Context {
+func (c Context) WithBlockHeader(header dtmproto.Header) Context {
 	// https://github.com/gogo/protobuf/issues/519
 	header.Time = header.Time.UTC()
 	c.header = header
@@ -163,7 +165,7 @@ func (c Context) WithLogger(logger log.Logger) Context {
 }
 
 // WithVoteInfos returns a Context with an updated consensus VoteInfo.
-func (c Context) WithVoteInfos(voteInfo []abci.VoteInfo) Context {
+func (c Context) WithVoteInfos(voteInfo []dabci.VoteInfo) Context {
 	c.voteInfo = voteInfo
 	return c
 }
@@ -203,7 +205,7 @@ func (c Context) WithMinGasPrices(gasPrices DecCoins) Context {
 }
 
 // WithConsensusParams returns a Context with an updated consensus params
-func (c Context) WithConsensusParams(params *abci.ConsensusParams) Context {
+func (c Context) WithConsensusParams(params *dabci.ConsensusParams) Context {
 	c.consParams = params
 	return c
 }

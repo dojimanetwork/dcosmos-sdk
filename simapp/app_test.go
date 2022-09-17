@@ -7,9 +7,11 @@ import (
 
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
-	abci "github.com/tendermint/tendermint/abci/types"
-	"github.com/tendermint/tendermint/libs/log"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+	//abci "github.com/dojimanetwork/dojimamint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
@@ -54,8 +56,8 @@ func TestSimAppExportAndBlockedAddrs(t *testing.T) {
 
 	// Initialize the chain
 	app.InitChain(
-		abci.RequestInitChain{
-			Validators:    []abci.ValidatorUpdate{},
+		dabci.RequestInitChain{
+			Validators:    []dabci.ValidatorUpdate{},
 			AppStateBytes: stateBytes,
 		},
 	)
@@ -99,7 +101,7 @@ func TestRunMigrations(t *testing.T) {
 	}
 
 	// Initialize the chain
-	app.InitChain(abci.RequestInitChain{})
+	app.InitChain(dabci.RequestInitChain{})
 	app.Commit()
 
 	testCases := []struct {
@@ -164,7 +166,7 @@ func TestRunMigrations(t *testing.T) {
 			// version for bank as 1, and for all other modules, we put as
 			// their latest ConsensusVersion.
 			_, err = app.mm.RunMigrations(
-				app.NewContext(true, tmproto.Header{Height: app.LastBlockHeight()}), app.configurator,
+				app.NewContext(true, dtmproto.Header{Height: app.LastBlockHeight()}), app.configurator,
 				module.VersionMap{
 					"bank":         1,
 					"auth":         auth.AppModule{}.ConsensusVersion(),
@@ -200,7 +202,7 @@ func TestInitGenesisOnMigration(t *testing.T) {
 	encCfg := MakeTestEncodingConfig()
 	logger := log.NewTMLogger(log.NewSyncWriter(os.Stdout))
 	app := NewSimApp(logger, db, nil, true, map[int64]bool{}, DefaultNodeHome, 0, encCfg, EmptyAppOptions{})
-	ctx := app.NewContext(true, tmproto.Header{Height: app.LastBlockHeight()})
+	ctx := app.NewContext(true, dtmproto.Header{Height: app.LastBlockHeight()})
 
 	// Create a mock module. This module will serve as the new module we're
 	// adding during a migration.
@@ -249,8 +251,8 @@ func TestUpgradeStateOnGenesis(t *testing.T) {
 
 	// Initialize the chain
 	app.InitChain(
-		abci.RequestInitChain{
-			Validators:    []abci.ValidatorUpdate{},
+		dabci.RequestInitChain{
+			Validators:    []dabci.ValidatorUpdate{},
 			AppStateBytes: stateBytes,
 		},
 	)

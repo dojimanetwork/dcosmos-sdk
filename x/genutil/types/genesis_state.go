@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	tmos "github.com/tendermint/tendermint/libs/os"
-	tmtypes "github.com/tendermint/tendermint/types"
+	tmtypes "github.com/dojimanetwork/dojimamint/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"

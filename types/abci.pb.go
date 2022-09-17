@@ -8,7 +8,8 @@ import (
 	types "github.com/cosmos/cosmos-sdk/codec/types"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
-	types1 "github.com/tendermint/tendermint/abci/types"
+	//types1 "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	io "io"
 	math "math"
 	math_bits "math/bits"
@@ -63,7 +64,7 @@ type TxResponse struct {
 	// additional metadata, emitted only by processing the messages.
 	//
 	// Since: cosmos-sdk 0.42.11, 0.44.5, 0.45
-	Events []types1.Event `protobuf:"bytes,13,rep,name=events,proto3" json:"events"`
+	Events []dabci.Event `protobuf:"bytes,13,rep,name=events,proto3" json:"events"`
 }
 
 func (m *TxResponse) Reset()      { *m = TxResponse{} }
@@ -329,7 +330,7 @@ type Result struct {
 	Log string `protobuf:"bytes,2,opt,name=log,proto3" json:"log,omitempty"`
 	// Events contains a slice of Event objects that were emitted during message
 	// or handler execution.
-	Events []types1.Event `protobuf:"bytes,3,rep,name=events,proto3" json:"events"`
+	Events []dabci.Event `protobuf:"bytes,3,rep,name=events,proto3" json:"events"`
 }
 
 func (m *Result) Reset()      { *m = Result{} }
@@ -1932,7 +1933,7 @@ func (m *TxResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Events = append(m.Events, types1.Event{})
+			m.Events = append(m.Events, dabci.Event{})
 			if err := m.Events[len(m.Events)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
@@ -2535,7 +2536,7 @@ func (m *Result) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Events = append(m.Events, types1.Event{})
+			m.Events = append(m.Events, dabci.Event{})
 			if err := m.Events[len(m.Events)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}

@@ -9,7 +9,8 @@ import (
 
 	"github.com/gogo/protobuf/jsonpb"
 	proto "github.com/gogo/protobuf/proto"
-	abci "github.com/tendermint/tendermint/abci/types"
+	//abci "github.com/tendermint/tendermint/abci/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 )
@@ -43,7 +44,7 @@ func (em *EventManager) EmitEvents(events Events) {
 }
 
 // ABCIEvents returns all stored Event objects as abci.Event objects.
-func (em EventManager) ABCIEvents() []abci.Event {
+func (em EventManager) ABCIEvents() []dabci.Event {
 	return em.events.ToABCIEvents()
 }
 
@@ -87,9 +88,9 @@ func TypedEventToEvent(tev proto.Message) (Event, error) {
 		return Event{}, err
 	}
 
-	attrs := make([]abci.EventAttribute, 0, len(attrMap))
+	attrs := make([]dabci.EventAttribute, 0, len(attrMap))
 	for k, v := range attrMap {
-		attrs = append(attrs, abci.EventAttribute{
+		attrs = append(attrs, dabci.EventAttribute{
 			Key:   []byte(k),
 			Value: v,
 		})
@@ -102,7 +103,7 @@ func TypedEventToEvent(tev proto.Message) (Event, error) {
 }
 
 // ParseTypedEvent converts abci.Event back to typed event
-func ParseTypedEvent(event abci.Event) (proto.Message, error) {
+func ParseTypedEvent(event dabci.Event) (proto.Message, error) {
 	concreteGoType := proto.MessageType(event.Type)
 	if concreteGoType == nil {
 		return nil, fmt.Errorf("failed to retrieve the message of type %q", event.Type)
@@ -144,7 +145,7 @@ func ParseTypedEvent(event abci.Event) (proto.Message, error) {
 
 type (
 	// Event is a type alias for an ABCI Event
-	Event abci.Event
+	Event dabci.Event
 
 	// Events defines a slice of Event objects
 	Events []Event
@@ -177,8 +178,8 @@ func (a Attribute) String() string {
 }
 
 // ToKVPair converts an Attribute object into a Tendermint key/value pair.
-func (a Attribute) ToKVPair() abci.EventAttribute {
-	return abci.EventAttribute{Key: toBytes(a.Key), Value: toBytes(a.Value)}
+func (a Attribute) ToKVPair() dabci.EventAttribute {
+	return dabci.EventAttribute{Key: toBytes(a.Key), Value: toBytes(a.Value)}
 }
 
 // AppendAttributes adds one or more attributes to an Event.
@@ -201,10 +202,10 @@ func (e Events) AppendEvents(events Events) Events {
 
 // ToABCIEvents converts a slice of Event objects to a slice of abci.Event
 // objects.
-func (e Events) ToABCIEvents() []abci.Event {
-	res := make([]abci.Event, len(e))
+func (e Events) ToABCIEvents() []dabci.Event {
+	res := make([]dabci.Event, len(e))
 	for i, ev := range e {
-		res[i] = abci.Event{Type: ev.Type, Attributes: ev.Attributes}
+		res[i] = dabci.Event{Type: ev.Type, Attributes: ev.Attributes}
 	}
 
 	return res
@@ -280,7 +281,7 @@ func (se StringEvents) Flatten() StringEvents {
 }
 
 // StringifyEvent converts an Event object to a StringEvent object.
-func StringifyEvent(e abci.Event) StringEvent {
+func StringifyEvent(e dabci.Event) StringEvent {
 	res := StringEvent{Type: e.Type}
 
 	for _, attr := range e.Attributes {
@@ -295,7 +296,7 @@ func StringifyEvent(e abci.Event) StringEvent {
 
 // StringifyEvents converts a slice of Event objects into a slice of StringEvent
 // objects.
-func StringifyEvents(events []abci.Event) StringEvents {
+func StringifyEvents(events []dabci.Event) StringEvents {
 	res := make(StringEvents, 0, len(events))
 
 	for _, e := range events {
@@ -307,19 +308,19 @@ func StringifyEvents(events []abci.Event) StringEvents {
 
 // MarkEventsToIndex returns the set of ABCI events, where each event's attribute
 // has it's index value marked based on the provided set of events to index.
-func MarkEventsToIndex(events []abci.Event, indexSet map[string]struct{}) []abci.Event {
+func MarkEventsToIndex(events []dabci.Event, indexSet map[string]struct{}) []dabci.Event {
 	indexAll := len(indexSet) == 0
-	updatedEvents := make([]abci.Event, len(events))
+	updatedEvents := make([]dabci.Event, len(events))
 
 	for i, e := range events {
-		updatedEvent := abci.Event{
+		updatedEvent := dabci.Event{
 			Type:       e.Type,
-			Attributes: make([]abci.EventAttribute, len(e.Attributes)),
+			Attributes: make([]dabci.EventAttribute, len(e.Attributes)),
 		}
 
 		for j, attr := range e.Attributes {
 			_, index := indexSet[fmt.Sprintf("%s.%s", e.Type, attr.Key)]
-			updatedAttr := abci.EventAttribute{
+			updatedAttr := dabci.EventAttribute{
 				Key:   attr.Key,
 				Value: attr.Value,
 				Index: index || indexAll,
