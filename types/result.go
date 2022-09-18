@@ -36,6 +36,11 @@ func (r Result) GetEvents() Events {
 	return events
 }
 
+// TODO: In the future, more codes may be OK.
+func (res Result) IsOK() bool {
+	return res.Code.IsOK()
+}
+
 // ABCIMessageLogs represents a slice of ABCIMessageLog.
 type ABCIMessageLogs []ABCIMessageLog
 

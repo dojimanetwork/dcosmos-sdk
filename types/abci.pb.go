@@ -9,6 +9,7 @@ import (
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	//types1 "github.com/tendermint/tendermint/abci/types"
+	erro "github.com/cosmos/cosmos-sdk/types/errors"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	io "io"
 	math "math"
@@ -323,6 +324,8 @@ func (m *GasInfo) GetGasUsed() uint64 {
 
 // Result is the union of ResponseFormat and ResponseCheckTx.
 type Result struct {
+	// Code is the response code, is stored back on the chain.
+	Code erro.CodeType
 	// Data is any data returned from message or handler execution. It MUST be
 	// length prefixed in order to separate data from multiple message executions.
 	Data []byte `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`

@@ -7,11 +7,21 @@ import (
 	"github.com/pkg/errors"
 )
 
+// CodeType - ABCI code identifier within codespace
+type CodeType uint32
+
 // RootCodespace is the codespace for all errors defined in this package
 const RootCodespace = "sdk"
 
 // UndefinedCodespace when we explicitly declare no codespace
 const UndefinedCodespace = "undefined"
+
+const CodeOK CodeType = 0
+
+// IsOK - is everything okay?
+func (code CodeType) IsOK() bool {
+	return code == CodeOK
+}
 
 var (
 	// errInternal should never be exposed, but we reserve this code for non-specified errors
