@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmtypes "github.com/dojimanetwork/dojimamint/types"
+	tmtypes "github.com/tendermint/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/client"

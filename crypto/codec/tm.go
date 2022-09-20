@@ -1,9 +1,11 @@
 package codec
 
 import (
-	tmcrypto "github.com/dojimanetwork/dojimamint/crypto"
-	"github.com/dojimanetwork/dojimamint/crypto/encoding"
-	tmprotocrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	tmcrypto "github.com/tendermint/tendermint/crypto"
+	dtmcrypto "github.com/dojimanetwork/dojimamint/crypto"
+	"github.com/tendermint/tendermint/crypto/encoding"
+	tmprotocrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
+	dtmprotocrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
 
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
@@ -47,9 +49,38 @@ func ToTmProtoPublicKey(pk cryptotypes.PubKey) (tmprotocrypto.PublicKey, error) 
 	}
 }
 
+// ToTmProtoPublicKey converts our own PubKey to TM's tmprotocrypto.PublicKey.
+func ToDTmProtoPublicKey(pk cryptotypes.PubKey) (dtmprotocrypto.PublicKey, error) {
+	switch pk := pk.(type) {
+	case *ed25519.PubKey:
+		return dtmprotocrypto.PublicKey{
+			Sum: &dtmprotocrypto.PublicKey_Ed25519{
+				Ed25519: pk.Key,
+			},
+		}, nil
+	case *secp256k1.PubKey:
+		return dtmprotocrypto.PublicKey{
+			Sum: &dtmprotocrypto.PublicKey_Secp256K1{
+				Secp256K1: pk.Key,
+			},
+		}, nil
+	default:
+		return dtmprotocrypto.PublicKey{}, sdkerrors.Wrapf(sdkerrors.ErrInvalidType, "cannot convert %v to Tendermint public key", pk)
+	}
+}
+
 // FromTmPubKeyInterface converts TM's tmcrypto.PubKey to our own PubKey.
 func FromTmPubKeyInterface(tmPk tmcrypto.PubKey) (cryptotypes.PubKey, error) {
 	tmProtoPk, err := encoding.PubKeyToProto(tmPk)
+	if err != nil {
+		return nil, err
+	}
+
+	return FromTmProtoPublicKey(tmProtoPk)
+}
+
+func FromDTmPubKeyInterface(dtmPk dtmcrypto.PubKey) (cryptotypes.PubKey, error) {
+	tmProtoPk, err := encoding.PubKeyToProto(dtmPk)
 	if err != nil {
 		return nil, err
 	}

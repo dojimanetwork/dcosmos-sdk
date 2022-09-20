@@ -52,7 +52,7 @@ func StatusCommand() *cobra.Command {
 			}
 
 			// `status` has TM pubkeys, we need to convert them to our pubkeys.
-			pk, err := cryptocodec.FromTmPubKeyInterface(status.ValidatorInfo.PubKey)
+			pk, err := cryptocodec.FromDTmPubKeyInterface(status.ValidatorInfo.PubKey)
 			if err != nil {
 				return err
 			}

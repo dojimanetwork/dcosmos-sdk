@@ -5,7 +5,7 @@ import (
 	"log"
 
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	tmtypes "github.com/dojimanetwork/dojimamint/types"
+	tmtypes "github.com/tendermint/tendermint/types"
 
 	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"
 	sdk "github.com/cosmos/cosmos-sdk/types"
