@@ -41,6 +41,13 @@ func (res Result) IsOK() bool {
 	return res.Code.IsOK()
 }
 
+func ErrInternal(msg string) Result {
+	return Result{
+		Code:      1,
+		Log:       msg,
+	}
+}
+
 // ABCIMessageLogs represents a slice of ABCIMessageLog.
 type ABCIMessageLogs []ABCIMessageLog
 

@@ -4,6 +4,7 @@ import (
 	tmcrypto "github.com/tendermint/tendermint/crypto"
 	dtmcrypto "github.com/dojimanetwork/dojimamint/crypto"
 	"github.com/tendermint/tendermint/crypto/encoding"
+	dencoding "github.com/dojimanetwork/dojimamint/crypto/encoding"
 	tmprotocrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
 	dtmprotocrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
 
@@ -21,6 +22,22 @@ func FromTmProtoPublicKey(protoPk tmprotocrypto.PublicKey) (cryptotypes.PubKey, 
 			Key: protoPk.Ed25519,
 		}, nil
 	case *tmprotocrypto.PublicKey_Secp256K1:
+		return &secp256k1.PubKey{
+			Key: protoPk.Secp256K1,
+		}, nil
+	default:
+		return nil, sdkerrors.Wrapf(sdkerrors.ErrInvalidType, "cannot convert %v from Tendermint public key", protoPk)
+	}
+}
+
+// FromTmProtoPublicKey converts a TM's tmprotocrypto.PublicKey into our own PubKey.
+func FromDTmProtoPublicKey(protoPk dtmprotocrypto.PublicKey) (cryptotypes.PubKey, error) {
+	switch protoPk := protoPk.Sum.(type) {
+	case *dtmprotocrypto.PublicKey_Ed25519:
+		return &ed25519.PubKey{
+			Key: protoPk.Ed25519,
+		}, nil
+	case *dtmprotocrypto.PublicKey_Secp256K1:
 		return &secp256k1.PubKey{
 			Key: protoPk.Secp256K1,
 		}, nil
@@ -80,12 +97,12 @@ func FromTmPubKeyInterface(tmPk tmcrypto.PubKey) (cryptotypes.PubKey, error) {
 }
 
 func FromDTmPubKeyInterface(dtmPk dtmcrypto.PubKey) (cryptotypes.PubKey, error) {
-	tmProtoPk, err := encoding.PubKeyToProto(dtmPk)
+	tmProtoPk, err := dencoding.PubKeyToProto(dtmPk)
 	if err != nil {
 		return nil, err
 	}
 
-	return FromTmProtoPublicKey(tmProtoPk)
+	return FromDTmProtoPublicKey(tmProtoPk)
 }
 
 // ToTmPubKeyInterface converts our own PubKey to TM's tmcrypto.PubKey.
@@ -96,4 +113,14 @@ func ToTmPubKeyInterface(pk cryptotypes.PubKey) (tmcrypto.PubKey, error) {
 	}
 
 	return encoding.PubKeyFromProto(tmProtoPk)
+}
+
+// ToTmPubKeyInterface converts our own PubKey to TM's tmcrypto.PubKey.
+func ToDTmPubKeyInterface(pk cryptotypes.PubKey) (dtmcrypto.PubKey, error) {
+	tmProtoPk, err := ToDTmProtoPublicKey(pk)
+	if err != nil {
+		return nil, err
+	}
+
+	return dencoding.PubKeyFromProto(tmProtoPk)
 }
