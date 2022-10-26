@@ -37,7 +37,7 @@ import (
 // DefaultConsensusParams defines the default Tendermint consensus params used in
 // SimApp testing.
 var DefaultConsensusParams = &dabci.ConsensusParams{
-	Block:     &dabci.BlockParams{MaxBytes: 200000, MaxGas: 2000000},
+	Block:     &dtmproto.BlockParams{MaxBytes: 200000, MaxGas: 2000000},
 	Evidence:  &dtmproto.EvidenceParams{MaxAgeNumBlocks: 302400, MaxAgeDuration: 504 * time.Hour, MaxBytes: 10000},
 	Validator: &dtmproto.ValidatorParams{PubKeyTypes: []string{tmtypes.ABCIPubKeyTypeEd25519}},
 	//Version:   &types.VersionParams{},

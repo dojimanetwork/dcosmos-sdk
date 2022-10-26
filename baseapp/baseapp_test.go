@@ -1393,7 +1393,7 @@ func TestMaxBlockGasLimits(t *testing.T) {
 	app := setupBaseApp(t, anteOpt, routerOpt)
 	app.InitChain(dabci.RequestInitChain{
 		ConsensusParams: &dabci.ConsensusParams{
-			Block: &dabci.BlockParams{
+			Block: &dtmproto.BlockParams{
 				MaxGas: 100,
 			},
 		},
@@ -1618,7 +1618,7 @@ func TestGasConsumptionBadTx(t *testing.T) {
 	app := setupBaseApp(t, anteOpt, routerOpt)
 	app.InitChain(dabci.RequestInitChain{
 		ConsensusParams: &dabci.ConsensusParams{
-			Block: &dabci.BlockParams{
+			Block: &dtmproto.BlockParams{
 				MaxGas: 9,
 			},
 		},
@@ -1776,16 +1776,16 @@ func TestGetMaximumBlockGas(t *testing.T) {
 	app.InitChain(dabci.RequestInitChain{})
 	ctx := app.NewContext(true, dtmproto.Header{})
 
-	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dabci.BlockParams{MaxGas: 0}})
+	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dtmproto.BlockParams{MaxGas: 0}})
 	require.Equal(t, uint64(0), app.getMaximumBlockGas(ctx))
 
-	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dabci.BlockParams{MaxGas: -1}})
+	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dtmproto.BlockParams{MaxGas: -1}})
 	require.Equal(t, uint64(0), app.getMaximumBlockGas(ctx))
 
-	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dabci.BlockParams{MaxGas: 5000000}})
+	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dtmproto.BlockParams{MaxGas: 5000000}})
 	require.Equal(t, uint64(5000000), app.getMaximumBlockGas(ctx))
 
-	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dabci.BlockParams{MaxGas: -5000000}})
+	app.StoreConsensusParams(ctx, &dabci.ConsensusParams{Block: &dtmproto.BlockParams{MaxGas: -5000000}})
 	require.Panics(t, func() { app.getMaximumBlockGas(ctx) })
 }
 
@@ -2017,7 +2017,7 @@ func TestBaseApp_EndBlock(t *testing.T) {
 	logger := defaultLogger()
 
 	cp := &dabci.ConsensusParams{
-		Block: &dabci.BlockParams{
+		Block: &dtmproto.BlockParams{
 			MaxGas: 5000000,
 		},
 	}

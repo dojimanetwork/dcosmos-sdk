@@ -431,7 +431,7 @@ func (app *BaseApp) GetConsensusParams(ctx sdk.Context) *dabci.ConsensusParams {
 	cp := new(dabci.ConsensusParams)
 
 	if app.paramStore.Has(ctx, ParamStoreKeyBlockParams) {
-		var bp dabci.BlockParams
+		var bp dtmproto.BlockParams
 
 		app.paramStore.Get(ctx, ParamStoreKeyBlockParams, &bp)
 		cp.Block = &bp
