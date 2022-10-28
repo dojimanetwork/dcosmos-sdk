@@ -168,7 +168,9 @@ func (s Subspace) checkType(key []byte, value interface{}) {
 		pty = pty.Elem()
 	}
 
-	if pty != ty {
+	fmt.Println(ty.Comparable())
+	fmt.Println(pty.Comparable())
+	if pty.String() != ty.String() {
 		fmt.Println(pty, ty)
 		panic("type mismatch with registered table")
 	}
