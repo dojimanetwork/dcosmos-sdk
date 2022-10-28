@@ -149,8 +149,11 @@ func (s Subspace) Modified(ctx sdk.Context, key []byte) bool {
 // checkType verifies that the provided key and value are comptable and registered.
 func (s Subspace) checkType(key []byte, value interface{}) {
 	fmt.Println(key,value)
+	fmt.Printf("%v %T\n", value, value)
 	attr, ok := s.table.m[string(key)]
 	fmt.Println("Attribute:", attr)
+	fmt.Printf("%v %T\n", attr, attr)
+	
 	if !ok {
 		panic(fmt.Sprintf("parameter %s not registered", string(key)))
 	}
@@ -159,7 +162,9 @@ func (s Subspace) checkType(key []byte, value interface{}) {
 	fmt.Println("AttributeType:", ty)
 	pty := reflect.TypeOf(value)
 	fmt.Println("PtyKind:", pty.Kind())
+	fmt.Println("PtyBefore:", pty)
 	if pty.Kind() == reflect.Ptr {
+		fmt.Println("PtyElem:", pty.Elem())
 		pty = pty.Elem()
 	}
 
