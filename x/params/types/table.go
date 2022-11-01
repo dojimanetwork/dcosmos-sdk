@@ -36,9 +36,9 @@ func (t KeyTable) RegisterType(psp ParamSetPair) KeyTable {
 	if !sdk.IsAlphaNumeric(string(psp.Key)) {
 		panic("cannot register ParamSetPair with a non-alphanumeric parameter key")
 	}
-	// if psp.ValidatorFn == nil {
-	// 	panic("cannot register ParamSetPair without a value validation function")
-	// }
+	if psp.ValidatorFn == nil {
+		panic("cannot register ParamSetPair without a value validation function")
+	}
 
 	keystr := string(psp.Key)
 	if _, ok := t.m[keystr]; ok {
