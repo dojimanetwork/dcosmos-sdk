@@ -3,8 +3,8 @@ package types
 import (
 	"sort"
 
-	"github.com/gogo/protobuf/proto"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/gogo/protobuf/proto"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"

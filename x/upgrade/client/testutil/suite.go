@@ -9,8 +9,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/upgrade/client/cli"
 	"github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	"github.com/stretchr/testify/suite"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/stretchr/testify/suite"
 )
 
 func NewIntegrationTestSuite(cfg network.Config) *IntegrationTestSuite {

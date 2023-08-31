@@ -7,10 +7,10 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/spf13/cobra"
 	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	tmtypes "github.com/dojimanetwork/dojimamint/types"
+	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/server/types"

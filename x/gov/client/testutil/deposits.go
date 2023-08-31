@@ -9,8 +9,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/gov/client/cli"
 	"github.com/cosmos/cosmos-sdk/x/gov/types"
-	"github.com/stretchr/testify/suite"
 	tmcli "github.com/dojimanetwork/dojimamint/libs/cli"
+	"github.com/stretchr/testify/suite"
 )
 
 type DepositTestSuite struct {

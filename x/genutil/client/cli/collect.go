@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"path/filepath"
 
+	tmtypes "github.com/dojimanetwork/dojimamint/types"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
-	tmtypes "github.com/dojimanetwork/dojimamint/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"

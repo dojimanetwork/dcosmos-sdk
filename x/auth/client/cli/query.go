@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/spf13/cobra"
 	tmtypes "github.com/dojimanetwork/dojimamint/types"
+	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"

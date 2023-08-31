@@ -8,9 +8,9 @@ import (
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
-	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"

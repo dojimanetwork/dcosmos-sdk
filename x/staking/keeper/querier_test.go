@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/stretchr/testify/require"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/simapp"

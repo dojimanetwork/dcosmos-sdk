@@ -4,10 +4,10 @@ import (
 	"encoding/hex"
 	"fmt"
 
-	"github.com/tendermint/crypto/bcrypt"
 	"github.com/dojimanetwork/dojimamint/crypto"
 	"github.com/dojimanetwork/dojimamint/crypto/armor"
 	"github.com/dojimanetwork/dojimamint/crypto/xsalsa20symmetric"
+	"github.com/tendermint/crypto/bcrypt"
 
 	"github.com/cosmos/cosmos-sdk/codec/legacy"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"

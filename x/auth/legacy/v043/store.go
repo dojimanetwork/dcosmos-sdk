@@ -21,9 +21,9 @@ import (
 	"errors"
 	"fmt"
 
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/gogo/protobuf/grpc"
 	"github.com/gogo/protobuf/proto"
-	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 

@@ -10,12 +10,12 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/spf13/cobra"
 	tmconfig "github.com/dojimanetwork/dojimamint/config"
 	tmos "github.com/dojimanetwork/dojimamint/libs/os"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
 	"github.com/dojimanetwork/dojimamint/types"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
+	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"

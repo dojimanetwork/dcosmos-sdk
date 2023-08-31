@@ -6,10 +6,9 @@ package types
 import (
 	fmt "fmt"
 	types "github.com/cosmos/cosmos-sdk/codec/types"
+	types1 "github.com/dojimanetwork/dojimamint/abci/types"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
-	erro "github.com/cosmos/cosmos-sdk/types/errors"
-	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	io "io"
 	math "math"
 	math_bits "math/bits"
@@ -64,7 +63,7 @@ type TxResponse struct {
 	// additional metadata, emitted only by processing the messages.
 	//
 	// Since: cosmos-sdk 0.42.11, 0.44.5, 0.45
-	Events []dabci.Event `protobuf:"bytes,13,rep,name=events,proto3" json:"events"`
+	Events []types1.Event `protobuf:"bytes,13,rep,name=events,proto3" json:"events"`
 }
 
 func (m *TxResponse) Reset()      { *m = TxResponse{} }
@@ -323,8 +322,6 @@ func (m *GasInfo) GetGasUsed() uint64 {
 
 // Result is the union of ResponseFormat and ResponseCheckTx.
 type Result struct {
-	// Code is the response code, is stored back on the chain.
-	Code erro.CodeType
 	// Data is any data returned from message or handler execution. It MUST be
 	// length prefixed in order to separate data from multiple message executions.
 	Data []byte `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
@@ -332,7 +329,7 @@ type Result struct {
 	Log string `protobuf:"bytes,2,opt,name=log,proto3" json:"log,omitempty"`
 	// Events contains a slice of Event objects that were emitted during message
 	// or handler execution.
-	Events []dabci.Event `protobuf:"bytes,3,rep,name=events,proto3" json:"events"`
+	Events []types1.Event `protobuf:"bytes,3,rep,name=events,proto3" json:"events"`
 }
 
 func (m *Result) Reset()      { *m = Result{} }
@@ -1935,7 +1932,7 @@ func (m *TxResponse) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Events = append(m.Events, dabci.Event{})
+			m.Events = append(m.Events, types1.Event{})
 			if err := m.Events[len(m.Events)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
@@ -2538,7 +2535,7 @@ func (m *Result) Unmarshal(dAtA []byte) error {
 			if postIndex > l {
 				return io.ErrUnexpectedEOF
 			}
-			m.Events = append(m.Events, dabci.Event{})
+			m.Events = append(m.Events, types1.Event{})
 			if err := m.Events[len(m.Events)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}

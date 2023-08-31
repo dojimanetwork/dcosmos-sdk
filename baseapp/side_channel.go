@@ -1,7 +1,6 @@
 package baseapp
 
 import (
-	
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 
@@ -27,7 +26,7 @@ func (app *BaseApp) DeliverSideTx(req abci.RequestDeliverSideTx) (res abci.Respo
 	if err != nil {
 		//r := err.Result()
 		res = abci.ResponseDeliverSideTx{
-			Result:    tmproto.SideTxResultType_Skip,
+			Result: tmproto.SideTxResultType_Skip,
 			//Code:      uint32(r.Code),
 			//Codespace: string(r.Codespace),
 		}
@@ -43,7 +42,7 @@ func (app *BaseApp) runSideTx(txBytes []byte, tx sdk.Tx, req abci.RequestDeliver
 	defer func() {
 		if r := recover(); r != nil {
 			res = abci.ResponseDeliverSideTx{
-				Result:    tmproto.SideTxResultType_Skip, // skip proposal
+				Result: tmproto.SideTxResultType_Skip, // skip proposal
 				//Code:      uint32(sdk.CodeInternal),
 				//Codespace: string(sdk.CodespaceRoot),
 			}
@@ -54,7 +53,7 @@ func (app *BaseApp) runSideTx(txBytes []byte, tx sdk.Tx, req abci.RequestDeliver
 	if err := validateBasicTxMsgs(msgs); err != nil {
 		//r := err.Result()
 		res = abci.ResponseDeliverSideTx{
-			Result:    tmproto.SideTxResultType_Skip, // skip proposal
+			Result: tmproto.SideTxResultType_Skip, // skip proposal
 			//Code:      uint32(r.Code),
 			//Codespace: string(r.Codespace),
 		}

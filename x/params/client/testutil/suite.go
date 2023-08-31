@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/stretchr/testify/suite"
 	tmcli "github.com/dojimanetwork/dojimamint/libs/cli"
+	"github.com/stretchr/testify/suite"
 
 	clitestutil "github.com/cosmos/cosmos-sdk/testutil/cli"
 	"github.com/cosmos/cosmos-sdk/testutil/network"

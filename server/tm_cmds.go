@@ -5,10 +5,10 @@ package server
 import (
 	"fmt"
 
-	"github.com/spf13/cobra"
 	"github.com/dojimanetwork/dojimamint/p2p"
 	pvm "github.com/dojimanetwork/dojimamint/privval"
 	tversion "github.com/dojimanetwork/dojimamint/version"
+	"github.com/spf13/cobra"
 	yaml "gopkg.in/yaml.v2"
 
 	"github.com/cosmos/cosmos-sdk/client"

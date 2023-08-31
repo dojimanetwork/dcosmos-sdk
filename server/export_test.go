@@ -10,13 +10,13 @@ import (
 	"path"
 	"testing"
 
-	"github.com/spf13/cobra"
-	"github.com/stretchr/testify/require"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	tmtypes "github.com/dojimanetwork/dojimamint/types"
+	"github.com/spf13/cobra"
+	"github.com/stretchr/testify/require"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/client"

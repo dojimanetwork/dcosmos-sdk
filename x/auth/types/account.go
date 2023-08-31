@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/gogo/protobuf/proto"
 	"github.com/dojimanetwork/dojimamint/crypto"
+	"github.com/gogo/protobuf/proto"
 	"gopkg.in/yaml.v2"
 
 	"github.com/cosmos/cosmos-sdk/codec"
@@ -26,6 +26,7 @@ var (
 )
 
 // NewBaseAccount creates a new BaseAccount object
+//
 //nolint:interfacer
 func NewBaseAccount(address sdk.AccAddress, pubKey cryptotypes.PubKey, accountNumber, sequence uint64) *BaseAccount {
 	acc := &BaseAccount{

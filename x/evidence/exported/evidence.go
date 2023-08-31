@@ -1,8 +1,8 @@
 package exported
 
 import (
-	"github.com/gogo/protobuf/proto"
 	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
+	"github.com/gogo/protobuf/proto"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

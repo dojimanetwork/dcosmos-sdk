@@ -8,9 +8,9 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"testing"
 
+	"github.com/dojimanetwork/dojimamint/libs/log"
 	"github.com/spf13/viper"
 	"github.com/stretchr/testify/require"
-	"github.com/dojimanetwork/dojimamint/libs/log"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"

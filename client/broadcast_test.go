@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
 	"github.com/dojimanetwork/dojimamint/mempool"
 	"github.com/dojimanetwork/dojimamint/rpc/client/mock"
 	ctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
 	tmtypes "github.com/dojimanetwork/dojimamint/types"
+	"github.com/stretchr/testify/require"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"

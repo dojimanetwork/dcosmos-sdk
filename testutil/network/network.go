@@ -15,13 +15,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/require"
 	tmcfg "github.com/dojimanetwork/dojimamint/config"
 	tmflags "github.com/dojimanetwork/dojimamint/libs/cli/flags"
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
 	"github.com/dojimanetwork/dojimamint/node"
 	tmclient "github.com/dojimanetwork/dojimamint/rpc/client"
+	"github.com/stretchr/testify/require"
 	dbm "github.com/tendermint/tm-db"
 	"google.golang.org/grpc"
 

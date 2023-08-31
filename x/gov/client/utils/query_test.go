@@ -5,10 +5,10 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	"github.com/dojimanetwork/dojimamint/rpc/client/mock"
 	ctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
 	tmtypes "github.com/dojimanetwork/dojimamint/types"
+	"github.com/stretchr/testify/require"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/simapp"

@@ -4,8 +4,8 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/stretchr/testify/require"
 
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"
 	sdk "github.com/cosmos/cosmos-sdk/types"

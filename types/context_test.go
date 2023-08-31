@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/golang/mock/gomock"
-	"github.com/stretchr/testify/suite"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/golang/mock/gomock"
+	"github.com/stretchr/testify/suite"
 
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	"github.com/cosmos/cosmos-sdk/tests/mocks"

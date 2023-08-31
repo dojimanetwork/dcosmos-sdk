@@ -5,8 +5,8 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/stretchr/testify/require"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/staking/types"

@@ -9,11 +9,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/require"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	tmtypes "github.com/dojimanetwork/dojimamint/types"
+	"github.com/stretchr/testify/require"
 	dbm "github.com/tendermint/tm-db"
 
 	bam "github.com/cosmos/cosmos-sdk/baseapp"
