@@ -1,7 +1,6 @@
 package rootmulti
 
 import (
-	//"github.com/tendermint/tendermint/crypto/merkle"
 	dmerkle "github.com/dojimanetwork/dojimamint/crypto/merkle"
 
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"

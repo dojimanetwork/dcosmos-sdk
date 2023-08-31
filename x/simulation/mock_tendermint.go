@@ -7,11 +7,10 @@ import (
 	"testing"
 	"time"
 
-	//abci "github.com/tendermint/tendermint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	//cryptoenc "github.com/tendermint/tendermint/crypto/encoding"
+
 	dcryptoenc "github.com/dojimanetwork/dojimamint/crypto/encoding"
-	//tmbytes "github.com/tendermint/tendermint/libs/bytes"
+
 	dtmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 )

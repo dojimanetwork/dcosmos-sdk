@@ -6,7 +6,6 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"

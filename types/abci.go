@@ -1,11 +1,8 @@
 package types
 
-import(
-	//abci "github.com/tendermint/tendermint/abci/types"
-	dabci "github.com/dojimanetwork/dojimamint/abci/types" 
-
+import (
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 )
-
 
 // InitChainer initializes application state at genesis
 type InitChainer func(ctx Context, req dabci.RequestInitChain) dabci.ResponseInitChain
@@ -37,4 +34,3 @@ type DeliverSideTxHandler func(ctx Context, tx Tx, req dabci.RequestDeliverSideT
 
 // PostDeliverTxHandler runs after deliver tx
 type PostDeliverTxHandler func(ctx Context, tx Tx, result Result)
-

@@ -3,12 +3,10 @@ package mock
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
-	//abci "github.com/tendermint/tendermint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	"github.com/tendermint/tendermint/types"
+	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/stretchr/testify/require"
 )
 
 // TestInitApp makes sure we can initialize this thing without an error

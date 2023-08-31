@@ -6,10 +6,9 @@ import (
 	"math"
 	"strings"
 
-	"github.com/gogo/protobuf/proto"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	//ctypes "github.com/tendermint/tendermint/rpc/core/types"
 	dtypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
+	"github.com/gogo/protobuf/proto"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"

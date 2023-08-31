@@ -4,13 +4,12 @@ import (
 	"context"
 	"time"
 
-	"github.com/gogo/protobuf/proto"
-	abci "github.com/tendermint/tendermint/abci/types"
+	abci "github.com/dojimanetwork/dojimamint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	tmbytes "github.com/tendermint/tendermint/libs/bytes"
+	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/gogo/protobuf/proto"
 
 	"github.com/cosmos/cosmos-sdk/store/gaskv"
 	stypes "github.com/cosmos/cosmos-sdk/store/types"
@@ -53,7 +52,7 @@ func (c Context) BlockTime() time.Time        { return c.header.Time }
 func (c Context) ChainID() string             { return c.chainID }
 func (c Context) TxBytes() []byte             { return c.txBytes }
 func (c Context) Logger() log.Logger          { return c.logger }
-func (c Context) VoteInfos() []dabci.VoteInfo  { return c.voteInfo }
+func (c Context) VoteInfos() []dabci.VoteInfo { return c.voteInfo }
 func (c Context) GasMeter() GasMeter          { return c.gasMeter }
 func (c Context) BlockGasMeter() GasMeter     { return c.blockGasMeter }
 func (c Context) IsCheckTx() bool             { return c.checkTx }

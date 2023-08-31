@@ -5,8 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/suite"
-	//abci "github.com/tendermint/tendermint/abci/types"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 

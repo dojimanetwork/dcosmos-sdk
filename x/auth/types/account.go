@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/gogo/protobuf/proto"
-	"github.com/tendermint/tendermint/crypto"
+	"github.com/dojimanetwork/dojimamint/crypto"
 	"gopkg.in/yaml.v2"
 
 	"github.com/cosmos/cosmos-sdk/codec"

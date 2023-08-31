@@ -8,8 +8,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/spf13/cobra"
-	//abci "github.com/tendermint/tendermint/abci/types"
-    dabci "github.com/dojimanetwork/dojimamint/abci/types"
+
 	sdkclient "github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -21,6 +20,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/authz/client/cli"
 	"github.com/cosmos/cosmos-sdk/x/authz/keeper"
 	"github.com/cosmos/cosmos-sdk/x/authz/simulation"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 )
 
 var (

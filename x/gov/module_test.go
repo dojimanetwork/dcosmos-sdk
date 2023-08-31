@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	//abcitypes "github.com/tendermint/tendermint/abci/types"
+
 	dabcitypes "github.com/dojimanetwork/dojimamint/abci/types"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 

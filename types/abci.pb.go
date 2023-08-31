@@ -8,7 +8,6 @@ import (
 	types "github.com/cosmos/cosmos-sdk/codec/types"
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
-	//types1 "github.com/tendermint/tendermint/abci/types"
 	erro "github.com/cosmos/cosmos-sdk/types/errors"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	io "io"

@@ -3,9 +3,7 @@ package tmservice
 import (
 	"context"
 
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	//ctypes "github.com/tendermint/tendermint/rpc/core/types"
 	dtypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
 
 	"github.com/cosmos/cosmos-sdk/client"

@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/suite"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	tmtime "github.com/tendermint/tendermint/types/time"
+	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/simapp"

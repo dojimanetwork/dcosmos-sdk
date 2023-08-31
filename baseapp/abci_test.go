@@ -3,15 +3,11 @@ package baseapp
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
-	//abci "github.com/tendermint/tendermint/abci/types"
-	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	//tmprototypes "github.com/tendermint/tendermint/proto/tendermint/types"
-	dbm "github.com/tendermint/tm-db"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/stretchr/testify/require"
+	dbm "github.com/tendermint/tm-db"
 )
 
 func TestGetBlockRentionHeight(t *testing.T) {

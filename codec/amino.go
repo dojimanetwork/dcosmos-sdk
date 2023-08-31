@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"io"
 
-	amino "github.com/tendermint/go-amino"
-	tmtypes "github.com/tendermint/tendermint/types"
+	"github.com/tendermint/go-amino"
+	tmtypes "github.com/dojimanetwork/dojimamint/types"
 
 	"github.com/cosmos/cosmos-sdk/codec/types"
 )

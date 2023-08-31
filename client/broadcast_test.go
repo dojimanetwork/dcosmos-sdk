@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/tendermint/tendermint/crypto/tmhash"
-	"github.com/tendermint/tendermint/mempool"
+	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
+	"github.com/dojimanetwork/dojimamint/mempool"
 	"github.com/dojimanetwork/dojimamint/rpc/client/mock"
 	ctypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
 	tmtypes "github.com/dojimanetwork/dojimamint/types"

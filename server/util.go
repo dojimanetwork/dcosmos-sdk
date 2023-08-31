@@ -19,7 +19,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
-	tmcmd "github.com/tendermint/tendermint/cmd/tendermint/commands"
+	tmcmd "github.com/dojimanetwork/dojimamint/cmd/tendermint/commands"
 	tmcfg "github.com/dojimanetwork/dojimamint/config"
 	tmlog "github.com/dojimanetwork/dojimamint/libs/log"
 	dbm "github.com/tendermint/tm-db"

@@ -5,7 +5,7 @@ package client_test
 import (
 	"fmt"
 
-	abci "github.com/tendermint/tendermint/abci/types"
+	abci "github.com/dojimanetwork/dojimamint/abci/types"
 
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 )

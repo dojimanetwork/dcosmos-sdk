@@ -10,11 +10,10 @@ import (
 	"sync"
 
 	iavltree "github.com/cosmos/iavl"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	protoio "github.com/gogo/protobuf/io"
 	gogotypes "github.com/gogo/protobuf/types"
 	"github.com/pkg/errors"
-	//abci "github.com/tendermint/tendermint/abci/types"
-	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	dbm "github.com/tendermint/tm-db"
 
 	snapshottypes "github.com/cosmos/cosmos-sdk/snapshots/types"

@@ -23,7 +23,6 @@ import (
 
 	"github.com/gogo/protobuf/grpc"
 	"github.com/gogo/protobuf/proto"
-	//abci "github.com/tendermint/tendermint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

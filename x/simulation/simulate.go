@@ -10,7 +10,6 @@ import (
 	"testing"
 	"time"
 
-	//abci "github.com/tendermint/tendermint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 

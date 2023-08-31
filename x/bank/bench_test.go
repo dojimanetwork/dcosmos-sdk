@@ -4,9 +4,9 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	//abci "github.com/tendermint/tendermint/abci/types"
+
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 
 	"github.com/cosmos/cosmos-sdk/simapp"

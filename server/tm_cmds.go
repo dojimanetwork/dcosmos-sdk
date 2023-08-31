@@ -6,9 +6,9 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/tendermint/tendermint/p2p"
-	pvm "github.com/tendermint/tendermint/privval"
-	tversion "github.com/tendermint/tendermint/version"
+	"github.com/dojimanetwork/dojimamint/p2p"
+	pvm "github.com/dojimanetwork/dojimamint/privval"
+	tversion "github.com/dojimanetwork/dojimamint/version"
 	yaml "gopkg.in/yaml.v2"
 
 	"github.com/cosmos/cosmos-sdk/client"

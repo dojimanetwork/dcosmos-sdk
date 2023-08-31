@@ -10,19 +10,16 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/gogo/protobuf/proto"
-	//abci "github.com/tendermint/tendermint/abci/types"
-	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	"google.golang.org/grpc/codes"
-	grpcstatus "google.golang.org/grpc/status"
-
 	"github.com/cosmos/cosmos-sdk/codec"
 	snapshottypes "github.com/cosmos/cosmos-sdk/snapshots/types"
 	"github.com/cosmos/cosmos-sdk/telemetry"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	"github.com/gogo/protobuf/proto"
+	"google.golang.org/grpc/codes"
+	grpcstatus "google.golang.org/grpc/status"
 )
 
 // InitChain implements the ABCI interface. It runs the initialization logic

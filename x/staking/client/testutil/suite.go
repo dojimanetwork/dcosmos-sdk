@@ -6,11 +6,11 @@ import (
 	"strings"
 	"testing"
 
+	tmcli "github.com/dojimanetwork/dojimamint/libs/cli"
+	"github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	"github.com/dojimanetwork/dojimamint/rpc/client/http"
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
-	tmcli "github.com/tendermint/tendermint/libs/cli"
-	"github.com/tendermint/tendermint/proto/tendermint/crypto"
-	"github.com/tendermint/tendermint/rpc/client/http"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/crypto/hd"

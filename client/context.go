@@ -10,16 +10,13 @@ import (
 
 	"gopkg.in/yaml.v2"
 
-	"github.com/gogo/protobuf/proto"
-	"github.com/pkg/errors"
-	//rpcclient "github.com/tendermint/tendermint/rpc/client"
-	drpcclient "github.com/dojimanetwork/dojimamint/rpc/client"
-
-
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	drpcclient "github.com/dojimanetwork/dojimamint/rpc/client"
+	"github.com/gogo/protobuf/proto"
+	"github.com/pkg/errors"
 )
 
 // Context implements a typical context created in SDK modules for transaction

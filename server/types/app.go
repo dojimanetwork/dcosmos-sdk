@@ -5,11 +5,11 @@ import (
 	"io"
 	"time"
 
-	"github.com/gogo/protobuf/grpc"
-	"github.com/spf13/cobra"
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmtypes "github.com/tendermint/tendermint/types"
+	tmtypes "github.com/dojimanetwork/dojimamint/types"
+	"github.com/gogo/protobuf/grpc"
+	"github.com/spf13/cobra"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/client"

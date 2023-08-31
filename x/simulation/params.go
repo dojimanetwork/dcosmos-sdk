@@ -5,11 +5,10 @@ import (
 	"fmt"
 	"math/rand"
 
-	//abci "github.com/tendermint/tendermint/abci/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	"github.com/tendermint/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+
+	"github.com/dojimanetwork/dojimamint/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/types/simulation"
