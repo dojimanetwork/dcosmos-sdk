@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
-	dtproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/stretchr/testify/require"
 )
 

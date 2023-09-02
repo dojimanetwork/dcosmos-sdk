@@ -16,7 +16,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/gogo/protobuf/proto"
 	"google.golang.org/grpc/codes"
 	grpcstatus "google.golang.org/grpc/status"

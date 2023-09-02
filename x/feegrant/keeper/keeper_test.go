@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/stretchr/testify/suite"
 
 	"github.com/cosmos/cosmos-sdk/simapp"

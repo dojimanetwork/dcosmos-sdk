@@ -14,7 +14,7 @@ import (
 	"syscall"
 	"time"
 
-	tmcmd "github.com/dojimanetwork/dojimamint/cmd/tendermint/commands"
+	tmcmd "github.com/dojimanetwork/dojimamint/cmd/dojimamint/commands"
 	tmcfg "github.com/dojimanetwork/dojimamint/config"
 	tmlog "github.com/dojimanetwork/dojimamint/libs/log"
 	"github.com/rs/zerolog"

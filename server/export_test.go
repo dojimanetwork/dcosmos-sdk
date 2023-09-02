@@ -13,7 +13,7 @@ import (
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	tmtypes "github.com/dojimanetwork/dojimamint/types"
 	"github.com/spf13/cobra"
 	"github.com/stretchr/testify/require"

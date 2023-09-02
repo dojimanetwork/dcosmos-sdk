@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"

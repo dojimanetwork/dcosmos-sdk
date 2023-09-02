@@ -11,7 +11,7 @@ import (
 
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	tmtypes "github.com/dojimanetwork/dojimamint/types"
 	"github.com/stretchr/testify/require"
 	dbm "github.com/tendermint/tm-db"

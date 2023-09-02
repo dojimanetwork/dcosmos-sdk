@@ -16,7 +16,7 @@ import (
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/gogo/protobuf/proto"
 	dbm "github.com/tendermint/tm-db"
 )

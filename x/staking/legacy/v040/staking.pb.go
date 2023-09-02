@@ -18,7 +18,7 @@ import (
 	types1 "github.com/cosmos/cosmos-sdk/codec/types"
 	github_com_cosmos_cosmos_sdk_types "github.com/cosmos/cosmos-sdk/types"
 	types2 "github.com/cosmos/cosmos-sdk/types"
-	types "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	types "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	_ "github.com/gogo/protobuf/gogoproto"
 	github_com_gogo_protobuf_proto "github.com/gogo/protobuf/proto"
 	proto "github.com/gogo/protobuf/proto"

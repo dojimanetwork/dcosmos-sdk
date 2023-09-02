@@ -3,7 +3,7 @@ package staking_test
 import (
 	"math/big"
 
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"

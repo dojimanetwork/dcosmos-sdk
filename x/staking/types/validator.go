@@ -8,8 +8,8 @@ import (
 	"time"
 
 	abci "github.com/dojimanetwork/dojimamint/abci/types"
-	dtmprotocrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
-	tmprotocrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	dtmprotocrypto "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
+	tmprotocrypto "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 	"gopkg.in/yaml.v2"
 
 	"github.com/cosmos/cosmos-sdk/codec"

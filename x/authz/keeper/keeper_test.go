@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"

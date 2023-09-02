@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/stretchr/testify/suite"
 	dbm "github.com/tendermint/tm-db"
 

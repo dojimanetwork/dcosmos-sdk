@@ -3,6 +3,7 @@ package types
 import (
 	"encoding/hex"
 	"encoding/json"
+	"github.com/cosmos/cosmos-sdk/types/errors"
 	"math"
 	"strings"
 
@@ -33,6 +34,19 @@ func (r Result) GetEvents() Events {
 	}
 
 	return events
+}
+
+// TODO: Remove this method once we have a better way to handle errors.
+
+func (res Result) IsOK() bool {
+	return errors.CodeType(res.Code).IsOK()
+}
+
+func ErrInternal(msg string) Result {
+	return Result{
+		Code: 1,
+		Log:  msg,
+	}
 }
 
 // ABCIMessageLogs represents a slice of ABCIMessageLog.

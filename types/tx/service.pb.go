@@ -8,7 +8,7 @@ import (
 	fmt "fmt"
 	types "github.com/cosmos/cosmos-sdk/types"
 	query "github.com/cosmos/cosmos-sdk/types/query"
-	types1 "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	types1 "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	_ "github.com/gogo/protobuf/gogoproto"
 	grpc1 "github.com/gogo/protobuf/grpc"
 	proto "github.com/gogo/protobuf/proto"

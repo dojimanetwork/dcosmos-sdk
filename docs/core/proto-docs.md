@@ -1249,6 +1249,7 @@ Result is the union of ResponseFormat and ResponseCheckTx.
 
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
+| `code` | [uint32](#uint32) |  | Response code. |
 | `data` | [bytes](#bytes) |  | Data is any data returned from message or handler execution. It MUST be length prefixed in order to separate data from multiple message executions. |
 | `log` | [string](#string) |  | Log contains the log information from message or handler execution. |
 | `events` | [tendermint.abci.Event](#tendermint.abci.Event) | repeated | Events contains a slice of Event objects that were emitted during message or handler execution. |

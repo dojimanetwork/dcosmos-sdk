@@ -5,7 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/stretchr/testify/require"
 	dbm "github.com/tendermint/tm-db"
 )

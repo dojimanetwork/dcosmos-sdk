@@ -9,7 +9,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/x/upgrade/client/cli"
 	"github.com/cosmos/cosmos-sdk/x/upgrade/types"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/stretchr/testify/suite"
 )
 

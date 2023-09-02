@@ -5,7 +5,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/store/rootmulti"
-	tmcmd "github.com/dojimanetwork/dojimamint/cmd/tendermint/commands"
+	tmcmd "github.com/dojimanetwork/dojimamint/cmd/dojimamint/commands"
 	"github.com/spf13/cobra"
 )
 

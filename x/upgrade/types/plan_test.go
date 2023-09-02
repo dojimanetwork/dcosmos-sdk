@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 

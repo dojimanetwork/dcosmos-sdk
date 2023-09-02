@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/dojimanetwork/dojimamint/abci/server"
-	tcmd "github.com/dojimanetwork/dojimamint/cmd/tendermint/commands"
+	tcmd "github.com/dojimanetwork/dojimamint/cmd/dojimamint/commands"
 	tmos "github.com/dojimanetwork/dojimamint/libs/os"
 	"github.com/dojimanetwork/dojimamint/node"
 	"github.com/dojimanetwork/dojimamint/p2p"

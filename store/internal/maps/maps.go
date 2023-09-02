@@ -5,7 +5,7 @@ import (
 
 	"github.com/dojimanetwork/dojimamint/crypto/merkle"
 	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
-	tmcrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	tmcrypto "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 
 	"github.com/cosmos/cosmos-sdk/types/kv"
 )

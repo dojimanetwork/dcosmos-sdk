@@ -4,7 +4,7 @@ import (
 	"sort"
 
 	"github.com/dojimanetwork/dojimamint/libs/rand"
-	tmcrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	tmcrypto "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 
 	sdkmaps "github.com/cosmos/cosmos-sdk/store/internal/maps"
 )

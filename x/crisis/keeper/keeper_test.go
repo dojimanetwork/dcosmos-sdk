@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"

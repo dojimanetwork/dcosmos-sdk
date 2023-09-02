@@ -9,8 +9,8 @@ import (
 	"github.com/stretchr/testify/require"
 
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	tmtypes "github.com/dojimanetwork/dojimamint/types"
 
 	"github.com/golang/protobuf/proto"

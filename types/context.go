@@ -8,7 +8,7 @@ import (
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/gogo/protobuf/proto"
 
 	"github.com/cosmos/cosmos-sdk/store/gaskv"

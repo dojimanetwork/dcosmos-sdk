@@ -6,7 +6,7 @@ import (
 	"time"
 
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/suite"
 

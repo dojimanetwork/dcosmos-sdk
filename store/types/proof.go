@@ -4,7 +4,7 @@ import (
 	ics23 "github.com/confio/ics23/go"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	dmerkle "github.com/dojimanetwork/dojimamint/crypto/merkle"
-	dtmmerkle "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	dtmmerkle "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 )
 
 const (

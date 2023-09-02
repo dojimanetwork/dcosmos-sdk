@@ -8,7 +8,7 @@ import (
 	"os"
 
 	tmjson "github.com/dojimanetwork/dojimamint/libs/json"
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	tmtypes "github.com/dojimanetwork/dojimamint/types"
 	"github.com/spf13/cobra"
 

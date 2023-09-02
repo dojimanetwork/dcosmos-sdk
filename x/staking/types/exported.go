@@ -1,7 +1,7 @@
 package types
 
 import (
-	tmprotocrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	tmprotocrypto "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"

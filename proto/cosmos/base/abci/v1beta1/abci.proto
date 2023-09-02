@@ -89,16 +89,19 @@ message GasInfo {
 message Result {
   option (gogoproto.goproto_getters) = false;
 
+  // Response code.
+  uint32 code = 1;
+
   // Data is any data returned from message or handler execution. It MUST be
   // length prefixed in order to separate data from multiple message executions.
-  bytes data = 1;
+  bytes data = 2;
 
   // Log contains the log information from message or handler execution.
-  string log = 2;
+  string log = 3;
 
   // Events contains a slice of Event objects that were emitted during message
   // or handler execution.
-  repeated tendermint.abci.Event events = 3 [(gogoproto.nullable) = false];
+  repeated tendermint.abci.Event events = 4 [(gogoproto.nullable) = false];
 }
 
 // SimulationResponse defines the response generated when a transaction is

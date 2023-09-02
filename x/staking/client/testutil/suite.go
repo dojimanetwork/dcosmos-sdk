@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	tmcli "github.com/dojimanetwork/dojimamint/libs/cli"
-	"github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	"github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 	"github.com/dojimanetwork/dojimamint/rpc/client/http"
 	"github.com/gogo/protobuf/proto"
 	"github.com/stretchr/testify/suite"
