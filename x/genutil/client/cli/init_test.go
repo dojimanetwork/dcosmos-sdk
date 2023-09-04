@@ -9,12 +9,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/spf13/viper"
-	"github.com/stretchr/testify/require"
 	abci_server "github.com/dojimanetwork/dojimamint/abci/server"
 	"github.com/dojimanetwork/dojimamint/libs/cli"
 	"github.com/dojimanetwork/dojimamint/libs/log"
 	dlog "github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/spf13/viper"
+	"github.com/stretchr/testify/require"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"

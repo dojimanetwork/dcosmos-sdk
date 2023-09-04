@@ -8,10 +8,8 @@ import (
 
 	ics23 "github.com/confio/ics23/go"
 	"github.com/cosmos/iavl"
-	//abci "github.com/tendermint/tendermint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	//tmcrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
-	dtmcrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	dtmcrypto "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/store/cachekv"

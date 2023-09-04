@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/suite"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"

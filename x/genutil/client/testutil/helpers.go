@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/spf13/viper"
 	tmcfg "github.com/dojimanetwork/dojimamint/config"
 	"github.com/dojimanetwork/dojimamint/libs/cli"
 	"github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/spf13/viper"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"

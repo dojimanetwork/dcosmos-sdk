@@ -1,12 +1,12 @@
 package codec
 
 import (
-	tmcrypto "github.com/tendermint/tendermint/crypto"
 	dtmcrypto "github.com/dojimanetwork/dojimamint/crypto"
-	"github.com/tendermint/tendermint/crypto/encoding"
+	tmcrypto "github.com/dojimanetwork/dojimamint/crypto"
+	"github.com/dojimanetwork/dojimamint/crypto/encoding"
 	dencoding "github.com/dojimanetwork/dojimamint/crypto/encoding"
-	tmprotocrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
-	dtmprotocrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
+	dtmprotocrypto "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
+	tmprotocrypto "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 
 	"github.com/cosmos/cosmos-sdk/crypto/keys/ed25519"
 	"github.com/cosmos/cosmos-sdk/crypto/keys/secp256k1"

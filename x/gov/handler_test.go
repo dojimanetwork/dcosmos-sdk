@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 
 	"github.com/cosmos/cosmos-sdk/testutil/testdata"
 

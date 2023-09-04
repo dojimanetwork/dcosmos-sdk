@@ -7,9 +7,6 @@ import (
 
 	minttypes "github.com/cosmos/cosmos-sdk/x/mint/types"
 
-	"github.com/stretchr/testify/suite"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-    dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	cryptotypes "github.com/cosmos/cosmos-sdk/crypto/types"
@@ -21,6 +18,8 @@ import (
 	xauthsigning "github.com/cosmos/cosmos-sdk/x/auth/signing"
 	"github.com/cosmos/cosmos-sdk/x/auth/types"
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
+	"github.com/stretchr/testify/suite"
 )
 
 // TestAccount represents an account used in the tests in x/auth/ante.

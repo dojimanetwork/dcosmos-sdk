@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"os"
 
-	//abci "github.com/tendermint/tendermint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/dojimanetwork/dojimamint/libs/log"
 )

@@ -7,16 +7,14 @@ import (
 
 	"github.com/stretchr/testify/suite"
 
-	//abci "github.com/tendermint/tendermint/abci/types"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-    dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	"github.com/cosmos/cosmos-sdk/simapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/authz"
 	"github.com/cosmos/cosmos-sdk/x/authz/simulation"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 type SimTestSuite struct {

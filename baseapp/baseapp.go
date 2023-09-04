@@ -6,16 +6,6 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/gogo/protobuf/proto"
-	//abci "github.com/tendermint/tendermint/abci/types"
-	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/tendermint/tendermint/crypto/tmhash"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-
-	dbm "github.com/tendermint/tm-db"
-
 	"github.com/cosmos/cosmos-sdk/codec/types"
 	"github.com/cosmos/cosmos-sdk/snapshots"
 	"github.com/cosmos/cosmos-sdk/store"
@@ -23,6 +13,12 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/cosmos/cosmos-sdk/x/auth/legacy/legacytx"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/dojimanetwork/dojimamint/crypto/tmhash"
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
+	"github.com/gogo/protobuf/proto"
+	dbm "github.com/tendermint/tm-db"
 )
 
 const (
@@ -177,7 +173,6 @@ func NewBaseApp(
 
 	return app
 }
-
 
 // Name returns the name of the BaseApp.
 func (app *BaseApp) Name() string {

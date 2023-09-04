@@ -3,13 +3,13 @@ package types
 import (
 	"encoding/hex"
 	"encoding/json"
+	"github.com/cosmos/cosmos-sdk/types/errors"
 	"math"
 	"strings"
 
-	"github.com/gogo/protobuf/proto"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	//ctypes "github.com/tendermint/tendermint/rpc/core/types"
 	dtypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
+	"github.com/gogo/protobuf/proto"
 
 	"github.com/cosmos/cosmos-sdk/codec"
 	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
@@ -36,15 +36,16 @@ func (r Result) GetEvents() Events {
 	return events
 }
 
-// TODO: In the future, more codes may be OK.
+// TODO: Remove this method once we have a better way to handle errors.
+
 func (res Result) IsOK() bool {
-	return res.Code.IsOK()
+	return errors.CodeType(res.Code).IsOK()
 }
 
 func ErrInternal(msg string) Result {
 	return Result{
-		Code:      1,
-		Log:       msg,
+		Code: 1,
+		Log:  msg,
 	}
 }
 

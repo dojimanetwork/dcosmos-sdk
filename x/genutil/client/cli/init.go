@@ -8,13 +8,13 @@ import (
 	"path/filepath"
 
 	"github.com/cosmos/go-bip39"
-	"github.com/pkg/errors"
-	"github.com/spf13/cobra"
 	cfg "github.com/dojimanetwork/dojimamint/config"
 	"github.com/dojimanetwork/dojimamint/libs/cli"
 	tmos "github.com/dojimanetwork/dojimamint/libs/os"
 	tmrand "github.com/dojimanetwork/dojimamint/libs/rand"
 	"github.com/dojimanetwork/dojimamint/types"
+	"github.com/pkg/errors"
+	"github.com/spf13/cobra"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"

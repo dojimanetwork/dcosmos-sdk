@@ -2,8 +2,8 @@ package capability_test
 
 import (
 	"github.com/dojimanetwork/dojimamint/libs/log"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
+
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/simapp"

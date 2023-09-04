@@ -14,14 +14,14 @@ import (
 	"syscall"
 	"time"
 
+	tmcmd "github.com/dojimanetwork/dojimamint/cmd/dojimamint/commands"
+	tmcfg "github.com/dojimanetwork/dojimamint/config"
+	tmlog "github.com/dojimanetwork/dojimamint/libs/log"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
-	tmcmd "github.com/tendermint/tendermint/cmd/tendermint/commands"
-	tmcfg "github.com/dojimanetwork/dojimamint/config"
-	tmlog "github.com/dojimanetwork/dojimamint/libs/log"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"

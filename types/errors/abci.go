@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"reflect"
 
-	//abci "github.com/tendermint/tendermint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 )
 

@@ -7,11 +7,10 @@ import (
 	"strconv"
 	"strings"
 
+	dtmtypes "github.com/dojimanetwork/dojimamint/types"
 	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
-	//tmtypes "github.com/tendermint/tendermint/types"
-	dtmtypes "github.com/dojimanetwork/dojimamint/types"
-	
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	cryptocodec "github.com/cosmos/cosmos-sdk/crypto/codec"

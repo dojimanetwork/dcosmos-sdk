@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"testing"
 
-	//abci "github.com/tendermint/tendermint/abci/types"
-
 	authsigning "github.com/cosmos/cosmos-sdk/x/auth/signing"
 
 	"github.com/cosmos/cosmos-sdk/client"

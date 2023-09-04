@@ -8,7 +8,6 @@ import (
 
 	"github.com/dojimanetwork/dojimamint/libs/bytes"
 	"github.com/dojimanetwork/dojimamint/p2p"
-	//ctypes "github.com/tendermint/tendermint/rpc/core/types"
 	dtypes "github.com/dojimanetwork/dojimamint/rpc/core/types"
 
 	"github.com/cosmos/cosmos-sdk/client"

@@ -9,15 +9,15 @@ import (
 	"runtime/pprof"
 	"time"
 
-	"github.com/spf13/cobra"
 	"github.com/dojimanetwork/dojimamint/abci/server"
-	tcmd "github.com/dojimanetwork/dojimamint/cmd/tendermint/commands"
+	tcmd "github.com/dojimanetwork/dojimamint/cmd/dojimamint/commands"
 	tmos "github.com/dojimanetwork/dojimamint/libs/os"
 	"github.com/dojimanetwork/dojimamint/node"
 	"github.com/dojimanetwork/dojimamint/p2p"
 	pvm "github.com/dojimanetwork/dojimamint/privval"
 	"github.com/dojimanetwork/dojimamint/proxy"
 	"github.com/dojimanetwork/dojimamint/rpc/client/local"
+	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 
 	"github.com/cosmos/cosmos-sdk/client"

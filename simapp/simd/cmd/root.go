@@ -7,10 +7,10 @@ import (
 	"path/filepath"
 
 	serverconfig "github.com/cosmos/cosmos-sdk/server/config"
-	"github.com/spf13/cast"
-	"github.com/spf13/cobra"
 	tmcli "github.com/dojimanetwork/dojimamint/libs/cli"
 	"github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/spf13/cast"
+	"github.com/spf13/cobra"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"

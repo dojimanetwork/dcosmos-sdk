@@ -16,11 +16,11 @@ const RootCodespace = "sdk"
 // UndefinedCodespace when we explicitly declare no codespace
 const UndefinedCodespace = "undefined"
 
-const CodeOK CodeType = 0
+const NoErrorCode CodeType = 0
 
 // IsOK - is everything okay?
 func (code CodeType) IsOK() bool {
-	return code == CodeOK
+	return code == NoErrorCode
 }
 
 var (

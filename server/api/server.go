@@ -8,12 +8,12 @@ import (
 	"sync"
 	"time"
 
+	"github.com/dojimanetwork/dojimamint/libs/log"
+	tmrpcserver "github.com/dojimanetwork/dojimamint/rpc/jsonrpc/server"
 	"github.com/gogo/gateway"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/dojimanetwork/dojimamint/libs/log"
-	tmrpcserver "github.com/dojimanetwork/dojimamint/rpc/jsonrpc/server"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/server/config"

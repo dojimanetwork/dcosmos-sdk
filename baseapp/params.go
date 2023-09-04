@@ -4,10 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	abci "github.com/tendermint/tendermint/abci/types"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	tmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 // Paramspace defines the parameter subspace to be used for the paramstore.
@@ -31,7 +29,7 @@ type ParamStore interface {
 // ValidateBlockParams defines a stateless validation on BlockParams. This function
 // is called whenever the parameters are updated or stored.
 func ValidateBlockParams(i interface{}) error {
-	v, ok := i.(abci.BlockParams)
+	v, ok := i.(tmproto.BlockParams)
 	if !ok {
 		return fmt.Errorf("invalid parameter type: %T", i)
 	}

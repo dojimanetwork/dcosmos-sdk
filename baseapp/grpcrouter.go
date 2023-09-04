@@ -4,16 +4,13 @@ import (
 	"fmt"
 
 	"github.com/cosmos/cosmos-sdk/client/grpc/reflection"
-
-	gogogrpc "github.com/gogo/protobuf/grpc"
-	//abci "github.com/tendermint/tendermint/abci/types"
+	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	gogogrpc "github.com/gogo/protobuf/grpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/encoding"
 	"google.golang.org/grpc/encoding/proto"
-
-	codectypes "github.com/cosmos/cosmos-sdk/codec/types"
-	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 var protoCodec = encoding.GetCodec(proto.Name)

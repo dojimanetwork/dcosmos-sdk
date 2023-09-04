@@ -5,11 +5,9 @@ import (
 	"os"
 	"testing"
 
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
 )
 
 // Profile with:

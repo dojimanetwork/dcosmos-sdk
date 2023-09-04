@@ -9,10 +9,8 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	//abci "github.com/tendermint/tendermint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	tmbytes "github.com/tendermint/tendermint/libs/bytes"
-	//rpcclient "github.com/tendermint/tendermint/rpc/client"
+	tmbytes "github.com/dojimanetwork/dojimamint/libs/bytes"
 	drpcclient "github.com/dojimanetwork/dojimamint/rpc/client"
 
 	"github.com/cosmos/cosmos-sdk/store/rootmulti"

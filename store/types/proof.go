@@ -2,11 +2,9 @@ package types
 
 import (
 	ics23 "github.com/confio/ics23/go"
-	//"github.com/tendermint/tendermint/crypto/merkle"
-	dmerkle "github.com/dojimanetwork/dojimamint/crypto/merkle"
-	//tmmerkle "github.com/tendermint/tendermint/proto/tendermint/crypto"
-    dtmmerkle "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	dmerkle "github.com/dojimanetwork/dojimamint/crypto/merkle"
+	dtmmerkle "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 )
 
 const (

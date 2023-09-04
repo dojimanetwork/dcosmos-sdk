@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"io"
 
-	//abci "github.com/tendermint/tendermint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	tmstrings "github.com/tendermint/tendermint/libs/strings"
+	tmstrings "github.com/dojimanetwork/dojimamint/libs/strings"
 	dbm "github.com/tendermint/tm-db"
 
 	snapshottypes "github.com/cosmos/cosmos-sdk/snapshots/types"

@@ -7,12 +7,10 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/gogo/protobuf/jsonpb"
-	proto "github.com/gogo/protobuf/proto"
-	//abci "github.com/tendermint/tendermint/abci/types"
-	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-
 	"github.com/cosmos/cosmos-sdk/codec"
+	dabci "github.com/dojimanetwork/dojimamint/abci/types"
+	"github.com/gogo/protobuf/jsonpb"
+	"github.com/gogo/protobuf/proto"
 )
 
 // ----------------------------------------------------------------------------

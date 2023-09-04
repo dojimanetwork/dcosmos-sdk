@@ -6,11 +6,10 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/suite"
-	//abci "github.com/tendermint/tendermint/dabci/types"
-	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
-	tmtime "github.com/tendermint/tendermint/types/time"
+	dtmproto "github.com/dojimanetwork/dojimamint/proto/dojimamint/types"
+	tmtime "github.com/dojimanetwork/dojimamint/types/time"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/simapp"

@@ -4,9 +4,7 @@ import (
 	fmt "fmt"
 
 	ics23 "github.com/confio/ics23/go"
-	//tmcrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
-	dtmcrypto "github.com/dojimanetwork/dojimamint/proto/tendermint/crypto"
-	
+	dtmcrypto "github.com/dojimanetwork/dojimamint/proto/dojimamint/crypto"
 
 	sdkmaps "github.com/cosmos/cosmos-sdk/store/internal/maps"
 	sdkproofs "github.com/cosmos/cosmos-sdk/store/internal/proofs"

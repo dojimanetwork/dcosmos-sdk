@@ -3,7 +3,6 @@ package keeper_test
 import (
 	"fmt"
 
-	//abci "github.com/tendermint/tendermint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 
 	"github.com/cosmos/cosmos-sdk/simapp"
