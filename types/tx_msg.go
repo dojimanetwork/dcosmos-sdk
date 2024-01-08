@@ -19,6 +19,13 @@ type (
 		// CONTRACT: All signatures must be present to be valid.
 		// CONTRACT: Returns addrs in some deterministic order.
 		GetSigners() []AccAddress
+
+		// Returns a human-readable string for the message, intended for utilization
+		// within tags
+		Type() string
+
+		// Get the canonical byte representation of the Msg.
+		GetSignBytes() []byte
 	}
 
 	// Fee defines an interface for an application application-defined concrete
