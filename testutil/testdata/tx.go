@@ -81,3 +81,12 @@ var _ sdk.Msg = &MsgCreateDog{}
 
 func (msg *MsgCreateDog) GetSigners() []sdk.AccAddress { return []sdk.AccAddress{} }
 func (msg *MsgCreateDog) ValidateBasic() error         { return nil }
+func (msg *MsgCreateDog) GetSignBytes() []byte {
+	bz, err := json.Marshal(msg)
+	if err != nil {
+		panic(err)
+	}
+	return sdk.MustSortJSON(bz)
+}
+
+func (msg *MsgCreateDog) Type() string { return "MsgCreateDog" }
