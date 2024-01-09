@@ -9,8 +9,8 @@ import (
 	"github.com/gogo/protobuf/proto"
 	//abci "github.com/tendermint/tendermint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
-	"github.com/tendermint/tendermint/crypto/tmhash"
 	"github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/tendermint/tendermint/crypto/tmhash"
 	//tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 
@@ -177,7 +177,6 @@ func NewBaseApp(
 
 	return app
 }
-
 
 // Name returns the name of the BaseApp.
 func (app *BaseApp) Name() string {
@@ -705,6 +704,11 @@ func (app *BaseApp) runTx(mode runTxMode, txBytes []byte) (gInfo sdk.GasInfo, re
 		consumeBlockGas()
 
 		msCache.Write()
+
+		// Calling PostDeliverTxHandler
+		if app.postDeliverTxHandler != nil {
+			app.postDeliverTxHandler(ctx, tx, *result)
+		}
 
 		if len(anteEvents) > 0 {
 			// append the events in the order of occurrence
