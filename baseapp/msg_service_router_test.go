@@ -4,10 +4,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stretchr/testify/require"
-	abci "github.com/dojimanetwork/dojimamint/abci/types"
 	dabci "github.com/dojimanetwork/dojimamint/abci/types"
 	"github.com/dojimanetwork/dojimamint/libs/log"
+	"github.com/stretchr/testify/require"
 	//tmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	dtmproto "github.com/dojimanetwork/dojimamint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
@@ -120,5 +119,5 @@ func TestMsgService(t *testing.T) {
 	txBytes, err := encCfg.TxConfig.TxEncoder()(txBuilder.GetTx())
 	require.NoError(t, err)
 	res := app.DeliverTx(dabci.RequestDeliverTx{Tx: txBytes})
-	require.Equal(t, abci.CodeTypeOK, res.Code, "res=%+v", res)
+	require.Equal(t, dabci.CodeTypeOK, res.Code, "res=%+v", res)
 }

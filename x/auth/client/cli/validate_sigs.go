@@ -76,7 +76,7 @@ func printAndValidateSigs(
 		panic(err)
 	}
 	cmd.Println("")
-	cmd.Println("Signatures:")
+	cmd.Println("Precommits:")
 
 	if len(sigs) != len(signers) {
 		success = false
