@@ -40,7 +40,7 @@ type Queryable interface {
 	Query(abci.RequestQuery) abci.ResponseQuery
 }
 
-//----------------------------------------
+// ----------------------------------------
 // MultiStore
 
 // StoreUpgrades defines a series of transformations to apply the multistore db upon load
@@ -198,7 +198,7 @@ type CommitMultiStore interface {
 	AddListeners(key StoreKey, listeners []WriteListener)
 }
 
-//---------subsp-------------------------------
+// ---------subsp-------------------------------
 // KVStore
 
 // KVStore is a simple interface to get/set data
@@ -252,7 +252,7 @@ type CommitKVStore interface {
 	KVStore
 }
 
-//----------------------------------------
+// ----------------------------------------
 // CacheWrap
 
 // CacheWrap is the most appropriate interface for store ephemeral branching and cache.
@@ -286,7 +286,7 @@ func (cid CommitID) String() string {
 	return fmt.Sprintf("CommitID{%v:%X}", cid.Hash, cid.Version)
 }
 
-//----------------------------------------
+// ----------------------------------------
 // Store types
 
 // kind of store
@@ -321,7 +321,7 @@ func (st StoreType) String() string {
 	return "unknown store type"
 }
 
-//----------------------------------------
+// ----------------------------------------
 // Keys for accessing substores
 
 // StoreKey is a key used to index stores in a MultiStore.
@@ -401,12 +401,12 @@ func (key *MemoryStoreKey) String() string {
 	return fmt.Sprintf("MemoryStoreKey{%p, %s}", key, key.name)
 }
 
-//----------------------------------------
+// ----------------------------------------
 
 // key-value result for iterator queries
 type KVPair kv.Pair
 
-//----------------------------------------
+// ----------------------------------------
 
 // TraceContext contains TraceKVStore context data. It will be written with
 // every trace operation.

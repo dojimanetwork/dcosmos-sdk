@@ -7,9 +7,11 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
+
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/libs/log"
-	tmproto "github.com/tendermint/tendermint/proto/tendermint/types"
+
+	dtmproto "github.com/tendermint/tendermint/proto/tendermint/types"
 	dbm "github.com/tendermint/tm-db"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
@@ -76,7 +78,7 @@ func TestBaseApp_BlockGas(t *testing.T) {
 				AppStateBytes:   stateBytes,
 			})
 
-			ctx := app.NewContext(false, tmproto.Header{})
+			ctx := app.NewContext(false, dtmproto.Header{})
 
 			// tx fee
 			feeCoin := sdk.NewCoin("atom", sdk.NewInt(150))
@@ -104,7 +106,7 @@ func TestBaseApp_BlockGas(t *testing.T) {
 			_, txBytes, err := createTestTx(encCfg.TxConfig, txBuilder, privs, accNums, accSeqs, ctx.ChainID())
 			require.NoError(t, err)
 
-			app.BeginBlock(abci.RequestBeginBlock{Header: tmproto.Header{Height: 1}})
+			app.BeginBlock(abci.RequestBeginBlock{Header: dtmproto.Header{Height: 1}})
 			rsp := app.DeliverTx(abci.RequestDeliverTx{Tx: txBytes})
 
 			// check result

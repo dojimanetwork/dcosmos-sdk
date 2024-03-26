@@ -85,6 +85,12 @@ message GasInfo {
   uint64 gas_used = 2 [(gogoproto.moretags) = "yaml:\"gas_used\""];
 }
 
+// CodeType is the type of response code.
+enum CodeType {
+  // OK indicates that the operation was successful.
+  CODE_TYPE_OK_UNSPECIFIED = 0;
+}
+
 // Result is the union of ResponseFormat and ResponseCheckTx.
 message Result {
   option (gogoproto.goproto_getters) = false;
@@ -96,9 +102,12 @@ message Result {
   // Log contains the log information from message or handler execution.
   string log = 2;
 
+  // Code is the response code, is stored back on the chain.
+  CodeType code = 3;
+
   // Events contains a slice of Event objects that were emitted during message
   // or handler execution.
-  repeated tendermint.abci.Event events = 3 [(gogoproto.nullable) = false];
+  repeated tendermint.abci.Event events = 4 [(gogoproto.nullable) = false];
 }
 
 // SimulationResponse defines the response generated when a transaction is

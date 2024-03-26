@@ -232,7 +232,7 @@ func (tx StdTx) UnpackInterfaces(unpacker codectypes.AnyUnpacker) error {
 		}
 	}
 
-	// Signatures contain PubKeys, which need to be unpacked.
+	// Precommits contain PubKeys, which need to be unpacked.
 	for _, s := range tx.Signatures {
 		err := s.UnpackInterfaces(unpacker)
 		if err != nil {

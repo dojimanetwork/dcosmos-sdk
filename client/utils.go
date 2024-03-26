@@ -2,7 +2,8 @@ package client
 
 import (
 	"github.com/spf13/pflag"
-	rpchttp "github.com/tendermint/tendermint/rpc/client/http"
+	// rpchttp "github.com/tendermint/tendermint/rpc/client/http"
+	drpchttp "github.com/tendermint/tendermint/rpc/client/http"
 
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
@@ -75,6 +76,6 @@ func ReadPageRequest(flagSet *pflag.FlagSet) (*query.PageRequest, error) {
 // JSON RPC and WebSockets
 // TODO: We might not need to manually append `/websocket`:
 // https://github.com/cosmos/cosmos-sdk/issues/8986
-func NewClientFromNode(nodeURI string) (*rpchttp.HTTP, error) {
-	return rpchttp.New(nodeURI, "/websocket")
+func NewClientFromNode(nodeURI string) (*drpchttp.HTTP, error) {
+	return drpchttp.New(nodeURI, "/websocket")
 }

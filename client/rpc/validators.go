@@ -9,7 +9,8 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/spf13/cobra"
-	tmtypes "github.com/tendermint/tendermint/types"
+	// tmtypes "github.com/tendermint/tendermint/types"
+	dtmtypes "github.com/tendermint/tendermint/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
@@ -103,8 +104,8 @@ func (rvo ResultValidatorsOutput) String() string {
 	return b.String()
 }
 
-func validatorOutput(validator *tmtypes.Validator) (ValidatorOutput, error) {
-	pk, err := cryptocodec.FromTmPubKeyInterface(validator.PubKey)
+func validatorOutput(validator *dtmtypes.Validator) (ValidatorOutput, error) {
+	pk, err := cryptocodec.FromDTmPubKeyInterface(validator.PubKey)
 	if err != nil {
 		return ValidatorOutput{}, err
 	}
