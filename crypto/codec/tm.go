@@ -1,7 +1,6 @@
 package codec
 
 import (
-	dtmcrypto "github.com/tendermint/tendermint/crypto"
 	tmcrypto "github.com/tendermint/tendermint/crypto"
 	"github.com/tendermint/tendermint/crypto/encoding"
 	dencoding "github.com/tendermint/tendermint/crypto/encoding"
@@ -96,7 +95,7 @@ func FromTmPubKeyInterface(tmPk tmcrypto.PubKey) (cryptotypes.PubKey, error) {
 	return FromTmProtoPublicKey(tmProtoPk)
 }
 
-func FromDTmPubKeyInterface(dtmPk dtmcrypto.PubKey) (cryptotypes.PubKey, error) {
+func FromDTmPubKeyInterface(dtmPk tmcrypto.PubKey) (cryptotypes.PubKey, error) {
 	tmProtoPk, err := dencoding.PubKeyToProto(dtmPk)
 	if err != nil {
 		return nil, err
@@ -116,7 +115,7 @@ func ToTmPubKeyInterface(pk cryptotypes.PubKey) (tmcrypto.PubKey, error) {
 }
 
 // ToTmPubKeyInterface converts our own PubKey to TM's tmcrypto.PubKey.
-func ToDTmPubKeyInterface(pk cryptotypes.PubKey) (dtmcrypto.PubKey, error) {
+func ToDTmPubKeyInterface(pk cryptotypes.PubKey) (tmcrypto.PubKey, error) {
 	tmProtoPk, err := ToDTmProtoPublicKey(pk)
 	if err != nil {
 		return nil, err
