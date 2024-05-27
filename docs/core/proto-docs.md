@@ -62,6 +62,8 @@
     - [TxMsgData](#cosmos.base.abci.v1beta1.TxMsgData)
     - [TxResponse](#cosmos.base.abci.v1beta1.TxResponse)
   
+    - [CodeType](#cosmos.base.abci.v1beta1.CodeType)
+  
 - [cosmos/authz/v1beta1/tx.proto](#cosmos/authz/v1beta1/tx.proto)
     - [MsgExec](#cosmos.authz.v1beta1.MsgExec)
     - [MsgExecResponse](#cosmos.authz.v1beta1.MsgExecResponse)
@@ -1294,6 +1296,7 @@ Result is the union of ResponseFormat and ResponseCheckTx.
 | ----- | ---- | ----- | ----------- |
 | `data` | [bytes](#bytes) |  | Data is any data returned from message or handler execution. It MUST be length prefixed in order to separate data from multiple message executions. |
 | `log` | [string](#string) |  | Log contains the log information from message or handler execution. |
+| `code` | [CodeType](#cosmos.base.abci.v1beta1.CodeType) |  | Code is the response code, is stored back on the chain. |
 | `events` | [tendermint.abci.Event](#tendermint.abci.Event) | repeated | Events contains a slice of Event objects that were emitted during message or handler execution. |
 
 
@@ -1401,6 +1404,17 @@ Since: cosmos-sdk 0.42.11, 0.44.5, 0.45 |
 
 
  <!-- end messages -->
+
+
+<a name="cosmos.base.abci.v1beta1.CodeType"></a>
+
+### CodeType
+CodeType is the type of response code.
+
+| Name | Number | Description |
+| ---- | ------ | ----------- |
+| CODE_TYPE_OK_UNSPECIFIED | 0 | OK indicates that the operation was successful. |
+
 
  <!-- end enums -->
 

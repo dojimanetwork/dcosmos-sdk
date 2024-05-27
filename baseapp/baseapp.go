@@ -108,6 +108,11 @@ type BaseApp struct { //nolint: maligned
 	// which informs Tendermint what to index. If empty, all events will be indexed.
 	indexEvents map[string]struct{}
 
+	// side channel
+	beginSideBlocker     sdk.BeginSideBlocker
+	deliverSideTxHandler sdk.DeliverSideTxHandler
+	postDeliverTxHandler sdk.PostDeliverTxHandler
+
 	// abciListeners for hooking into the ABCI message processing of the BaseApp
 	// and exposing the requests and responses to external consumers
 	abciListeners []ABCIListener
@@ -720,6 +725,11 @@ func (app *BaseApp) runTx(mode runTxMode, txBytes []byte) (gInfo sdk.GasInfo, re
 		consumeBlockGas()
 
 		msCache.Write()
+
+		// Calling PostDeliverTxHandler
+		if app.postDeliverTxHandler != nil {
+			app.postDeliverTxHandler(ctx, tx, *result)
+		}
 
 		if len(anteEvents) > 0 {
 			// append the events in the order of occurrence

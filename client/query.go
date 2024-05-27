@@ -11,7 +11,8 @@ import (
 
 	abci "github.com/tendermint/tendermint/abci/types"
 	tmbytes "github.com/tendermint/tendermint/libs/bytes"
-	rpcclient "github.com/tendermint/tendermint/rpc/client"
+	// rpcclient "github.com/tendermint/tendermint/rpc/client"
+	drpcclient "github.com/tendermint/tendermint/rpc/client"
 
 	"github.com/cosmos/cosmos-sdk/store/rootmulti"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -20,7 +21,7 @@ import (
 
 // GetNode returns an RPC client. If the context's client is not defined, an
 // error is returned.
-func (ctx Context) GetNode() (rpcclient.Client, error) {
+func (ctx Context) GetNode() (drpcclient.Client, error) {
 	if ctx.Client == nil {
 		return nil, errors.New("no RPC client is defined in offline mode")
 	}
@@ -86,7 +87,7 @@ func (ctx Context) queryABCI(req abci.RequestQuery) (abci.ResponseQuery, error) 
 		queryHeight = ctx.Height
 	}
 
-	opts := rpcclient.ABCIQueryOptions{
+	opts := drpcclient.ABCIQueryOptions{
 		Height: queryHeight,
 		Prove:  req.Prove,
 	}

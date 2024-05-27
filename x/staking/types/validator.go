@@ -8,6 +8,7 @@ import (
 	"time"
 
 	abci "github.com/tendermint/tendermint/abci/types"
+	dtmprotocrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
 	tmprotocrypto "github.com/tendermint/tendermint/proto/tendermint/crypto"
 	"gopkg.in/yaml.v2"
 
@@ -257,7 +258,7 @@ func (d Description) EnsureLength() (Description, error) {
 // ABCIValidatorUpdate returns an abci.ValidatorUpdate from a staking validator type
 // with the full validator power
 func (v Validator) ABCIValidatorUpdate(r sdk.Int) abci.ValidatorUpdate {
-	tmProtoPk, err := v.TmConsPublicKey()
+	tmProtoPk, err := v.DTmConsPublicKey()
 	if err != nil {
 		panic(err)
 	}
@@ -271,7 +272,7 @@ func (v Validator) ABCIValidatorUpdate(r sdk.Int) abci.ValidatorUpdate {
 // ABCIValidatorUpdateZero returns an abci.ValidatorUpdate from a staking validator type
 // with zero power used for validator updates.
 func (v Validator) ABCIValidatorUpdateZero() abci.ValidatorUpdate {
-	tmProtoPk, err := v.TmConsPublicKey()
+	tmProtoPk, err := v.DTmConsPublicKey()
 	if err != nil {
 		panic(err)
 	}
@@ -488,6 +489,21 @@ func (v Validator) TmConsPublicKey() (tmprotocrypto.PublicKey, error) {
 	tmPk, err := cryptocodec.ToTmProtoPublicKey(pk)
 	if err != nil {
 		return tmprotocrypto.PublicKey{}, err
+	}
+
+	return tmPk, nil
+}
+
+// TmConsPublicKey casts Validator.ConsensusPubkey to tmprotocrypto.PubKey.
+func (v Validator) DTmConsPublicKey() (dtmprotocrypto.PublicKey, error) {
+	pk, err := v.ConsPubKey()
+	if err != nil {
+		return dtmprotocrypto.PublicKey{}, err
+	}
+
+	tmPk, err := cryptocodec.ToDTmProtoPublicKey(pk)
+	if err != nil {
+		return dtmprotocrypto.PublicKey{}, err
 	}
 
 	return tmPk, nil
