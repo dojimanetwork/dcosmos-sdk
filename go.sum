@@ -277,8 +277,8 @@ github.com/dnaeon/go-vcr v1.2.0/go.mod h1:R4UdLID7HZT3taECzJs4YgbbH6PIGXB6W/sc5O
 github.com/docker/docker v1.4.2-0.20180625184442-8e610b2b55bf/go.mod h1:eEKB0N0r5NX/I1kEveEz05bcu8tLC/8azJZsviup8Sk=
 github.com/docker/go-connections v0.4.0 h1:El9xVISelRB7BuFusrZozjnkIM5YnzCViNKohAFqRJQ=
 github.com/docker/go-units v0.5.0 h1:69rxXcBk27SvSaaxTtLh/8llcHD8vYHT7WSdRZ/jvr4=
-github.com/dojimanetwork/dojimamint v0.34.21-0.20240326111113-18496e42571e h1:sJhEEO9xM2MsEHTlMPfzGE7JzOKNLEiCnvZjpT70NDM=
-github.com/dojimanetwork/dojimamint v0.34.21-0.20240326111113-18496e42571e/go.mod h1:GcX+adlvpG+3K701LIdF0WqNYdYu5WNdp+HluZ/8OrY=
+github.com/dojimanetwork/dojimamint v0.34.21-0.20240619124428-037fa9251bcb h1:uBd4bPbbdZCTWW2CxXeq8ddFg56qYyeKzsTUuNjdm+I=
+github.com/dojimanetwork/dojimamint v0.34.21-0.20240619124428-037fa9251bcb/go.mod h1:GcX+adlvpG+3K701LIdF0WqNYdYu5WNdp+HluZ/8OrY=
 github.com/dop251/goja v0.0.0-20211011172007-d99e4b8cbf48/go.mod h1:R9ET47fwRVRPZnOGvHxxhuZcbrMCuiqOz3Rlrh4KSnk=
 github.com/dop251/goja_nodejs v0.0.0-20210225215109-d91c329300e7/go.mod h1:hn7BA7c8pLvoGndExHudxTDKZ84Pyvv+90pbBjbTz0Y=
 github.com/dustin/go-humanize v0.0.0-20171111073723-bb3d318650d4/go.mod h1:HtrtbFcZ19U5GC7JDqmcUSB87Iq5E25KnS6fMYU6eOk=

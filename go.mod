@@ -156,7 +156,7 @@ replace (
 	github.com/jhump/protoreflect => github.com/jhump/protoreflect v1.9.0
 
 	// use dojimamint which is a fork of cometbft (tendermint fork)
-	github.com/tendermint/tendermint => github.com/dojimanetwork/dojimamint v0.34.21-0.20240326111113-18496e42571e
+	github.com/tendermint/tendermint => github.com/dojimanetwork/dojimamint v0.34.21-0.20240619124428-037fa9251bcb
 
 	// latest grpc doesn't work with with our modified proto compiler, so we need to enforce
 	// the following version across all dependencies.
